@@ -1,0 +1,266 @@
+{% extends "Template.html" %}
+
+{% block Title %}
+新增 - 用户 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<form action="" method="post" class="card" id="form">
+    {% if csrf is defined %}
+    <input type="hidden" name="{{ csrf.name_key }}" value="{{ csrf.name }}">
+    <input type="hidden" name="{{ csrf.value_key }}" value="{{ csrf.value }}">
+    {% endif %}
+    <div class="card-header">
+        <h3 class="card-title">新增用户</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">姓&nbsp;&nbsp;&nbsp;名</label>
+                    <input type="text" class="form-control {{ form_v_error.name is defined ? 'is-invalid' : '' }}" name="name" value="{{ form_data.name is defined ? form_data.name : '' }}" maxlength="32" autocomplete="off">
+                    {% if form_v_error.name is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.name %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">用户名 <span class="form-required">*</span></label>
+                    <input type="text" class="form-control {{ form_v_error.username is defined ? 'is-invalid' : '' }}" name="username" value="{{ form_data.username is defined ? form_data.username : '' }}" required maxlength="32" autocomplete="off">
+                    {% if form_v_error.username is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.username %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">手机号 <span class="form-required">*</span></label>
+                    <input type="text" class="form-control {{ form_v_error.phone is defined ? 'is-invalid' : '' }}" name="phone" value="{{ form_data.phone is defined ? form_data.phone : '' }}" required maxlength="11" autocomplete="off">
+                    {% if form_v_error.phone is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.phone %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">邮&nbsp;&nbsp;&nbsp;箱</label>
+                    <input type="email" class="form-control {{ form_v_error.email is defined ? 'is-invalid' : '' }}" name="email" value="{{ form_data.email is defined ? form_data.email : '' }}" maxlength="255" autocomplete="off">
+                    {% if form_v_error.email is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.email %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">昵&nbsp;&nbsp;&nbsp;称</label>
+                    <input type="text" class="form-control {{ form_v_error.nickname is defined ? 'is-invalid' : '' }}" name="nickname" value="{{ form_data.nickname is defined ? form_data.nickname : '' }}" maxlength="32" autocomplete="off">
+                    {% if form_v_error.nickname is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.nickname %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">密&nbsp;&nbsp;&nbsp;码 <span class="form-required">*</span></label>
+                    <input type="text" class="form-control {{ form_v_error.password is defined ? 'is-invalid' : '' }}" name="password" value="{{ form_data.password is defined ? form_data.password : '' }}" required maxlength="32" autocomplete="off">
+                    {% if form_v_error.password is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.password %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">用户组</label>
+                    <div class="selectgroup w-100">
+                        <label class="selectgroup-item">
+                            <input type="radio" name="group" value="0" class="selectgroup-input" checked="checked">
+                            <span class="selectgroup-button">普通用户</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="group" value="1" class="selectgroup-input">
+                            <span class="selectgroup-button">管理员</span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="group" value="2" class="selectgroup-input">
+                            <span class="selectgroup-button">超级管理员</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">签&nbsp;&nbsp;&nbsp;名</label>
+                    <textarea class="form-control {{ form_v_error.sign is defined ? 'is-invalid' : '' }}" name="sign" rows="3" maxlength="128">{{ form_data.sign is defined ? form_data.sign : '' }}</textarea>
+                    {% if form_v_error.sign is defined %}
+                    <div class="invalid-feedback">
+                        {% for err in form_v_error.sign %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">头像</label>
+                    <div class="row gutters-sm">
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="1" class="imagecheck-input" checked="checked">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/1.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="2" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/2.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="3" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/3.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="4" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/4.jpg" alt="}" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="5" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/5.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="6" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/6.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="7" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/7.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="8" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/male/8.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="9" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/1.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="10" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/2.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="11" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/3.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="12" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/4.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="13" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/5.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="14" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/6.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="15" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/7.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <label class="imagecheck mb-4">
+                                <input name="avatar" type="radio" value="16" class="imagecheck-input">
+                                <figure class="imagecheck-figure">
+                                    <img src="/assets/images/faces/female/8.jpg" alt="" class="imagecheck-image">
+                                </figure>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-right">
+        <div class="d-flex">
+            <a href="javascript:void(0)" class="btn btn-link">清 除</a>
+            <button type="submit" class="btn btn-primary ml-auto">保 存</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

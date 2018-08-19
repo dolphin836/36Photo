@@ -1,0 +1,33 @@
+{
+    "name": "dolphin/slimadmin",
+    "description": "基于 Slim 框架的后台管理系统脚手架",
+    "keywords": ["Slim", "Admin"],
+    "type": "project",
+    "homepage": "https://hbdx.cc",
+    "authors": [{
+        "name": "dolphin.wang",
+        "email": "416509859@qq.com",
+        "homepage": "http://blog.hbdx.cc"
+    }],
+    "require": {
+        "slim/slim": "^3.10",
+        "vlucas/phpdotenv": "^2.5",
+        "catfan/medoo": "^1.5",
+        "ramsey/uuid": "^3.7",
+        "twig/twig": "^2.4",
+        "guzzlehttp/guzzle": "^6.3",
+        "slim/flash": "^0.4.0",
+        "bryanjhv/slim-session": "^3.5",
+        "slim/csrf": "^0.8.2",
+        "respect/validation": "^1.1",
+        "jasongrimes/paginator": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dolphin\\Ting\\": "app/"
+        }
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public"
+    }
+}
