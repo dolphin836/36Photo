@@ -9,7 +9,7 @@ class Base
 {
     protected $app;
     // 每页显示的记录数量
-    protected $count = 2;
+    protected $count = 20;
     protected $is_csrf    = false;
     protected $csrf_name  = '';
     protected $csrf_value = '';

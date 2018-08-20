@@ -39,9 +39,9 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
             "LIMIT" => [$this->count * ($page - 1), $this->count]
         ]);
 
-        if (empty($records)) {
-            return $response->withHeader('Location', '/404');
-        }
+        // if (empty($records)) {
+        //     return $response->withHeader('Location', '/404');
+        // }
 
         $data = [];
 
@@ -55,11 +55,15 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
                      "email" => $user["email"],
                     "avatar" => '/' . $user["avatar"],
                  "is_wechat" => $user['open_id'] ? true : false,
-                    "client" => $this->user_client[$user["client"]],
-                     "group" => $this->user_groups[$user["group"]],
+                    "client" => $user["client"],
+               "client_name" => $this->user_client[$user["client"]],
+                     "group" => $user["group"],
+                "group_name" => $this->user_groups[$user["group"]],
                 "last_login" => $user["last_login"] ? date("Y-m-d H:i:s", $user["last_login"]) : ''
             ];
         }
+
+        $data['class'] = ['blue', 'azure', 'indigo', 'purple', 'pink', 'orange'];
 
         $data['page'] = Page::reder('/user/records', $total, $page, $this->count);
 
