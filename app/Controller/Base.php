@@ -28,6 +28,8 @@ class Base
         'Android',
         '微信小程序'
     ];
+    // 数据库
+    protected $table_name = '';
 
     function __construct(ContainerInterface $app)
     {
@@ -61,8 +63,8 @@ class Base
         if ($this->app->flash->hasMessage('note')) {
             $data['note'] = $this->app->flash->getFirstMessage('note');
         }
-
-        // var_dump($data);
+        // class
+        $data['class'] = ['blue', 'azure', 'indigo', 'purple', 'pink', 'orange'];
 
         echo $this->app->template->render($template, $data);
     }
@@ -70,6 +72,11 @@ class Base
     protected function random_code()
     {
         return str_replace('-', '', U::uuid4()->toString()); 
+    }
+
+    protected function total()
+    {
+        return $this->app->db->count($this->table_name);
     }
 }
 

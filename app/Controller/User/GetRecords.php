@@ -7,19 +7,28 @@ use Dolphin\Ting\Librarie\Page as Page;
 
 class GetRecords extends \Dolphin\Ting\Controller\Base
 {
+    function __construct(ContainerInterface $app)
+    {
+        parent::__construct($app);
+
+        $this->table_name = 'user';
+    }
+
     public function __invoke($request, $response, $args)
     {  
-        $uri = $request->getUri();
-
-        parse_str($uri->getQuery(), $query_str);
-
-        $page = isset($query_str['page']) && $query_str['page'] > 0 ? (int) $query_str['page'] : 1;
-
-        $order = isset($query_str['order']) && in_array($query_str['order'], ['ASC', 'DESC']) ? $query_str['order'] : 'DESC';
         // CSRF
         $this->is_csrf = false;
 
-        $total = $this->app->db->count("user");
+        $where = [];
+
+        if (! empty($request->getAttribute('filter'))) {
+            foreach ($request->getAttribute('filter') as $key => $value) {
+                $where[substr($key, 7) . '[~]'] = $value;
+            }
+        }
+
+        $where["ORDER"] = ["id" => $request->getAttribute('order')];
+        $where["LIMIT"] = [$this->count * ($request->getAttribute('page') - 1), $this->count];
 
         $records = $this->app->db->select("user", [
             "uuid",
@@ -34,14 +43,7 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
             "client",
             "group",
             "last_login"
-        ], [
-            "ORDER" => ["id" => $order],
-            "LIMIT" => [$this->count * ($page - 1), $this->count]
-        ]);
-
-        // if (empty($records)) {
-        //     return $response->withHeader('Location', '/404');
-        // }
+        ], $where);
 
         $data = [];
 
@@ -63,9 +65,9 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
             ];
         }
 
-        $data['class'] = ['blue', 'azure', 'indigo', 'purple', 'pink', 'orange'];
+        $data['page'] = Page::reder('/user/records', $this->total(), $request->getAttribute('page'), $this->count);
 
-        $data['page'] = Page::reder('/user/records', $total, $page, $this->count);
+        $data['filter'] = $request->getAttribute('filter');
 
         $this->respond('User\Records.html', $data);
     }
