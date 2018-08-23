@@ -1,4 +1,41 @@
 $(document).ready(function() {
+    // DateTimePicker
+    $.datetimepicker.setLocale('zh');
+
+    var months = [
+        '1 月', '2 月', '3 月', '4 月',
+        '5 月', '6 月', '7 月', '8 月',
+        '9 月', '10 月', '11 月', '12月',
+    ];
+
+    $("#filter_start").datetimepicker({
+        i18n:{
+            zh:{
+                months: months
+            }
+        },
+        format: 'Y-m-d H:i:s',
+        onShow: function() {
+            this.setOptions({
+                maxDate: $('#filter_end').val() ? $('#filter_end').val() : false
+            })
+        },
+        closeOnDateSelect: true
+    });
+    $("#filter_end").datetimepicker({
+        i18n:{
+            zh:{
+                months: months
+            }
+        },
+        format: 'Y-m-d H:i:s',
+        onShow: function() {
+            this.setOptions({
+                minDate: $('#filter_start').val() ? $('#filter_start').val() : false
+            })
+        },
+        closeOnDateSelect: true
+    });
     // 检索
     $("#filter_submit").click(function() {
         var path   = window.location.pathname;
