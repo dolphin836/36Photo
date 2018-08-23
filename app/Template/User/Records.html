@@ -66,31 +66,16 @@ is defined %}
                 <caption>{{ page.text }}</caption>
                 <thead>
                     <tr>
-                        <th></th>
                         <th class="text-center">基本信息</th>
                         <th class="text-center">用户组</th>
                         <th class="text-center">来源</th>
                         <th class="text-center">最近登录</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for user in records %}
                     <tr>
-                        <td class="text-center">
-                            <div class="item-action dropdown">
-                                <a href="javascript:void(0)" data-toggle="dropdown" class="icon">
-                                    <i class="fe fe-more-vertical"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="/user/delete/{{ user.uuid }}" class="dropdown-item">
-                                        <i class="dropdown-icon fe fe-x"></i> 删除
-                                    </a>
-                                    <a href="/user/modify/{{ user.uuid }}" class="dropdown-item">
-                                        <i class="dropdown-icon fe fe-edit"></i> 编辑
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
                         <td class="text-center">
                             <div>
                                 {{ user.name }}
@@ -113,6 +98,10 @@ is defined %}
                         </td>
                         <td class="text-center">
                             <div>{{ user.last_login }}</div>
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-delete" data-id="{{ user.uuid }}"><i class="fa fa-close mr-2"></i> 删除</button>
+                            <a href="/user/modify/{{ user.uuid }}" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil mr-2"></i> 编辑</a>
                         </td>
                     </tr>
                     {% endfor %}

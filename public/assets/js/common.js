@@ -28,4 +28,26 @@ $(document).ready(function() {
             window.location.href = path;
         }
     });
+    // 删除
+    $(".btn-delete").click(function() {
+        $.confirm({
+            title: '删除确认',
+            content: '您确定要删除这条记录吗？',
+            theme: 'modern',
+            buttons: {
+                No: {
+                    text: '取消',
+                    keys: ['esc']
+                },
+                Yes: {
+                    text: '确定',
+                    btnClass: 'btn-blue',
+                    keys: ['enter'],
+                    action: function() {
+                        window.location.reload();
+                    }
+                }
+            }
+        });
+    });
 });
