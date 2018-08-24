@@ -33,14 +33,14 @@ class Query
                     $order = $value;
                 }
 
-                if (strpos($key, 'filter_') !== false && $value != '') {
+                if (strpos($key, 'search_') !== false && $value != '') {
                     $filter[$key] = $value;
                 }
             }
 
             $request = $request->withAttribute('page', $page);
             $request = $request->withAttribute('order', $order);
-            $request = $request->withAttribute('filter', $filter);
+            $request = $request->withAttribute('search', $filter);
         }
 
         $response = $next($request, $response);
