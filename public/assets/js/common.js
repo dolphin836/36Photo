@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    var search_start = $("#search_start"),
+        search_end = $('#search_end'),
+        search = $("#search"),
+        remove = $(".remove"),
+        action = $("#action-switch"),
+        ant = $(".ant");
     // DateTimePicker
     $.datetimepicker.setLocale('zh');
 
@@ -8,7 +14,7 @@ $(document).ready(function() {
         '9 月', '10 月', '11 月', '12月',
     ];
 
-    $("#filter_start").datetimepicker({
+    search_start.datetimepicker({
         i18n:{
             zh:{
                 months: months
@@ -17,12 +23,13 @@ $(document).ready(function() {
         format: 'Y-m-d H:i:s',
         onShow: function() {
             this.setOptions({
-                maxDate: $('#filter_end').val() ? $('#filter_end').val() : false
+                maxDate: search_end.val() ? search_end.val() : false
             })
         },
         closeOnDateSelect: true
     });
-    $("#filter_end").datetimepicker({
+
+    search_end.datetimepicker({
         i18n:{
             zh:{
                 months: months
@@ -31,18 +38,18 @@ $(document).ready(function() {
         format: 'Y-m-d H:i:s',
         onShow: function() {
             this.setOptions({
-                minDate: $('#filter_start').val() ? $('#filter_start').val() : false
+                minDate: search_start.val() ? search_start.val() : false
             })
         },
         closeOnDateSelect: true
     });
     // 检索
-    $("#filter_submit").click(function() {
+    search.click(function() {
         var path   = window.location.pathname;
-        var filter = $("input[name^='filter_'],select[name^='filter_']");
+        var inputs = $("input[name^='search_'],select[name^='search_']");
         var is     = true;
 
-        filter.each(function() {
+        inputs.each(function() {
             var name  = $(this).attr("name");
             var value = $(this).val();
 
@@ -66,7 +73,7 @@ $(document).ready(function() {
         }
     });
     // 删除
-    $(".btn-delete").click(function() {
+    remove.click(function() {
         $.confirm({
             title: '删除确认',
             content: '您确定要删除这条记录吗？',
@@ -86,5 +93,10 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+    // 操作列
+    action.click(function() {
+        ant.toggleClass("d-none");
+        ant.toggleClass("d-block");
     });
 });

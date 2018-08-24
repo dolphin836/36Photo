@@ -16,25 +16,25 @@ is defined %}
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">姓&nbsp;&nbsp;&nbsp;名</label>
-                    <input type="text" class="form-control" name="filter_name" value="{{ filter.filter_name is defined ? filter.filter_name : '' }}" maxlength="32">
+                    <input type="text" class="form-control" name="search_name" value="{{ search.search_name is defined ? search.search_name : '' }}" maxlength="32">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">手机号</label>
-                    <input type="text" class="form-control" name="filter_phone" value="{{ filter.filter_phone is defined ? filter.filter_phone : '' }}" maxlength="11">
+                    <input type="text" class="form-control" name="search_phone" value="{{ search.search_phone is defined ? search.search_phone : '' }}" maxlength="11">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">邮&nbsp;&nbsp;&nbsp;箱</label>
-                    <input type="text" class="form-control" name="filter_email" value="{{ filter.filter_email is defined ? filter.filter_email : '' }}" maxlength="255">
+                    <input type="text" class="form-control" name="search_email" value="{{ search.search_email is defined ? search.search_email : '' }}" maxlength="255">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">用户组</label>
-                    <select class="form-control" name="filter_group">
+                    <select class="form-control" name="search_group">
                         <option value="-1">全部</option>
                         <option value="0">普通用户</option>
                         <option value="1">管理员</option>
@@ -45,13 +45,13 @@ is defined %}
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">起始时间</label>
-                    <input type="text" class="form-control" id="filter_start" name="filter_start" value="{{ filter.filter_start is defined ? filter.filter_start : '' }}" maxlength="32">
+                    <input type="text" class="form-control" id="search_start" name="search_start" value="{{ search.search_start is defined ? search.search_start : '' }}" maxlength="32">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">结束时间</label>
-                    <input type="text" class="form-control" id="filter_end" name="filter_end" value="{{ filter.filter_end is defined ? filter.filter_end : '' }}" maxlength="32">
+                    <input type="text" class="form-control" id="search_end" name="search_end" value="{{ search.search_end is defined ? search.search_end : '' }}" maxlength="32">
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@ is defined %}
     <div class="card-footer text-right">
         <div class="d-flex">
             <a href="/user/records" class="btn btn-link">清 除</a>
-            <button type="button" id="filter_submit" class="btn btn-primary ml-auto">检 索</button>
+            <button type="button" id="search" class="btn btn-primary ml-auto">检 索</button>
             <a href="/user/add" class="btn btn-link">新 增</a>
         </div>
     </div>
@@ -67,8 +67,16 @@ is defined %}
 
 <div class="card">
 
-    <div class="card-header">
+    <div class="card-header text-right">
         <h3 class="card-title">用户列表</h3>
+
+        <div class="card-options">
+            <label class="custom-switch">
+                <input type="checkbox" id="action-switch" class="custom-switch-input">
+                <span class="custom-switch-indicator"></span>
+                <span class="custom-switch-description">操作列</span>
+            </label>
+        </div>
     </div>
 
     <div class="card-body">
@@ -81,8 +89,9 @@ is defined %}
                         <th class="text-center">基本信息</th>
                         <th class="text-center">用户组</th>
                         <th class="text-center">来源</th>
+                        <th class="text-center">创建时间</th>
                         <th class="text-center">最近登录</th>
-                        <th></th>
+                        <th class="text-center ant d-none">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,10 +118,13 @@ is defined %}
                             <span class="tag tag-{{ attribute(class, user.client) }}">{{ user.client_name }}</span>
                         </td>
                         <td class="text-center">
-                            <div>{{ user.last_login }}</div>
+                            <div>{{ user.gmt_create }}</div>
                         </td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-outline-primary btn-delete" data-id="{{ user.uuid }}"><i class="fa fa-close mr-2"></i> 删除</button>
+                            <div>{{ user.last_login }}</div>
+                        </td>
+                        <td class="text-center ant d-none">
+                            <button type="button" class="btn btn-sm btn-outline-primary remove" data-id="{{ user.uuid }}"><i class="fa fa-close mr-2"></i> 删除</button>
                             <a href="/user/modify/{{ user.uuid }}" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil mr-2"></i> 编辑</a>
                         </td>
                     </tr>
