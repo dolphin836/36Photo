@@ -6,7 +6,7 @@ use JasonGrimes\Paginator;
 // 分页插件
 class Page
 {
-    public static function reder($url, $total, $page, $count)
+    public static function reder($url, $total, $page, $count, $query)
     {
         $paginator = new Paginator($total, $count, $page, $url . '?page=(:num)');
 
@@ -22,7 +22,7 @@ class Page
                 $class = 'disabled';
             }
 
-            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getPrevUrl() . "'>上一页</a></li>";
+            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getPrevUrl() . $query . "'>上一页</a></li>";
             // 中间页
             foreach ($paginator->getPages() as $p) {
                 if ($p['url']) {
@@ -32,7 +32,7 @@ class Page
                         $class = 'active';
                     }
 
-                    $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $p['url'] . "'>" . $p['num'] . "</a></li>";
+                    $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $p['url'] . $query . "'>" . $p['num'] . "</a></li>";
                 } else {
                     $html .= "<li class='page-item disabled'><a class='page-link' href='javascript:void(0)'>" . $p['num'] . "</a></li>";
                 }
@@ -44,7 +44,7 @@ class Page
                 $class = 'disabled';
             }
 
-            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getNextUrl() . "'>下一页</a></li>";
+            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getNextUrl() . $query . "'>下一页</a></li>";
         
             $html .= "</ul></nav>";
         }

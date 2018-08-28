@@ -23,7 +23,8 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
             ],
                   'name' => [
                 'column' => 'name',
-                'format' => 'string'
+                'format' => 'string',
+                  'mark' => '[~]'
             ],
               'nickname' => [
                 'column' => 'nickname',
@@ -31,11 +32,13 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
             ],
                  'phone' => [
                 'column' => 'phone',
-                'format' => 'string'
+                'format' => 'string',
+                  'mark' => '[~]'
             ],
                  'email' => [
                 'column' => 'email',
-                'format' => 'string'
+                'format' => 'string',
+                  'mark' => '[~]'
             ],
                 'avatar' => [
                 'column' => 'avatar',

@@ -20,6 +20,14 @@ class Query
 
             parse_str($uri->getQuery(), $querys);
 
+            if (isset($querys['search_start']) && ! isset($querys['search_end'])) {
+                $querys['search_end'] =  strtotime($querys['search_start']) >= time() ? $querys['search_start'] : date("Y-m-d H:i:s", time());
+            }
+
+            if (isset($querys['search_end']) && ! isset($querys['search_start'])) {
+                $querys['search_start'] =  strtotime($querys['search_end']) >= time() ? date("Y-m-d H:i:s", time()) : date("Y-m-d H:i:s", strtotime(" -1 month"));
+            }
+
             $page   = 1;
             $order  = 'DESC';
             $filter = [];

@@ -14,10 +14,15 @@ class Base
     // 数据库
     protected $table_name = '';
     protected $record = [];
+    private $where = [];
     // 是否开启数据分页
     protected $is_page = false;
     // 当前页数
     private $page = 1;
+    // 分页路径
+    private $page_url = '';
+    // 查询参数
+    private $query = '&';
     // 是否开启数据检索
     protected $is_search = false;
     // 模版路径
@@ -47,11 +52,13 @@ class Base
         }
         // 列表 - 手动设置是否启用数据分页和数据检索
         if ($this->method == 'records') {
+            $this->where();
+
             $data['records'] = $this->records($this->record);
 
             // 数据分页
             if ($this->is_page) {
-                $data['page'] = Page::reder('/user/records', $this->total(), $this->page, $this->count);
+                $data['page'] = Page::reder($this->page_url, $this->total(), $this->page, $this->count, $this->query);
             }
             // 数据检索
             if ($this->is_search) {
@@ -92,12 +99,50 @@ class Base
         return str_replace('-', '', U::uuid4()->toString()); 
     }
 
+    private function where()
+    {
+        if (! empty($this->search)) {
+            foreach ($this->search as $key => $value) {
+                if ($key == 'search_start') {
+                    $this->where['gmt_create[>=]'] = $value;
+
+                    continue;
+                }
+
+                if ($key == 'search_end') {
+                    $this->where['gmt_create[<=]'] = $value;
+
+                    continue;
+                }
+
+                $text = substr($key, 7);
+
+                if (isset($this->record[$text]['mark'])) {
+                    $this->where[$text . $this->record[$text]['mark']] = $value;
+                } else {
+                    $this->where[$text] = $value;
+                }
+            }
+        }
+
+        $this->where["ORDER"] = ["id" => $this->order];
+        $this->where["LIMIT"] = [$this->count * ($this->page - 1), $this->count];
+    }
+
     /**
      * 获取记录总数
      */
     private function total()
     {
-        return $this->app->db->count($this->table_name);
+        if (isset($this->where['ORDER'])) {
+            unset($this->where['ORDER']);
+        }
+
+        if (isset($this->where['LIMIT'])) {
+            unset($this->where['LIMIT']);
+        }
+
+        return $this->app->db->count($this->table_name, $this->where);
     }
 
     /**
@@ -105,30 +150,7 @@ class Base
      */
     private function records($record = [])
     {
-        $where = [];
-
-        if (! empty($this->search)) {
-            foreach ($this->search as $key => $value) {
-                if ($key == 'search_start') {
-                    $where['gmt_create[>=]'] = $value;
-
-                    continue;
-                }
-
-                if ($key == 'search_end') {
-                    $where['gmt_create[<=]'] = $value;
-
-                    continue;
-                }
-
-                $where[substr($key, 7) . '[~]'] = $value;
-            }
-        }
-
-        $where["ORDER"] = ["id" => $this->order];
-        $where["LIMIT"] = [$this->count * ($this->page - 1), $this->count];
-
-        $results = $this->app->db->select($this->table_name, $this->select($record), $where);
+        $results = $this->app->db->select($this->table_name, $this->select($record), $this->where);
 
         $records = [];
 
@@ -203,6 +225,10 @@ class Base
         $name = '';
 
         foreach ($path as $p) {
+            if ($p != '') {
+                $this->page_url  .= '/' . $p;
+            }
+            
             $name .= $p ? ucwords($p) . '\\' : '';
 
             if (in_array($p, $methods)) {
@@ -213,6 +239,14 @@ class Base
         $name = substr($name, 0, strlen($name) - 1) . '.html';
 
         $this->html = $name;
+
+        if (! empty($this->search)) {
+            $this->query .= http_build_query($this->search);
+        }
+
+        if ($this->order != '') {
+            $this->query .= '&order=' . $this->order;
+        }
     }
 }
 
