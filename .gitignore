@@ -7,3 +7,7 @@
 /vendor
 
 /public/assets/node_modules
+
+/.idea
+
+/.vscode
