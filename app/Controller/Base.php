@@ -10,7 +10,7 @@ class Base
 {
     protected $app;
     // 每页显示的记录数量
-    protected $count = 20;
+    protected $count = 5;
     // 数据库
     protected $table_name = '';
     protected $record = [];
@@ -42,7 +42,7 @@ class Base
         $this->conf();
 
         // 新增和更新进行 CSRF 校验
-        if ($this->method == 'records' || $this->method == 'modify') {
+        if ($this->method == 'add' || $this->method == 'modify') {
             $data['csrf'] = [
                  'name_key' => 'next_name',
                 'value_key' => 'next_value',
@@ -63,6 +63,7 @@ class Base
             // 数据检索
             if ($this->is_search) {
                 $data['search'] = $this->search;
+                $data['search_conf'] = $this->search_conf($this->record);
             }
         }
 
@@ -88,6 +89,8 @@ class Base
             $data['note'] = $this->app->flash->getFirstMessage('note');
         }
 
+        // var_dump($data);
+
         echo $this->app->template->render($this->html, $data);
     }
 
@@ -97,6 +100,29 @@ class Base
     protected function random_code()
     {
         return str_replace('-', '', U::uuid4()->toString()); 
+    }
+
+    /**
+     * 筛选出需要进行搜索的元数据
+     */
+    private function search_conf($data = [])
+    {
+        if (empty($data)) return [];
+
+        $conf = [];
+
+        foreach ($data as $key => $value) {
+            if (isset($value['is_search']) && $value['is_search']) {
+                $conf[] = [
+                       'key' => $value['column'],
+                      'name' => $value['name'],
+                    'format' => $value['format'],
+                    'option' => isset($value['data']) ? $value['data'] : []
+                ];
+            }
+        }
+
+        return $conf;
     }
 
     private function where()
@@ -182,6 +208,10 @@ class Base
                     $format = $origin ? date("Y-m-d H:i:s", $origin) : '';
                 }
 
+                if ($data['format'] == 'size') {
+                    $format = $this->size($origin);
+                }
+
                 $temp[$name] = $format;
             }
 
@@ -189,6 +219,19 @@ class Base
         }
 
         return $records;
+    }
+
+    private function size($size)
+    {
+        $kb = ceil($size / 1024);
+
+        if ($kb < 1024) {
+            return $kb . ' KB';
+        }
+
+        $mb = round($kb / 1024, 2);
+
+        return $mb . ' M';
     }
 
     /**

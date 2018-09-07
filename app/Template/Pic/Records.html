@@ -1,0 +1,99 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+列表 - 图片 - {{ site.web_name }}
+{% endblock %}
+
+{% block Note %} 
+    {% if note is defined %}
+    <div class="page-header" id="note">
+        <div class="alert alert-{{ note.code }} alert-dismissible" style="margin: 0 auto;min-width: 320px;">
+            <button data-dismiss="alert" class="close"></button>
+            <h4>系统消息</h4>
+            <p>{{ note.text }}</p>
+        </div>
+    </div>
+    <script>
+        setTimeout(function () { document.getElementById("note").innerHTML = ''; }, 3000);
+    </script> 
+    {% endif %} 
+{% endblock %} 
+
+{% block Content %}
+
+<div class="card">
+    <div class="card-body">
+        <a href="/pic/auto" class="btn btn-primary">批量导入</a>
+    </div>
+</div>
+
+<div class="card">
+
+    <div class="card-header text-right">
+        <h3 class="card-title">列表列表</h3>
+
+        <div class="card-options">
+            <label class="custom-switch">
+                <input type="checkbox" id="action-switch" class="custom-switch-input">
+                <span class="custom-switch-indicator"></span>
+                <span class="custom-switch-description">操作列</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card-body">
+        {% if records is defined %}
+        <div class="table-responsive">
+            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                <caption>{{ page.text }}</caption>
+                <thead>
+                    <tr>
+                        <th class="text-center">缩略图</th>
+                        <th class="text-center">宽</th>
+                        <th class="text-center">高</th>
+                        <th class="text-center">大小</th>
+                        <th class="text-center">创建时间</th>
+                        <th class="text-center ant d-none">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td class="text-center">
+                            <a href="{{ record.path }}" target="_blank">
+                                <img src="{{ record.path }}" class="rounded" style="width: 120px;">
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.width }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.height }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.size }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.gmt_create }}</div>
+                        </td>
+                        <td class="text-center ant d-none">
+                            <button type="button" class="btn btn-sm btn-outline-primary remove" data-id="{{ record.hash }}"><i class="fa fa-close mr-2"></i> 删除</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        暂无数据。
+        {% endif %}
+    </div>
+
+    {% if page.link != '' %}
+    <div class="card-footer">
+        {% autoescape false %} {{ page.link }} {% endautoescape %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

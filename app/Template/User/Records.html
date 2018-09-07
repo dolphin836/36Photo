@@ -1,47 +1,65 @@
-{% extends "Template.html" %} {% block Title %} 列表 - 用户 - {{ site.web_name }} {% endblock %} {% block Note %} {% if note
-is defined %}
-<div class="page-header" id="note">
-    <div class="alert alert-{{ note.code }} alert-dismissible" style="margin: 0 auto;min-width: 320px;">
-        <button data-dismiss="alert" class="close"></button>
-        <h4>系统消息</h4>
-        <p>{{ note.text }}</p>
+{% extends "Template.html" %} 
+
+{% block Title %}
+列表 - 用户 - {{ site.web_name }}
+{% endblock %}
+
+{% block Note %} 
+    {% if note is defined %}
+    <div class="page-header" id="note">
+        <div class="alert alert-{{ note.code }} alert-dismissible" style="margin: 0 auto;min-width: 320px;">
+            <button data-dismiss="alert" class="close"></button>
+            <h4>系统消息</h4>
+            <p>{{ note.text }}</p>
+        </div>
     </div>
-</div>
-<script>
-    setTimeout(function () { document.getElementById("note").innerHTML = ''; }, 3000);
-</script> {% endif %} {% endblock %} {% block Content %}
+    <script>
+        setTimeout(function () { document.getElementById("note").innerHTML = ''; }, 3000);
+    </script> 
+    {% endif %} 
+{% endblock %} 
+
+{% block Content %}
+
+{% if search is defined %}
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">姓&nbsp;&nbsp;&nbsp;名</label>
-                    <input type="text" class="form-control" name="search_name" value="{{ search.search_name is defined ? search.search_name : '' }}" maxlength="32">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">手机号</label>
-                    <input type="text" class="form-control" name="search_phone" value="{{ search.search_phone is defined ? search.search_phone : '' }}" maxlength="11">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">邮&nbsp;&nbsp;&nbsp;箱</label>
-                    <input type="text" class="form-control" name="search_email" value="{{ search.search_email is defined ? search.search_email : '' }}" maxlength="255">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">用户组</label>
-                    <select class="form-control" name="search_group">
-                        <option value="-1">全部</option>
-                        <option value="0">普通用户</option>
-                        <option value="1">管理员</option>
-                        <option value="2">超级管理员</option>
-                    </select>
-                </div>
-            </div>
+            {% if search_conf is defined %}
+                {% for conf in search_conf %}
+
+                    {% set name = ['search', conf.key] | join('_') %}
+
+                    {% if conf.format == 'string' %}
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="form-group">
+                            <label class="form-label">{{ conf.name }}</label>
+                            <input type="text" class="form-control" name="search_{{ conf.key }}" value="{{ attribute(search, name) is defined ? attribute(search, name) : '' }}" maxlength="255">
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if conf.format == 'enum' %}
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="form-group">
+                            <label class="form-label">{{ conf.name }}</label>
+                            {% set select_value = attribute(search, name) is defined ? attribute(search, name) : -1 %}
+                            <select class="form-control" name="search_{{ conf.key }}">
+                                <option value="-1">全部</option>
+                                {% for p in conf.option %}
+                                    {% if loop.index0 == select_value %}
+                                    <option value="{{ loop.index0 }}" selected>{{ p }}</option>
+                                    {% else %}
+                                    <option value="{{ loop.index0 }}">{{ p }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                {% endfor %}
+            {% endif %}
+
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">起始时间</label>
@@ -64,6 +82,7 @@ is defined %}
         </div>
     </div>
 </div>
+{% endif %}
 
 <div class="card">
 

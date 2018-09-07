@@ -19,35 +19,47 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
             ],
               'username' => [
                 'column' => 'username',
-                'format' => 'string'
+                'format' => 'string',
+                  'name' => '用户名'
             ],
                   'name' => [
                 'column' => 'name',
                 'format' => 'string',
-                  'mark' => '[~]'
+                  'mark' => '[~]',
+                  'name' => '姓 名',
+             'is_search' => true,
+               'is_show' => true
             ],
               'nickname' => [
                 'column' => 'nickname',
-                'format' => 'string'
+                'format' => 'string',
+                  'name' => '昵 称'
             ],
                  'phone' => [
                 'column' => 'phone',
                 'format' => 'string',
-                  'mark' => '[~]'
+                  'mark' => '[~]',
+                  'name' => '手 机',
+             'is_search' => true,
+               'is_show' => true
             ],
                  'email' => [
                 'column' => 'email',
                 'format' => 'string',
-                  'mark' => '[~]'
+                  'mark' => '[~]',
+                  'name' => '邮 箱',
+             'is_search' => true
             ],
                 'avatar' => [
                 'column' => 'avatar',
                 'format' => 'pre',
-                  'data' => '/'
+                  'data' => '/',
+                  'name' => '头 像'
             ],
              'is_wechat' => [
                 'column' => 'open_id',
-                'format' => 'bool'
+                'format' => 'bool',
+                  'name' => '微信用户'
             ],
                 'client' => [
                 'column' => 'client',
@@ -63,7 +75,10 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
                     'iOS',
                     'Android',
                     '微信小程序'  
-                ]
+                ],
+               'is_show' => true,
+                  'name' => '来 源',
+             'is_search' => true
             ],
                  'group' => [
                 'column' => 'group',
@@ -76,15 +91,22 @@ class GetRecords extends \Dolphin\Ting\Controller\Base
                     '普通用户',
                     '管理员',
                     '超级管理员'
-                ]
+                ],
+               'is_show' => true,
+                  'name' => '用户组',
+             'is_search' => true
             ],
             'last_login' => [
                 'column' => 'last_login',
-                'format' => 'datetime'
+                'format' => 'datetime',
+                  'name' => '最近登录',
+               'is_show' => true
             ],
             'gmt_create' => [
                 'column' => 'gmt_create',
-                'format' => 'string'
+                'format' => 'string',
+                  'name' => '创建时间',
+               'is_show' => true
             ]
         ];
     }
