@@ -18,6 +18,9 @@ $app->get('/pic/auto', 'Dolphin\Ting\Controller\Pic\GetAuto');
 // 图片列表
 $app->get('/pic/records', "Dolphin\Ting\Controller\Pic\GetRecords");
 
+// 标签列表
+$app->get('/mark/records', "Dolphin\Ting\Controller\Mark\GetRecords");
+
 
 // $params = $container->request->getUri()->getPath();
 

@@ -1,0 +1,56 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+列表 - 标签 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+
+<div class="card">
+
+    <div class="card-header text-right">
+        <h3 class="card-title">标签列表</h3>
+    </div>
+
+    <div class="card-body">
+        {% if records is defined %}
+        <div class="table-responsive">
+            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                <caption>{{ page.text }}</caption>
+                <thead>
+                    <tr>
+                        <th class="text-center">名称</th>
+                        <th class="text-center">数量</th>
+                        <th class="text-center">创建时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td class="text-center">
+                            <div>{{ record.name }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.count }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.gmt_create }}</div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        暂无数据。
+        {% endif %}
+    </div>
+
+    {% if page.link != '' %}
+    <div class="card-footer">
+        {% autoescape false %} {{ page.link }} {% endautoescape %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
