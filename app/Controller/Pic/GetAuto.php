@@ -5,6 +5,8 @@ namespace Dolphin\Ting\Controller\Pic;
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
+use OSS\OSSClient;
+use OSS\Core\OSSException;
 
 /**
  * 自动导入功能
@@ -19,18 +21,29 @@ class GetAuto extends \Dolphin\Ting\Controller\Base
     private $upload = './uploads';
     // 
     private $hashs = [];
+    // oss client
+    private $oss_client;
 
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
 
-        $this->table_name = "picture";
-
-        $this->image_hash = new ImageHash(new DifferenceHash());
         // 设置临时超时时间
         set_time_limit(0);
         // 设置临时最大内存
         ini_set('memory_limit', '512M');
+
+        $this->table_name = "picture";
+
+        $this->image_hash = new ImageHash(new DifferenceHash());
+
+        try {
+            $this->oss_client = new OssClient(getenv('OSS_ACCESS_KEY_ID'), getenv('OSS_ACCESS_SECRET'), getenv('OSS_END_POINT'));
+        } catch (OssException $e) {
+            printf(__FUNCTION__ . "阿里云 OSS 初始化失败。\n");
+            printf($e->getMessage() . "\n");
+            exit();
+        } 
     }
 
     public function __invoke($request, $response, $args)
@@ -93,13 +106,22 @@ class GetAuto extends \Dolphin\Ting\Controller\Base
             // 移动到上传目录
             $upload = $this->upload($path, $result->getExtension());
 
+            $is_oss = 1;
+
+            try {
+                $this->oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), substr($upload, 2), $upload);
+            } catch (OssException $e) {
+                $is_oss = 0;
+            }
+
             array_push($data, [
                 'hash' => $hash,
                 'uuid' => 'a22c38198f4b4ad992c4a1b89123d6e3',
                'width' => $width,
               'height' => $height,
                 'path' => $upload,
-                'size' => $size
+                'size' => $size,
+              'is_oss' => $is_oss
             ]);
         }
         
