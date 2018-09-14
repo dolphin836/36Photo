@@ -64,7 +64,7 @@ class GetAuto extends \Dolphin\Ting\Controller\Base
             ]);  
         }
 
-        return $response->withStatus(302)->withHeader('Location', '/pic/records');
+        return $response->withRedirect('/pic/records', 302);
     }
 
     /**

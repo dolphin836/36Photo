@@ -124,7 +124,7 @@ class Validation
                 $this->app->flash->addMessage('form_v_error', $form_v_error);
                 $this->app->flash->addMessage('form_data', $body);
 
-                return $response->withStatus(302)->withHeader('Location', '/user/add');
+                return $response->withRedirect('/user/add', 302);
             }
         }
 

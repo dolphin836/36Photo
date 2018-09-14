@@ -55,6 +55,7 @@ class PostAdd extends \Dolphin\Ting\Controller\Base
             ]);  
         }
 
-        return $response->withStatus(302)->withHeader('Location', '/user/records');
+        return $response->withRedirect('/user/records', 302);
+        
     }
 }
