@@ -5,6 +5,7 @@ use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use OSS\OSSClient;
 use OSS\Core\OSSException;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 define('ROOTPATH', __DIR__);
 // 设置时区
@@ -29,6 +30,8 @@ $db = new Medoo([
 ]);
 // 图片 Hash
 $image_hash = new ImageHash(new DifferenceHash());
+// 图片优化
+$image_opt = OptimizerChainFactory::create();
 // oss client
 try {
   $oss_client = new OssClient(
@@ -46,12 +49,12 @@ $mark = new Mark(getenv('OSS_ACCESS_KEY_ID'), getenv('OSS_ACCESS_SECRET'));
 
 var_dump(date("Y-m-d H:i:s") . ':**********Start Run**********');
 
-found('./public/picture', $image_hash, $db, $oss_client, $mark);
+found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt);
 
 /**
  * 遍历文件夹，处理图片
  */
-function found($dir, $image_hash, $db, $oss_client, $mark)
+function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt)
 {
   $results = new \FilesystemIterator($dir);
 
@@ -59,9 +62,9 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
   {
       // 递归目录
       if ($result->isDir()) {
-          found($result->getPathname(), $image_hash, $db, $oss_client, $mark);
-          // 删除目录
-          rmdir($result->getPathname());
+        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt);
+        // 删除目录
+        rmdir($result->getPathname());
       }
       
       // 过滤
@@ -85,7 +88,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
 
       list($width, $height, $type, $attr) = getimagesize($path);
       // 移动到上传目录
-      $upload = upload($path, $result->getExtension());
+      $upload = upload($path, $result->getExtension(), $image_opt);
 
       if (! $upload) { // 移动到上传目录失败
         continue;
@@ -120,7 +123,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
         // 图片操作成功后继续添加标签
         if ($is_oss) { // 只处理 OSS 上传成功的
-          $valid = 10;
+          $valid = 60;
 
           try {
             $pic = $oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $upload, $valid);
@@ -130,10 +133,10 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
 
           $marks = $mark->run($pic);
 
-          foreach ($marks as $mark) {
-            if (! $db->has('mark', ['name' => $mark])) {
+          foreach ($marks as $mark_name) {
+            if (! $db->has('mark', ['name' => $mark_name])) {
               $query = $db->insert('mark', [
-                'name' => $mark
+                'name' => $mark_name
               ]);
 
               $mark_id = $db->id();
@@ -141,16 +144,16 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
               $query = $db->update('mark', [
                 'count[+]' => 1
               ], [
-                'name' => $mark
+                'name' => $mark_name
               ]);
 
-              $mark = $db->get('mark', [
+              $mark_info = $db->get('mark', [
                 'id'
               ], [
-                'name' => $mark
+                'name' => $mark_name
               ]);
 
-              $mark_id = $mark['id'];
+              $mark_id = $mark_info['id'];
             }
 
             if ($query->rowCount()) {
@@ -160,7 +163,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
               ]);
             }
 
-            var_dump(date("Y-m-d H:i:s") . ':Add Mark Success:' . $mark);
+            var_dump(date("Y-m-d H:i:s") . ':Add Mark Success:' . $mark_name);
           }
         }
       }
@@ -170,7 +173,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark)
 /**
  * 移动到上传目录
  */
-function upload($path, $extension)
+function upload($path, $extension, $image_opt)
 {
   $upload = 'uploads';
 
@@ -190,11 +193,9 @@ function upload($path, $extension)
 
   $file_path = $dir . '/' . $file_name;
 
-  if (rename($path, './public/' . $file_path)) {
-    return $file_path;
-  }
+  $image_opt->optimize($path, './public/' . $file_path);
 
-  return false;
+  return $file_path;
 }
 
 
