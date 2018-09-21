@@ -16,7 +16,7 @@ $container['db'] = function($c) {
 
 // HTTP
 $container['guzzle'] = function ($c) {
-    return new \GuzzleHttp\Client();;
+    return new \GuzzleHttp\Client();
 };
 
 // view renderer
