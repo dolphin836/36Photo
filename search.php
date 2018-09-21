@@ -5,31 +5,6 @@ define('ROOTPATH', __DIR__);
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 
-// use Crew\Unsplash\HttpClient as client;
-// use Crew\Unsplash\Photo as photo;
-
-// // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-// client::init([
-// 	'applicationId'	=> '2c66d87a0031f85494c76ca1d0c1adb53a77a10b3a59eda45abe7252d6780444',
-// 	'secret'		=> 'e20960981aa5b69571e1274b87772a6608bf27121733d11f990dd42dbba14e51',
-// 	'utmSource'     => 'Emage'
-// ]);
-
-// $filters = [
-//     'featured' => true,
-//     'username' => 'andy_brunner',
-//     'query'    => 'coffee',
-//     'w'        => 100,
-//     'h'        => 100
-// ];
-
-// $pic = photo::random($filters);
-
-// var_dump($pic);
-
-// Authorization: Client-ID YOUR_ACCESS_KEY
-
 $server = 'https://api.unsplash.com';
 
 $methon = '/photos/random';
