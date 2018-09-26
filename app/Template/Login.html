@@ -12,36 +12,51 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
-        <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
-        <title>登录</title>
-        <script src="./assets/js/require.min.js"></script>
-        <script>requirejs.config({baseUrl: '.'});</script>
-        <link href="./assets/css/dashboard.css" rel="stylesheet" />
-        <script src="./assets/js/dashboard.js"></script>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <title>登 录 - {{ site.web_name }}</title>
+        <link href="/assets/css/next.min.css" rel="stylesheet" />
     </head>
-    <body class="">
+    <body>
         <div class="page">
             <div class="page-single">
                 <div class="container">
                     <div class="row">
                         <div class="col col-login mx-auto">
                             <div class="text-center mb-6">
-                                <img src="./assets/images/brand/tabler.svg" class="h-6" alt="">
+                                <img src="./assets/images/brand/logo.png" class="h-6" alt="">
                             </div>
 
                             <form class="card" action="" method="post">
+                                {% if csrf is defined %}
+                                <input type="hidden" name="{{ csrf.name_key }}" value="{{ csrf.name }}">
+                                <input type="hidden" name="{{ csrf.value_key }}" value="{{ csrf.value }}">
+                                {% endif %}
                                 <div class="card-body p-6">
-                                    <div class="card-title">欢迎您</div>
+                                    <div class="card-title">{{ site.web_name }}欢迎您</div>
 
                                     <div class="form-group">
                                         <label class="form-label">邮 箱</label>
-                                        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="请输入您的邮箱">
+                                        <input type="email" name="email" class="form-control {{ form_v_error.email is defined ? 'is-invalid' : '' }}" value="{{ form_data.email is defined ? form_data.email : '' }}" placeholder="请输入您的邮箱" required maxlength="255" autocomplete="off">
+                                        {% if form_v_error.email is defined %}
+                                        <div class="invalid-feedback">
+                                            {% for err in form_v_error.email %}
+                                                <p>{{ err }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label">密 码</label>
-                                        <input type="password" class="form-control" placeholder="请输入您的密码">
+                                        <input type="password" name="password" class="form-control {{ form_v_error.password is defined ? 'is-invalid' : '' }}" placeholder="请输入您的密码" required maxlength="32" autocomplete="off">
+                                        {% if form_v_error.password is defined %}
+                                        <div class="invalid-feedback">
+                                            {% for err in form_v_error.password %}
+                                                <p>{{ err }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
                                     </div>
 
                                     <div class="form-footer">

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c1881e840c24cc50bc3ebbea92371fb",
+    "content-hash": "86025cf29e43b23d0d3e411b209cf221",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -185,6 +185,42 @@
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
             "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "dolphin.wang/unsplash-random-download",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dolphin836/unsplash-random-download.git",
+                "reference": "7efba321418a0cb6a3337a484ad34ca8ec41d030"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dolphin836/unsplash-random-download/zipball/7efba321418a0cb6a3337a484ad34ca8ec41d030",
+                "reference": "7efba321418a0cb6a3337a484ad34ca8ec41d030",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dolphin\\Wang\\Unsplash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "wanghaibing",
+                    "email": "wanghaibing@shein.com"
+                }
+            ],
+            "description": "随机的从 Unsplash 网站下载图片到本地",
+            "time": "2018-09-25T10:17:41+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

@@ -51,3 +51,8 @@ $container['csrf'] = function ($c) {
 $container['flash'] = function () {
     return new \Slim\Flash\Messages();
 };
+
+// Session
+$container['session'] = function ($c) {
+    return new \SlimSession\Helper;
+};

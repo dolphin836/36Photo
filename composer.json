@@ -17,14 +17,15 @@
         "twig/twig": "^2.4",
         "guzzlehttp/guzzle": "^6.3",
         "slim/flash": "^0.4.0",
-        "bryanjhv/slim-session": "^3.5",
+        "bryanjhv/slim-session": "~3.0",
         "slim/csrf": "^0.8.2",
         "respect/validation": "^1.1",
         "jasongrimes/paginator": "~1.0",
         "jenssegers/imagehash": "^0.5.0",
         "aliyuncs/oss-sdk-php": "^2.3",
         "spatie/image-optimizer": "^1.1",
-        "unsplash/unsplash": "^2.4"
+        "unsplash/unsplash": "^2.4",
+        "dolphin.wang/unsplash-random-download": "^1.1"
     },
     "autoload": {
         "psr-4": {

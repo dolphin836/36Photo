@@ -11,8 +11,6 @@ define('CACHPATH', ROOTPATH . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATO
 
 date_default_timezone_set('PRC');
 
-session_start();
-
 require ROOTPATH . 'vendor/autoload.php';
 
 $env = new Dotenv\Dotenv(ROOTPATH);
