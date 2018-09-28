@@ -4,6 +4,8 @@ use Medoo\Medoo;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use OSS\OSSClient;
+use OSS\Core\OSSException;
 
 define('ROOTPATH', __DIR__);
 // 设置时区
