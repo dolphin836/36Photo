@@ -4,6 +4,8 @@ use Medoo\Medoo;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use OSS\OssClient as OssClient;
+use OSS\Core\OssException as OssException;
 
 define('ROOTPATH', __DIR__);
 // 设置时区
@@ -32,12 +34,12 @@ $image_hash = new ImageHash(new DifferenceHash());
 $image_opt = OptimizerChainFactory::create();
 // oss client
 try {
-  $oss_client = new \OSS\OSSClient(
+  $oss_client = new OssClient(
     getenv('OSS_ACCESS_KEY_ID'),
     getenv('OSS_ACCESS_SECRET'),
     getenv('OSS_END_POINT')
   );
-} catch (\OSS\Core\OSSException $e) {
+} catch (OssException $e) {
   printf(__FUNCTION__ . "阿里云 OSS 初始化失败。\n");
   printf($e->getMessage() . "\n");
   exit();
@@ -98,7 +100,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt)
 
       try {
           $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $upload, './public/' .$upload);
-      } catch (\OSS\Core\OSSException $e) {
+      } catch (OssException $e) {
           $is_oss = 0;
           var_dump(date("Y-m-d H:i:s") . ':OSS Upload Faild.');
       }
@@ -125,7 +127,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt)
 
           try {
             $pic = $oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $upload, $valid);
-          } catch (\OSS\Core\OSSException $e) {
+          } catch (OssException $e) {
             continue;
           }
 
