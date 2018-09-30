@@ -19,6 +19,8 @@ require ROOTPATH . '/mark.php';
 // 载入配置文件
 $env = new Dotenv\Dotenv(ROOTPATH);
 $env->load();
+// 运行环境
+$is_debug = getenv("DEBUG") === "TRUE" ? true : false;
 // 初始化数据库
 $db = new Medoo([
     'database_type' => 'mysql',
@@ -49,12 +51,12 @@ $mark = new Mark(getenv('OSS_ACCESS_KEY_ID'), getenv('OSS_ACCESS_SECRET'));
 
 var_dump(date("Y-m-d H:i:s") . ':**********Start Run**********');
 
-found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt);
+found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug);
 
 /**
  * 遍历文件夹，处理图片
  */
-function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt)
+function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug)
 {
   $results = new \FilesystemIterator($dir);
 
@@ -62,7 +64,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt)
   {
       // 递归目录
       if ($result->isDir()) {
-        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt);
+        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug);
         // 删除目录
         rmdir($result->getPathname());
       }
@@ -98,14 +100,16 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt)
 
       $is_oss = 1;
 
-      try {
-          $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $upload, './public/' .$upload);
-      } catch (OssException $e) {
-          $is_oss = 0;
-          var_dump(date("Y-m-d H:i:s") . ':OSS Upload Faild.');
-      }
+      if (! $is_debug) {
+        try {
+            $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $upload, './public/' .$upload);
+        } catch (OssException $e) {
+            $is_oss = 0;
+            var_dump(date("Y-m-d H:i:s") . ':OSS Upload Faild.');
+        }
 
-      var_dump(date("Y-m-d H:i:s") . ':OSS Upload Over.');
+        var_dump(date("Y-m-d H:i:s") . ':OSS Upload Over.');
+      }
 
       $data = [
           'hash' => $hash,

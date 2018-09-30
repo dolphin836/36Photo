@@ -1,0 +1,51 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+列表 - 分类 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+
+<div class="card">
+
+    <div class="card-header text-right">
+        <div class="card-options">
+            <label class="custom-switch">
+                <input type="checkbox" id="action-switch" class="custom-switch-input">
+                <span class="custom-switch-indicator"></span>
+                <span class="custom-switch-description">操作列</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                {% include 'Common/TableHead.html' %}
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td class="text-center">
+                            <div>{{ record.code }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.name }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.count }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.gmt_create }}</div>
+                        </td>
+                        <td class="text-center ant d-none">
+                            <button type="button" class="btn btn-sm btn-outline-primary remove" data-id="{{ record.id }}"><i class="fa fa-close mr-2"></i> 删除</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

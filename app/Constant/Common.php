@@ -1,5 +1,7 @@
 <?php
 
+namespace Dolphin\Ting\Constant;
+
 /**
  * 通用
  */
