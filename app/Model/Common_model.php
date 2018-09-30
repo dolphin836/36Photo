@@ -28,7 +28,9 @@ class Common_model
 
     public function records($data = [])
     {
-        $data["ORDER"] = ["gmt_create" => "DESC"];
+        if (! isset($data["ORDER"])) {
+            $data["ORDER"] = ["gmt_create" => "DESC"];
+        }
 
         return $this->app->db->select($this->table_name, "*", $data);
     }
