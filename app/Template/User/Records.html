@@ -21,69 +21,6 @@
 
 {% block Content %}
 
-{% if search is defined %}
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            {% if search_conf is defined %}
-                {% for conf in search_conf %}
-
-                    {% set name = ['search', conf.key] | join('_') %}
-
-                    {% if conf.format == 'string' %}
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="form-group">
-                            <label class="form-label">{{ conf.name }}</label>
-                            <input type="text" class="form-control" name="search_{{ conf.key }}" value="{{ attribute(search, name) is defined ? attribute(search, name) : '' }}" maxlength="255">
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if conf.format == 'enum' %}
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="form-group">
-                            <label class="form-label">{{ conf.name }}</label>
-                            {% set select_value = attribute(search, name) is defined ? attribute(search, name) : -1 %}
-                            <select class="form-control" name="search_{{ conf.key }}">
-                                <option value="-1">全部</option>
-                                {% for p in conf.option %}
-                                    {% if loop.index0 == select_value %}
-                                    <option value="{{ loop.index0 }}" selected>{{ p }}</option>
-                                    {% else %}
-                                    <option value="{{ loop.index0 }}">{{ p }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                {% endfor %}
-            {% endif %}
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">起始时间</label>
-                    <input type="text" class="form-control" id="search_start" name="search_start" value="{{ search.search_start is defined ? search.search_start : '' }}" maxlength="32">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">结束时间</label>
-                    <input type="text" class="form-control" id="search_end" name="search_end" value="{{ search.search_end is defined ? search.search_end : '' }}" maxlength="32">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-footer text-right">
-        <div class="d-flex">
-            <a href="/user/records" class="btn btn-link">清 除</a>
-            <button type="button" id="search" class="btn btn-primary ml-auto">检 索</button>
-            <a href="/user/add" class="btn btn-link">新 增</a>
-        </div>
-    </div>
-</div>
-{% endif %}
-
 <div class="card">
 
     <div class="card-header text-right">

@@ -8,12 +8,15 @@ class GetAdd extends \Dolphin\Ting\Controller\Base
 {
     public function __invoke($request, $response, $args)
     {   
-        $this->is_page   = false;
+        $data = [
+            'csrf' => [
+                'name_key' => 'next_name',
+               'value_key' => 'next_value',
+                    'name' => $request->getAttribute('next_name'),
+                   'value' => $request->getAttribute('next_value')
+            ]
+        ];
 
-        $this->is_search = false;
-
-        $this->request   = $request;
-
-        $this->respond();
+        $this->respond('User/Add', $data);
     }
 }

@@ -14,8 +14,8 @@ class GetRecords extends Pic
     private $columns = [
               'path' => '缩略图',
              'width' => '宽',
-             'height' => '高',
-             'size' => '大小',
+            'height' => '高',
+              'size' => '大小',
         'gmt_create' => '创建时间'
     ];
 

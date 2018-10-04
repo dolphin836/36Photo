@@ -3,6 +3,7 @@
 namespace Dolphin\Ting\Controller;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Ramsey\Uuid\Uuid as U;
 
 class Base
 {
@@ -37,7 +38,17 @@ class Base
             $data['note'] = $this->app->flash->getFirstMessage('note');
         }
 
+        // var_dump($data);
+
         echo $this->app->template->render($html . '.html', $data);
+    }
+
+    /**
+     * 生成 32 位随机字符串
+     */
+    protected function random_code()
+    {
+        return str_replace('-', '', U::uuid4()->toString()); 
     }
 }
 
