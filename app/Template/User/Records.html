@@ -4,74 +4,68 @@
 列表 - 用户 - {{ site.web_name }}
 {% endblock %}
 
-{% block Note %} 
-    {% if note is defined %}
-    <div class="page-header" id="note">
-        <div class="alert alert-{{ note.code }} alert-dismissible" style="margin: 0 auto;min-width: 320px;">
-            <button data-dismiss="alert" class="close"></button>
-            <h4>系统消息</h4>
-            <p>{{ note.text }}</p>
-        </div>
-    </div>
-    <script>
-        setTimeout(function () { document.getElementById("note").innerHTML = ''; }, 3000);
-    </script> 
-    {% endif %} 
-{% endblock %} 
-
 {% block Content %}
-
-{% if search is defined %}
 <div class="card">
     <div class="card-body">
         <div class="row">
-            {% if search_conf is defined %}
-                {% for conf in search_conf %}
-
-                    {% set name = ['search', conf.key] | join('_') %}
-
-                    {% if conf.format == 'string' %}
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="form-group">
-                            <label class="form-label">{{ conf.name }}</label>
-                            <input type="text" class="form-control" name="search_{{ conf.key }}" value="{{ attribute(search, name) is defined ? attribute(search, name) : '' }}" maxlength="255">
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if conf.format == 'enum' %}
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="form-group">
-                            <label class="form-label">{{ conf.name }}</label>
-                            {% set select_value = attribute(search, name) is defined ? attribute(search, name) : -1 %}
-                            <select class="form-control" name="search_{{ conf.key }}">
-                                <option value="-1">全部</option>
-                                {% for p in conf.option %}
-                                    {% if loop.index0 == select_value %}
-                                    <option value="{{ loop.index0 }}" selected>{{ p }}</option>
-                                    {% else %}
-                                    <option value="{{ loop.index0 }}">{{ p }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                {% endfor %}
-            {% endif %}
-
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
-                    <label class="form-label">起始时间</label>
-                    <input type="text" class="form-control" id="search_start" name="search_start" value="{{ search.search_start is defined ? search.search_start : '' }}" maxlength="32">
+                    <label class="form-label">姓名</label>
+                    <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
-                    <label class="form-label">结束时间</label>
-                    <input type="text" class="form-control" id="search_end" name="search_end" value="{{ search.search_end is defined ? search.search_end : '' }}" maxlength="32">
+                    <label class="form-label">昵称</label>
+                    <input type="text" class="form-control" name="search_nickname_~" value="{{ text.nickname is defined ? text.nickname : '' }}" maxlength="32">
                 </div>
             </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">手机</label>
+                    <input type="text" class="form-control" name="search_phone_~" value="{{ text.phone is defined ? text.phone : '' }}" maxlength="11">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">邮箱</label>
+                    <input type="text" class="form-control" name="search_email_~" value="{{ text.email is defined ? text.email : '' }}" maxlength="255">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">用户组</label>
+                    {% set select_value = text.group is defined ? text.group : -1 %}
+                    <select class="form-control" name="search_group">
+                        <option value="-1">全部</option>
+                        {% for grou in group %}
+                            {% if loop.index0 == select_value %}
+                            <option value="{{ loop.index0 }}" selected>{{ grou }}</option>
+                            {% else %}
+                            <option value="{{ loop.index0 }}">{{ grou }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">用户来源</label>
+                    {% set select_value = text.client is defined ? text.client : -1 %}
+                    <select class="form-control" name="search_client">
+                        <option value="-1">全部</option>
+                        {% for clien in client %}
+                        {% if loop.index0 == select_value %}
+                        <option value="{{ loop.index0 }}" selected>{{ clien }}</option>
+                        {% else %}
+                        <option value="{{ loop.index0 }}">{{ clien }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+ 
+            {% include 'Component/DateTime.html' %}
         </div>
     </div>
     <div class="card-footer text-right">
@@ -82,37 +76,15 @@
         </div>
     </div>
 </div>
-{% endif %}
 
 <div class="card">
-
-    <div class="card-header text-right">
-        <h3 class="card-title">用户列表</h3>
-
-        <div class="card-options">
-            <label class="custom-switch">
-                <input type="checkbox" id="action-switch" class="custom-switch-input">
-                <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">操作列</span>
-            </label>
-        </div>
-    </div>
+    {% include 'Component/Action.html' %}
 
     <div class="card-body">
-        {% if records is defined %}
         <div class="table-responsive">
             <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                 <caption>{{ page.text }}</caption>
-                <thead>
-                    <tr>
-                        <th class="text-center">基本信息</th>
-                        <th class="text-center">用户组</th>
-                        <th class="text-center">来源</th>
-                        <th class="text-center">创建时间</th>
-                        <th class="text-center">最近登录</th>
-                        <th class="text-center ant d-none">操作</th>
-                    </tr>
-                </thead>
+                {% include 'Component/Thead.html' %}
                 <tbody>
                     {% for user in records %}
                     <tr>
@@ -151,9 +123,6 @@
                 </tbody>
             </table>
         </div>
-        {% else %}
-        暂无数据。
-        {% endif %}
     </div>
 
     {% if page.link != '' %}

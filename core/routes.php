@@ -1,8 +1,5 @@
 <?php
 
-// $app->get('/login', 'Dolphin\Ting\Controller\Login');
-
-// $app->get('/', 'Dolphin\Ting\Controller\Home');
 // // 添加用户
 // $app->get('/user/add', 'Dolphin\Ting\Controller\User\GetAdd');
 // $app->post('/user/add', 'Dolphin\Ting\Controller\User\PostAdd');
@@ -33,15 +30,12 @@ $class = "Dolphin\Ting\Controller" . "\\";
 $path = explode('/', $params);
 // 设置默认路由为 Home
 $c = isset($path[1]) && $path[1] != '' ? $path[1] : 'Home';
-// $m = isset($path[2]) && $path[1] != '' ? $path[2] : 'index';
 
 if (isset($path[2]) && $path[2] != '') {
     $class .= ucwords($c) . "\\" . ucwords($method) . ucwords($path[2]);
 } else {
     $class .= ucwords($method) . ucwords($c);
 }
-
-// $app->$method($params, "Dolphin\Ting\Controller" . "\\" . ucwords($c) . "\\" . ucwords($method) . ucwords($m));
 
 $app->$method($params, $class);
 

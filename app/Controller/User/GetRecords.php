@@ -3,122 +3,80 @@
 namespace Dolphin\Ting\Controller\User;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Dolphin\Ting\Librarie\Page;
+use Dolphin\Ting\Model\User_model;
+use Dolphin\Ting\Constant\Common;
 
-class GetRecords extends \Dolphin\Ting\Controller\Base
+class GetRecords extends User
 {
-    function __construct(ContainerInterface $app)
-    {
-        parent::__construct($app);
+  private $user_model;
 
-        $this->table_name = 'user';
+  private $columns = [
+    '基本信息',
+    '用户组',
+    '来源',
+    '创建时间',
+    '最近登录'
+  ];
 
-        $this->record = [
-                  'uuid' => [
-                'column' => 'uuid',
-                'format' => 'string'
-            ],
-              'username' => [
-                'column' => 'username',
-                'format' => 'string',
-                  'name' => '用户名'
-            ],
-                  'name' => [
-                'column' => 'name',
-                'format' => 'string',
-                  'mark' => '[~]',
-                  'name' => '姓 名',
-             'is_search' => true,
-               'is_show' => true
-            ],
-              'nickname' => [
-                'column' => 'nickname',
-                'format' => 'string',
-                  'name' => '昵 称'
-            ],
-                 'phone' => [
-                'column' => 'phone',
-                'format' => 'string',
-                  'mark' => '[~]',
-                  'name' => '手 机',
-             'is_search' => true,
-               'is_show' => true
-            ],
-                 'email' => [
-                'column' => 'email',
-                'format' => 'string',
-                  'mark' => '[~]',
-                  'name' => '邮 箱',
-             'is_search' => true
-            ],
-                'avatar' => [
-                'column' => 'avatar',
-                'format' => 'pre',
-                  'data' => '/',
-                  'name' => '头 像'
-            ],
-             'is_wechat' => [
-                'column' => 'open_id',
-                'format' => 'bool',
-                  'name' => '微信用户'
-            ],
-                'client' => [
-                'column' => 'client',
-                'format' => 'string'
-            ],
-           'client_name' => [
-                'column' => 'client',
-                'format' => 'enum',
-                  'data' => [
-                    '后台',
-                    'PC',
-                    '移动',
-                    'iOS',
-                    'Android',
-                    '微信小程序'  
-                ],
-               'is_show' => true,
-                  'name' => '来 源',
-             'is_search' => true
-            ],
-                 'group' => [
-                'column' => 'group',
-                'format' => 'string'
-            ],
-            'group_name' => [
-                'column' => 'group',
-                'format' => 'enum',
-                  'data' => [
-                    '普通用户',
-                    '管理员',
-                    '超级管理员'
-                ],
-               'is_show' => true,
-                  'name' => '用户组',
-             'is_search' => true
-            ],
-            'last_login' => [
-                'column' => 'last_login',
-                'format' => 'datetime',
-                  'name' => '最近登录',
-               'is_show' => true
-            ],
-            'gmt_create' => [
-                'column' => 'gmt_create',
-                'format' => 'string',
-                  'name' => '创建时间',
-               'is_show' => true
-            ]
-        ];
+  function __construct(ContainerInterface $app)
+  {
+    parent::__construct($app);
+
+    $this->user_model = new User_model($app, $this->table_name);
+  }
+
+  public function __invoke($request, $response, $args)
+  {  
+    $page   = $request->getAttribute('page');
+    // 检索
+    $search = $request->getAttribute('search');
+    // 排序
+    $order  = $request->getAttribute('order');
+
+    $query = '&';
+
+    if (! empty($search)) {
+      $query .= http_build_query($search);
     }
 
-    public function __invoke($request, $response, $args)
-    {  
-        $this->is_page   = true;
-
-        $this->is_search = true;
-
-        $this->request   = $request;
-
-        $this->respond();
+    if ($order != '') {
+      $query .= '&order=' . $order;
     }
+
+    $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
+
+    $search['ORDER'] = ["gmt_create" => $order];
+
+    $records = $this->user_model->records($search);
+
+    $user    = [];
+
+    foreach ($records as $record) {
+      $user[] = [
+               'uuid' => $record['uuid'],
+               'name' => $record['name'],
+              'phone' => $record['phone'],
+              'email' => $record['email'],
+         'gmt_create' => $record['gmt_create'],
+         'last_login' => $record['last_login'] ? date("Y-m-d H:i:s", $record['last_login']) : '',
+          'is_wechat' => $record['open_id'] === '' ? false : true,
+              'group' => $record['group'],
+             'client' => $record['client'],
+         'group_name' => $this->group[$record['group']],
+        'client_name' => $this->client[$record['client']]
+      ];
+    }
+
+    $data = [
+      "records" => $user,
+      "columns" => $this->columns,
+        'group' => $this->group,
+       'client' => $this->client,
+         'text' => $request->getAttribute('text'),
+         "page" => Page::reder('/user/records', $this->user_model->total($search), $page, Common::PAGE_COUNT, $query)
+    ];
+
+    $this->respond('User/Records', $data);
+  }
 }

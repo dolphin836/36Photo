@@ -31,6 +31,7 @@ class Query
             $page   = 1;
             $order  = 'DESC';
             $filter = [];
+            $text   = [];
 
             foreach ($querys as $key => $value) {
                 if ($key == 'page' && $value > 0) {
@@ -42,13 +43,22 @@ class Query
                 }
 
                 if (strpos($key, 'search_') !== false && $value != '') {
-                    $filter[$key] = $value;
+                    $k = explode("_", $key);
+
+                    if (isset($k[2]) && $k[2] != '') {
+                        $filter[$k[1] . '[' . $k[2] . ']'] = $value;
+                    } else {
+                        $filter[$k[1]] = $value;
+                    }
+
+                    $text[$k[1]] = $value;
                 }
             }
 
-            $request = $request->withAttribute('page', $page);
-            $request = $request->withAttribute('order', $order);
+            $request = $request->withAttribute('page',   $page);
+            $request = $request->withAttribute('order',  $order);
             $request = $request->withAttribute('search', $filter);
+            $request = $request->withAttribute('text',   $text);
         }
 
         $response = $next($request, $response);
