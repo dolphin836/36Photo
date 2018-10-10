@@ -6,6 +6,8 @@ use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Model\Common_model;
 use Dolphin\Ting\Constant\Common;
+use OSS\OssClient;
+use OSS\Core\OssException;
 
 class GetRecords extends Pic
 {
@@ -41,7 +43,9 @@ class GetRecords extends Pic
                 $valid = 3600;
 
                 try {
-                    $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $record['path'], $valid);
+                    $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $record['path'], $valid, "GET", [
+                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_80,w_80"
+                    ]);
                 } catch (OssException $e) {
                     $path = getenv('WEB_URL') . '/' . $record['path'];
                 }
