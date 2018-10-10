@@ -23,6 +23,14 @@ class Common_model
 
     public function total($data = [])
     {
+        if (isset($data['LIMIT'])) {
+            unset($data['LIMIT']);
+        }
+
+        if (isset($data['ORDER'])) {
+            unset($data['ORDER']);
+        }
+
         return $this->app->db->count($this->table_name, $data);
     }
 

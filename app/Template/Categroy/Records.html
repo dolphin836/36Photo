@@ -12,7 +12,13 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="form-group">
                     <label class="form-label">名 称</label>
-                    <input type="text" class="form-control" name="search_name" value="" maxlength="255">
+                    <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">别 名</label>
+                    <input type="text" class="form-control" name="search_code_~" value="{{ text.code is defined ? text.code : '' }}" maxlength="16">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3">
@@ -31,24 +37,13 @@
 </div>
 
 <div class="card">
-
-    <div class="card-header text-right">
-        <h3 class="card-title">分类</h3>
-
-        <div class="card-options">
-            <label class="custom-switch">
-                <input type="checkbox" id="action-switch" class="custom-switch-input">
-                <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">操作列</span>
-            </label>
-        </div>
-    </div>
+    {% include 'Component/Action.html' %}
 
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                 <caption>共 {{ total }} 条记录</caption>
-                {% include 'Common/TableHead.html' %}
+                {% include 'Component/Thead.html' %}
                 <tbody>
                     {% for record in records %}
                     <tr>

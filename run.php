@@ -98,13 +98,13 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       var_dump(date("Y-m-d H:i:s") . ':Move To:' . $upload);
 
-      $is_oss = 1;
+      $is_oss = 0;
 
       if (! $is_debug) {
         try {
             $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $upload, './public/' .$upload);
+            $is_oss = 1;
         } catch (OssException $e) {
-            $is_oss = 0;
             var_dump(date("Y-m-d H:i:s") . ':OSS Upload Faild.');
         }
 

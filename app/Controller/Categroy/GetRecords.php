@@ -10,10 +10,10 @@ class GetRecords extends Categroy
     private $common_model;
 
     private $columns = [
-              'code' => '别名',
-              'name' => '名称',
-             'count' => '数量',
-        'gmt_create' => '创建时间'
+        '别名',
+        '名称',
+        '数量',
+        '创建时间'
     ];
 
     function __construct(ContainerInterface $app)
@@ -24,10 +24,14 @@ class GetRecords extends Categroy
     }
 
     public function __invoke($request, $response, $args)
-    {  
+    { 
+        // 检索
+        $search = $request->getAttribute('search');
+
         $data = [
               "total" => $this->common_model->total(),
-            "records" => $this->common_model->records(),
+            "records" => $this->common_model->records($search),
+               'text' => $request->getAttribute('text'),
             "columns" => $this->columns
         ];
 

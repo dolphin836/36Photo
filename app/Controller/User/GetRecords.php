@@ -4,37 +4,53 @@ namespace Dolphin\Ting\Controller\User;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Librarie\Page;
-use Dolphin\Ting\Model\Common_model;
+use Dolphin\Ting\Model\User_model;
 use Dolphin\Ting\Constant\Common;
 
 class GetRecords extends User
 {
-  private $common_model;
+  private $user_model;
 
   private $columns = [
-            'path' => '缩略图',
-           'width' => '宽',
-          'height' => '高',
-            'size' => '大小',
-      'gmt_create' => '创建时间'
+    '基本信息',
+    '用户组',
+    '来源',
+    '创建时间',
+    '最近登录'
   ];
 
   function __construct(ContainerInterface $app)
   {
     parent::__construct($app);
 
-    $this->common_model = new Common_model($app, $this->table_name);
+    $this->user_model = new User_model($app, $this->table_name);
   }
 
   public function __invoke($request, $response, $args)
   {  
-    $page = $request->getAttribute('page');
+    $page   = $request->getAttribute('page');
+    // 检索
+    $search = $request->getAttribute('search');
+    // 排序
+    $order  = $request->getAttribute('order');
 
-    $user = [];
+    $query = '&';
 
-    $records = $this->common_model->records([
-      "LIMIT" => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
-    ]);
+    if (! empty($search)) {
+      $query .= http_build_query($search);
+    }
+
+    if ($order != '') {
+      $query .= '&order=' . $order;
+    }
+
+    $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
+
+    $search['ORDER'] = ["gmt_create" => $order];
+
+    $records = $this->user_model->records($search);
+
+    $user    = [];
 
     foreach ($records as $record) {
       $user[] = [
@@ -43,7 +59,7 @@ class GetRecords extends User
               'phone' => $record['phone'],
               'email' => $record['email'],
          'gmt_create' => $record['gmt_create'],
-         'last_login' => $record['last_login'],
+         'last_login' => $record['last_login'] ? date("Y-m-d H:i:s", $record['last_login']) : '',
           'is_wechat' => $record['open_id'] === '' ? false : true,
               'group' => $record['group'],
              'client' => $record['client'],
@@ -55,7 +71,10 @@ class GetRecords extends User
     $data = [
       "records" => $user,
       "columns" => $this->columns,
-         "page" => Page::reder('/user/records', $this->common_model->total(), $page, Common::PAGE_COUNT, '')
+        'group' => $this->group,
+       'client' => $this->client,
+         'text' => $request->getAttribute('text'),
+         "page" => Page::reder('/user/records', $this->user_model->total($search), $page, Common::PAGE_COUNT, $query)
     ];
 
     $this->respond('User/Records', $data);

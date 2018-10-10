@@ -4,52 +4,87 @@
 列表 - 用户 - {{ site.web_name }}
 {% endblock %}
 
-{% block Note %} 
-    {% if note is defined %}
-    <div class="page-header" id="note">
-        <div class="alert alert-{{ note.code }} alert-dismissible" style="margin: 0 auto;min-width: 320px;">
-            <button data-dismiss="alert" class="close"></button>
-            <h4>系统消息</h4>
-            <p>{{ note.text }}</p>
+{% block Content %}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">姓名</label>
+                    <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">昵称</label>
+                    <input type="text" class="form-control" name="search_nickname_~" value="{{ text.nickname is defined ? text.nickname : '' }}" maxlength="32">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">手机</label>
+                    <input type="text" class="form-control" name="search_phone_~" value="{{ text.phone is defined ? text.phone : '' }}" maxlength="11">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">邮箱</label>
+                    <input type="text" class="form-control" name="search_email_~" value="{{ text.email is defined ? text.email : '' }}" maxlength="255">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">用户组</label>
+                    {% set select_value = text.group is defined ? text.group : -1 %}
+                    <select class="form-control" name="search_group">
+                        <option value="-1">全部</option>
+                        {% for grou in group %}
+                            {% if loop.index0 == select_value %}
+                            <option value="{{ loop.index0 }}" selected>{{ grou }}</option>
+                            {% else %}
+                            <option value="{{ loop.index0 }}">{{ grou }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">用户来源</label>
+                    {% set select_value = text.client is defined ? text.client : -1 %}
+                    <select class="form-control" name="search_client">
+                        <option value="-1">全部</option>
+                        {% for clien in client %}
+                        {% if loop.index0 == select_value %}
+                        <option value="{{ loop.index0 }}" selected>{{ clien }}</option>
+                        {% else %}
+                        <option value="{{ loop.index0 }}">{{ clien }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+ 
+            {% include 'Component/DateTime.html' %}
         </div>
     </div>
-    <script>
-        setTimeout(function () { document.getElementById("note").innerHTML = ''; }, 3000);
-    </script> 
-    {% endif %} 
-{% endblock %} 
-
-{% block Content %}
+    <div class="card-footer text-right">
+        <div class="d-flex">
+            <a href="/user/records" class="btn btn-link">清 除</a>
+            <button type="button" id="search" class="btn btn-primary ml-auto">检 索</button>
+            <a href="/user/add" class="btn btn-link">新 增</a>
+        </div>
+    </div>
+</div>
 
 <div class="card">
-
-    <div class="card-header text-right">
-        <h3 class="card-title">用户列表</h3>
-
-        <div class="card-options">
-            <label class="custom-switch">
-                <input type="checkbox" id="action-switch" class="custom-switch-input">
-                <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">操作列</span>
-            </label>
-        </div>
-    </div>
+    {% include 'Component/Action.html' %}
 
     <div class="card-body">
-        {% if records is defined %}
         <div class="table-responsive">
             <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                 <caption>{{ page.text }}</caption>
-                <thead>
-                    <tr>
-                        <th class="text-center">基本信息</th>
-                        <th class="text-center">用户组</th>
-                        <th class="text-center">来源</th>
-                        <th class="text-center">创建时间</th>
-                        <th class="text-center">最近登录</th>
-                        <th class="text-center ant d-none">操作</th>
-                    </tr>
-                </thead>
+                {% include 'Component/Thead.html' %}
                 <tbody>
                     {% for user in records %}
                     <tr>
@@ -88,9 +123,6 @@
                 </tbody>
             </table>
         </div>
-        {% else %}
-        暂无数据。
-        {% endif %}
     </div>
 
     {% if page.link != '' %}

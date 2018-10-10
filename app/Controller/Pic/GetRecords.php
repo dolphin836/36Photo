@@ -12,11 +12,11 @@ class GetRecords extends Pic
     private $common_model;
 
     private $columns = [
-              'path' => '缩略图',
-             'width' => '宽',
-            'height' => '高',
-              'size' => '大小',
-        'gmt_create' => '创建时间'
+        '缩略图',
+        '宽',
+        '高',
+        '大小',
+        '创建时间'
     ];
 
     function __construct(ContainerInterface $app)
@@ -34,12 +34,51 @@ class GetRecords extends Pic
             "LIMIT" => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
         ]);
 
+        $images = [];
+
+        foreach ($records as $record) {
+            if ($record['is_oss']) {
+                $valid = 3600;
+
+                try {
+                    $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $record['path'], $valid);
+                } catch (OssException $e) {
+                    $path = getenv('WEB_URL') . '/' . $record['path'];
+                }
+            } else {
+                $path = getenv('WEB_URL') . '/' .$record['path'];
+            }
+            
+            $images[] = [
+                     'hash' => $record['hash'],
+                    'width' => $record['width'],
+                   'height' => $record['height'],
+                     'size' => $this->size($record['size']),
+               'gmt_create' => $record['gmt_create'],
+                     'path' => $path,
+                   'is_oss' => $record['is_oss'] ? true : false
+            ];
+        }
+
         $data = [
-            "records" => $records,
+            "records" => $images,
             "columns" => $this->columns,
                "page" => Page::reder('/pic/records', $this->common_model->total(), $page, Common::PAGE_COUNT, '')
         ];
 
         $this->respond('Pic/Records', $data);
+    }
+
+    private function size($size)
+    {
+        $kb = ceil($size / 1024);
+
+        if ($kb < 1024) {
+            return $kb . ' KB';
+        }
+
+        $mb = round($kb / 1024, 2);
+
+        return $mb . ' M';
     }
 }

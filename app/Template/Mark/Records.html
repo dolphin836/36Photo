@@ -5,19 +5,16 @@
 {% endblock %}
 
 {% block Content %}
-
 <div class="card">
 
-    <div class="card-header text-right">
-        <h3 class="card-title">标签列表</h3>
-    </div>
+    {% include 'Component/Action.html' %}
 
     <div class="card-body">
         {% if records is defined %}
         <div class="table-responsive">
             <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                 <caption>{{ page.text }}</caption>
-                {% include 'Common/TableHead.html' %}
+                {% include 'Component/Thead.html' %}
                 <tbody>
                     {% for record in records %}
                     <tr>
@@ -29,6 +26,9 @@
                         </td>
                         <td class="text-center">
                             <div>{{ record.gmt_create }}</div>
+                        </td>
+                        <td class="text-center ant d-none">
+                            <button type="button" class="btn btn-sm btn-outline-primary remove" data-id="{{ record.id }}"><i class="fa fa-close mr-2"></i> 删除</button>
                         </td>
                     </tr>
                     {% endfor %}

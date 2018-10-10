@@ -28,34 +28,14 @@
 </div>
 
 <div class="card">
-
-    <div class="card-header text-right">
-        <h3 class="card-title">列表列表</h3>
-
-        <div class="card-options">
-            <label class="custom-switch">
-                <input type="checkbox" id="action-switch" class="custom-switch-input">
-                <span class="custom-switch-indicator"></span>
-                <span class="custom-switch-description">操作列</span>
-            </label>
-        </div>
-    </div>
+    {% include 'Component/Action.html' %}
 
     <div class="card-body">
         {% if records is defined %}
         <div class="table-responsive">
             <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                 <caption>{{ page.text }}</caption>
-                <thead>
-                    <tr>
-                        <th class="text-center">缩略图</th>
-                        <th class="text-center">宽</th>
-                        <th class="text-center">高</th>
-                        <th class="text-center">大小</th>
-                        <th class="text-center">创建时间</th>
-                        <th class="text-center ant d-none">操作</th>
-                    </tr>
-                </thead>
+                {% include 'Component/Thead.html' %}
                 <tbody>
                     {% for record in records %}
                     <tr>
@@ -63,6 +43,9 @@
                             <a href="{{ record.path }}" target="_blank">
                                 <img src="{{ record.path }}" class="rounded" style="width: 120px;">
                             </a>
+                            {% if record.is_oss %}
+                            <div><i class="fa fa-cloud text-success" title="已上传至阿里云"></i></div>
+                            {% endif %}
                         </td>
                         <td class="text-center">
                             <div>{{ record.width }}</div>

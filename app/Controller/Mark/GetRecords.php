@@ -12,9 +12,9 @@ class GetRecords extends Mark
     private $common_model;
 
     private $columns = [
-              'name' => '名称',
-             'count' => '数量',
-        'gmt_create' => '创建时间'
+        '名称',
+        '数量',
+        '创建时间'
     ];
 
     function __construct(ContainerInterface $app)
