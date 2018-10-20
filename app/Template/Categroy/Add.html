@@ -5,14 +5,11 @@
 {% endblock %}
 
 {% block Content %}
-<form action="" method="post" class="card" id="form">
+<form action="" method="POST" class="card" id="form">
     {% if csrf is defined %}
     <input type="hidden" name="{{ csrf.name_key }}" value="{{ csrf.name }}">
     <input type="hidden" name="{{ csrf.value_key }}" value="{{ csrf.value }}">
     {% endif %}
-    <div class="card-header">
-        <h3 class="card-title">添加分类</h3>
-    </div>
 
     <div class="card-body">
         <div class="row">
@@ -44,7 +41,7 @@
     </div>
     <div class="card-footer text-right">
         <div class="d-flex">
-            <a href="javascript:void(0)" class="btn btn-link">清 除</a>
+            <a href="/categroy/add" class="btn btn-warning btn-link">清 除</a>
             <button type="submit" class="btn btn-primary ml-auto">保 存</button>
         </div>
     </div>

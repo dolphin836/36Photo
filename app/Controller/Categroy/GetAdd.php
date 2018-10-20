@@ -4,7 +4,7 @@ namespace Dolphin\Ting\Controller\Categroy;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 
-class GetAdd extends \Dolphin\Ting\Controller\Base
+class GetAdd extends Categroy
 {
     public function __invoke($request, $response, $args)
     {   

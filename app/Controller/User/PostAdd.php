@@ -36,7 +36,7 @@ class PostAdd extends \Dolphin\Ting\Controller\Base
                'phone' => trim($body['phone']),
                'email' => trim($body['email']),
             'password' => password_hash($body['password'], PASSWORD_DEFAULT),
-              'avatar' => $avatar[$body['avatar']],
+              'avatar' => $avatar[rand(1, 16)],
                 'sign' => trim($body['sign']),
                'group' => $body['group']
         ];

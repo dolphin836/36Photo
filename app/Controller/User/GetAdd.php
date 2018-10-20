@@ -4,7 +4,7 @@ namespace Dolphin\Ting\Controller\User;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 
-class GetAdd extends \Dolphin\Ting\Controller\Base
+class GetAdd extends User
 {
     public function __invoke($request, $response, $args)
     {   
