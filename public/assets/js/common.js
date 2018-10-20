@@ -1,10 +1,7 @@
 $(document).ready(function() {
     var search_start = $("#search_start"),
         search_end = $('#search_end'),
-        search = $("#search"),
-        remove = $(".remove"),
-        action = $("#action-switch"),
-        ant = $(".ant");
+        search = $("#search");
     // DateTimePicker
     $.datetimepicker.setLocale('zh');
 
@@ -71,32 +68,5 @@ $(document).ready(function() {
         if (path != window.location.pathname) {
             window.location.href = path;
         }
-    });
-    // 删除
-    remove.click(function() {
-        $.confirm({
-            title: '删除确认',
-            content: '您确定要删除这条记录吗？',
-            theme: 'modern',
-            buttons: {
-                No: {
-                    text: '取消',
-                    keys: ['esc']
-                },
-                Yes: {
-                    text: '确定',
-                    btnClass: 'btn-blue',
-                    keys: ['enter'],
-                    action: function() {
-                        window.location.reload();
-                    }
-                }
-            }
-        });
-    });
-    // 操作列
-    action.click(function() {
-        ant.toggleClass("d-none");
-        ant.toggleClass("d-block");
     });
 });

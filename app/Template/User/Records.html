@@ -78,8 +78,6 @@
 </div>
 
 <div class="card">
-    {% include 'Component/Action.html' %}
-
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
@@ -114,9 +112,9 @@
                         <td class="text-center">
                             <div>{{ user.last_login }}</div>
                         </td>
-                        <td class="text-center ant d-none">
-                            <button type="button" class="btn btn-sm btn-outline-primary remove" data-id="{{ user.uuid }}"><i class="fa fa-close mr-2"></i> 删除</button>
-                            <a href="/user/modify/{{ user.uuid }}" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil mr-2"></i> 编辑</a>
+                        <td class="text-center">
+                            <a href="/user/delete?uuid={{ user.uuid }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-close mr-2"></i> 删除</a>
+                            <a href="/user/modify?uuid={{ user.uuid }}" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil mr-2"></i> 编辑</a>
                         </td>
                     </tr>
                     {% endfor %}
