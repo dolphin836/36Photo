@@ -1,33 +1,44 @@
-<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-3 ml-auto">
-                <form class="input-icon my-3 my-lg-0">
-                    <input type="search" class="form-control header-search" placeholder="Search…" tabindex="1">
-                    <div class="input-icon-addon">
-                        <i class="fa fa-search"></i>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg order-lg-first">
-                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                    <li class="nav-item">
-                        <a href="/" class="nav-link"><i class="fa fa-bar-chart"></i> 概况</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/pic/records" class="nav-link"><i class="fa fa-photo"></i> 图片</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/mark/records" class="nav-link"><i class="fa fa-tags"></i> 标签</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/categroy/records" class="nav-link"><i class="fa fa-tag"></i> 分类</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/user/records" class="nav-link"><i class="fa fa-smile-o"></i> 用户</a>
-                    </li>
-                </ul>
-            </div>
+<div class="sidebar">
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="/" class="simple-text logo-mini">
+                EM
+            </a>
+            <a href="/" class="simple-text logo-normal">
+                Emage Center
+            </a>
         </div>
+        <ul class="nav">
+            <li class="{{ site.nav_item == 'home' ? 'active' : '' }}">
+                <a href="/">
+                    <i class="tim-icons icon-chart-pie-36"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'pic' ? 'active' : '' }}">
+                <a href="/pic/records">
+                    <i class="tim-icons icon-image-02"></i>
+                    <p>Picture</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'mark' ? 'active' : '' }}">
+                <a href="/mark/records">
+                    <i class="tim-icons icon-tag"></i>
+                    <p>Mark</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'categroy' ? 'active' : '' }}">
+                <a href="/categroy/records">
+                    <i class="tim-icons icon-align-center"></i>
+                    <p>Categroy</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'user' ? 'active' : '' }}">
+                <a href="/user/records">
+                    <i class="tim-icons icon-single-02"></i>
+                    <p>User</p>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>

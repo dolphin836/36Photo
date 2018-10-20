@@ -8,6 +8,8 @@ use Ramsey\Uuid\Uuid as U;
 class Base
 {
     protected $app;
+    
+    protected $nav;
 
     function __construct(ContainerInterface $app)
     {
@@ -19,7 +21,8 @@ class Base
         // 公共数据
         // 页面信息
         $data['site'] = [
-            'web_name' => getenv('WEB_NAME')
+            'web_name' => getenv('WEB_NAME'),
+            'nav_item' => $this->nav
         ];
         // class
         $data['class'] = ['blue', 'azure', 'indigo', 'purple', 'pink', 'orange'];

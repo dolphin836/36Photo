@@ -70,9 +70,9 @@
     </div>
     <div class="card-footer text-right">
         <div class="d-flex">
-            <a href="/user/records" class="btn btn-link">清 除</a>
+            <a href="/user/records" class="btn btn-warning btn-link">清 除</a>
             <button type="button" id="search" class="btn btn-primary ml-auto">检 索</button>
-            <a href="/user/add" class="btn btn-link">新 增</a>
+            <a href="/user/add" class="btn btn-success btn-link">新 增</a>
         </div>
     </div>
 </div>
@@ -80,7 +80,7 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+            <table class="table table-hover">
                 <caption>{{ page.text }}</caption>
                 {% include 'Component/Thead.html' %}
                 <tbody>
@@ -113,8 +113,8 @@
                             <div>{{ user.last_login }}</div>
                         </td>
                         <td class="text-center">
-                            <a href="/user/delete?uuid={{ user.uuid }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-close mr-2"></i> 删除</a>
-                            <a href="/user/modify?uuid={{ user.uuid }}" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil mr-2"></i> 编辑</a>
+                            <a href="/user/delete?uuid={{ user.uuid }}" class="btn btn-danger btn-sm btn-round btn-icon"><i class="tim-icons icon-simple-remove"></i></a>
+                            <a href="/user/modify?uuid={{ user.uuid }}" class="btn btn-info btn-sm btn-round btn-icon"><i class="tim-icons icon-pencil"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

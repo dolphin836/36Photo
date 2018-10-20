@@ -1,41 +1,41 @@
-<div class="header py-4">
-    <div class="container">
-        <div class="d-flex">
-            <a class="header-brand" href="/index.html">
-                <img src="/assets/images/brand/logo.png" class="header-brand-img" alt="tabler logo">
-            </a>
-
-            <div class="d-flex order-lg-2 ml-auto">
-                <div class="dropdown">
-                    <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                        <span class="avatar" style="background-image: url(/assets/images/faces/male/1.jpg)"></span>
-                        <span class="ml-2 d-none d-lg-block">
-                        <span class="text-default">dolphin</span>
-                        <small class="text-muted d-block mt-1">超级管理员</small>
-                        </span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon fa fa-user-circle"></i> 主页
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon fa fa-gear"></i> 设置
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon fa fa-comments"></i> 消息
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/signout">
-                            <i class="dropdown-icon fa fa-power-off"></i> 退出
-                        </a>
-                    </div>
-                </div>
+<nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+                <button type="button" class="navbar-toggler">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
             </div>
-
-            <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
-                <span class="header-toggler-icon"></span>
-            </a>
+            <a class="navbar-brand" href="/">EMAGE</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <div class="notification d-none d-lg-block d-xl-block"></div>
+                        <i class="tim-icons icon-sound-wave"></i>
+                        <p class="d-lg-none">
+                            新消息
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                        <li class="nav-link">
+                            <a href="#" class="nav-item dropdown-item">消息标题</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">退 出</a>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>

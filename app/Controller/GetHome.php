@@ -2,12 +2,21 @@
 
 namespace Dolphin\Ting\Controller;
 
-class GetHome
+use Psr\Container\ContainerInterface as ContainerInterface;
+
+class GetHome extends Base
 {
+    function __construct(ContainerInterface $app)
+    {
+        parent::__construct($app);
+
+        $this->nav = 'home';
+    }
+
     public function __invoke($request, $response, $args)
     {   
         $data = [];
         
-        var_dump('Home');
+        $this->respond('Home', $data);
     }
 }

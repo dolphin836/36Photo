@@ -28,12 +28,10 @@
 </div>
 
 <div class="card">
-    {% include 'Component/Action.html' %}
-
     <div class="card-body">
         {% if records is defined %}
         <div class="table-responsive">
-            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+            <table class="table table-hover">
                 <caption>{{ page.text }}</caption>
                 {% include 'Component/Thead.html' %}
                 <tbody>
@@ -59,8 +57,10 @@
                         <td class="text-center">
                             <div>{{ record.gmt_create }}</div>
                         </td>
-                        <td class="text-center ant d-none">
-                            <button type="button" class="btn btn-sm btn-outline-primary remove" data-id="{{ record.hash }}"><i class="fa fa-close mr-2"></i> 删除</button>
+                        <td class="text-center">
+                            <a href="/pic/delete?hash={{ record.hash }}" class="btn btn-danger btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
