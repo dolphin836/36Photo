@@ -18,4 +18,6 @@ class Nav
     const MARK = 'mark';
     // 分类
     const CATEGROY = 'categroy';
+    // 专题
+    const COLLECTION = 'collection';
 }

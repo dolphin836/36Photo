@@ -18,4 +18,8 @@ class Table
     const PICTURE_MARK = 'picture_mark';
     // 分类
     const CATEGROY = 'categroy';
+    // 专题
+    const COLLECTION = 'collection';
+    // 专题 - 图片
+    const PICTURE_COLLECTION = 'picture_collection';
 }
