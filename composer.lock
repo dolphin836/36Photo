@@ -98,16 +98,16 @@
         },
         {
             "name": "catfan/medoo",
-            "version": "v1.5.7",
+            "version": "v1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
-                "reference": "8d90cba0e8ff176028847527d0ea76fe41a06ecf"
+                "reference": "45047e013105d95569c1b66167d788dfd3f1102b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/catfan/Medoo/zipball/8d90cba0e8ff176028847527d0ea76fe41a06ecf",
-                "reference": "8d90cba0e8ff176028847527d0ea76fe41a06ecf",
+                "url": "https://api.github.com/repos/catfan/Medoo/zipball/45047e013105d95569c1b66167d788dfd3f1102b",
+                "reference": "45047e013105d95569c1b66167d788dfd3f1102b",
                 "shasum": ""
             },
             "require": {
@@ -153,7 +153,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2018-06-14T18:59:08+00:00"
+            "time": "2018-10-08T07:13:05+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -1249,16 +1249,16 @@
         },
         {
             "name": "respect/validation",
-            "version": "1.1.25",
+            "version": "1.1.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Respect/Validation.git",
-                "reference": "5a067faec79d0cd74aa189fc535a644fa29e0c70"
+                "reference": "203f8e7e9d7fc41d8e757f02ae424702822f2fa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Respect/Validation/zipball/5a067faec79d0cd74aa189fc535a644fa29e0c70",
-                "reference": "5a067faec79d0cd74aa189fc535a644fa29e0c70",
+                "url": "https://api.github.com/repos/Respect/Validation/zipball/203f8e7e9d7fc41d8e757f02ae424702822f2fa1",
+                "reference": "203f8e7e9d7fc41d8e757f02ae424702822f2fa1",
                 "shasum": ""
             },
             "require": {
@@ -1266,7 +1266,7 @@
                 "symfony/polyfill-mbstring": "^1.2"
             },
             "require-dev": {
-                "egulias/email-validator": "~1.2",
+                "egulias/email-validator": "~1.2 || ~2.1",
                 "mikey179/vfsstream": "^1.5",
                 "phpunit/phpunit": "~4.0",
                 "symfony/validator": "~2.6.9",
@@ -1308,7 +1308,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-08-29T20:30:50+00:00"
+            "time": "2018-10-09T04:03:51+00:00"
         },
         {
             "name": "slim/csrf",
@@ -1647,16 +1647,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.1.4",
+            "version": "v4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "86cdb930a6a855b0ab35fb60c1504cb36184f843"
+                "reference": "ee33c0322a8fee0855afcc11fff81e6b1011b529"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/86cdb930a6a855b0ab35fb60c1504cb36184f843",
-                "reference": "86cdb930a6a855b0ab35fb60c1504cb36184f843",
+                "url": "https://api.github.com/repos/symfony/process/zipball/ee33c0322a8fee0855afcc11fff81e6b1011b529",
+                "reference": "ee33c0322a8fee0855afcc11fff81e6b1011b529",
                 "shasum": ""
             },
             "require": {
@@ -1692,7 +1692,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2018-08-03T11:13:38+00:00"
+            "time": "2018-10-02T12:40:59+00:00"
         },
         {
             "name": "twig/twig",
