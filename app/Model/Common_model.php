@@ -42,6 +42,11 @@ class Common_model
 
         return $this->app->db->select($this->table_name, "*", $data);
     }
+
+    public function add($data = [])
+    {
+        return $this->app->db->insert($this->table_name, $data);
+    }
 }
 
 

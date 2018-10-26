@@ -1,0 +1,14 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+添加 - 图片 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<div class="card">
+    <div class="card-body">
+        <form action="/pic/upload" class="dropzone" method="POST" enctype="multipart/form-data"></form>
+    </div>
+</div>
+
+{% endblock %}
