@@ -1,10 +1,10 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Categroy;
+namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 
-class GetDelete extends Categroy
+class GetDelete extends Pic
 {
     public function __invoke($request, $response, $args)
     {        
@@ -12,22 +12,27 @@ class GetDelete extends Categroy
 
         parse_str($uri->getQuery(), $querys);
 
-        $categroy_id = $querys['id'];
+        $hash = $querys['hash'];
 
-        $db = $this->common_model->delete(["id" => $categroy_id]);
+        $pic  = $this->common_model->record(["hash" => $hash]);
+
+        $db   = $this->common_model->delete(["hash" => $hash]);
 
         if (! $db->rowCount()) { // 删除失败
             $this->app->flash->addMessage('note', [
                 'code' => 'danger',
-                'text' => '删除分类失败'
+                'text' => '删除图片失败'
             ]);
         } else {
+            // 删除本地文件
+            unlink($pic['path']);
+
             $this->app->flash->addMessage('note', [
                 'code' => 'success',
-                'text' => '删除分类成功'
-            ]);  
+                'text' => '删除图片成功'
+            ]);
         }
 
-        return $response->withRedirect('/categroy/records', 302);
+        return $response->withRedirect('/pic/records', 302);
     }
 }

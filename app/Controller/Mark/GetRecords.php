@@ -4,25 +4,15 @@ namespace Dolphin\Ting\Controller\Mark;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Librarie\Page;
-use Dolphin\Ting\Model\Common_model;
 use Dolphin\Ting\Constant\Common;
 
 class GetRecords extends Mark
 {
-    private $common_model;
-
     private $columns = [
         '名称',
         '数量',
         '创建时间'
     ];
-
-    function __construct(ContainerInterface $app)
-    {
-        parent::__construct($app);
-
-        $this->common_model = new Common_model($app, $this->table_name);
-    }
 
     public function __invoke($request, $response, $args)
     {  

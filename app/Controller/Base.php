@@ -4,6 +4,7 @@ namespace Dolphin\Ting\Controller;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Ramsey\Uuid\Uuid as U;
+use Dolphin\Ting\Model\Common_model;
 
 class Base
 {
@@ -11,9 +12,13 @@ class Base
     
     protected $nav;
 
-    function __construct(ContainerInterface $app)
+    protected $common_model;
+
+    function __construct(ContainerInterface $app, $table_name)
     {
         $this->app = $app;
+
+        $this->common_model = new Common_model($app, $table_name);
     }
 
     protected function respond($html, $data = [])

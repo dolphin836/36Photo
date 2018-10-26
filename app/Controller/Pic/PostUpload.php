@@ -7,7 +7,6 @@ use Dolphin\Ting\Constant\Common;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
-use Dolphin\Ting\Model\Common_model;
 
 class PostUpload extends Pic
 {
@@ -15,8 +14,6 @@ class PostUpload extends Pic
     private $image_opt;
     // 图片 Hash
     private $image_hash;
-    //
-    private $common_model;
     // 运行环境
     private $is_debug;
     // 
@@ -36,8 +33,6 @@ class PostUpload extends Pic
         $this->image_opt    = OptimizerChainFactory::create();
 
         $this->image_hash   = new ImageHash(new DifferenceHash());
-
-        $this->common_model = new Common_model($app, $this->table_name);
 
         $this->is_debug     = getenv("DEBUG") === "TRUE" ? true : false;
 
