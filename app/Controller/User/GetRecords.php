@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Model\User_model;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Table;
 
 class GetRecords extends User
 {
@@ -23,7 +24,7 @@ class GetRecords extends User
   {
     parent::__construct($app);
 
-    $this->user_model = new User_model($app, $this->table_name);
+    $this->user_model = new User_model($app, Table::USER);
   }
 
   public function __invoke($request, $response, $args)

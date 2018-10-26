@@ -48,7 +48,7 @@ CREATE TABLE `picture` (
 CREATE TABLE `mark` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '名字',
-    `count` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '数量',
+    `count` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '图片数量',
     `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
@@ -66,7 +66,7 @@ CREATE TABLE `categroy` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '标识符',
     `name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '名字',
-    `count` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '数量',
+    `count` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '图片数量',
     `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
@@ -75,3 +75,28 @@ CREATE TABLE `categroy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类信息记录表';
 
 INSERT INTO `categroy` (`code`, `name`) VALUES ('default', '默认分类');
+
+CREATE TABLE `collection` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` CHAR(16) NOT NULL DEFAULT '' COMMENT '标识符',
+    `uuid` CHAR(32) NOT NULL DEFAULT '' COMMENT '所有者身份标识符',
+    `name` VARCHAR(62) NOT NULL DEFAULT '' COMMENT '名字',
+    `count` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '图片数量',
+    `browse` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '浏览数',
+    `collect` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收藏数',
+    `like` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数',
+    `is_public` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否公开：0 - 否、1 - 是',
+    `link_name` VARCHAR(62) NOT NULL DEFAULT '' COMMENT '推广链接名称',
+    `link` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '推广链接',
+    `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
+    `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_code` (`code`),
+    KEY `uk_uuid` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题信息记录表';
+
+CREATE TABLE `picture_collection` (
+    `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
+    `collection_code` CHAR(16) NOT NULL DEFAULT '' COMMENT '专题 Code',
+    KEY `idx_collection_code` (`collection_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题 - 图片映射关系记录表';

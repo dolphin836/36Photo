@@ -4,11 +4,10 @@ namespace Dolphin\Ting\Controller\User;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Table;
+use Dolphin\Ting\Constant\Nav;
 
 class User extends \Dolphin\Ting\Controller\Base
 {
-    protected $table_name = Table::USER;
-
     protected $conf = [
         
     ];
@@ -30,8 +29,8 @@ class User extends \Dolphin\Ting\Controller\Base
     
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app);
+        parent::__construct($app, Table::USER);
 
-        $this->nav = 'user';
+        $this->nav = Nav::USER;
     }
 }

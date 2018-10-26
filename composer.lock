@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3431e9cd339aba2fa42eb5b42530939a",
+    "content-hash": "e355aacc14a6c3b1f5cb4dc74ef7c97f",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -259,6 +259,29 @@
             ],
             "description": "随机的从 Unsplash 网站下载图片到本地",
             "time": "2018-09-25T10:17:41+00:00"
+        },
+        {
+            "name": "fineuploader/php-traditional-server",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FineUploader/php-traditional-server.git",
+                "reference": "ca3b7277c0dbddd2bf8bc97ed94ecc65776a2190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FineUploader/php-traditional-server/zipball/ca3b7277c0dbddd2bf8bc97ed94ecc65776a2190",
+                "reference": "ca3b7277c0dbddd2bf8bc97ed94ecc65776a2190",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Endpoint handler for Fine Uploader's traditional server requests.",
+            "homepage": "http://fineuploader.com",
+            "time": "2017-02-23T15:06:09+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

@@ -4,13 +4,12 @@ namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Table;
+use Dolphin\Ting\Constant\Nav;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 
 class Pic extends \Dolphin\Ting\Controller\Base
 {
-    protected $table_name = Table::PICTURE;
-
     protected $conf = [
         
     ];
@@ -19,7 +18,9 @@ class Pic extends \Dolphin\Ting\Controller\Base
     
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app);
+        parent::__construct($app, Table::PICTURE);
+
+        $this->nav = Nav::PICTURE;
 
         try {
             $this->oss_client = new OssClient(
@@ -33,6 +34,6 @@ class Pic extends \Dolphin\Ting\Controller\Base
             exit();
         }
 
-        $this->nav = 'pic';
+        
     }
 }

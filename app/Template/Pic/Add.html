@@ -1,0 +1,19 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+添加 - 图片 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<div class="card">
+    <div class="card-body">
+        <form action="/pic/upload" class="dropzone" method="POST" enctype="multipart/form-data">
+            {% if csrf is defined %}
+            <input type="hidden" name="{{ csrf.name_key }}" value="{{ csrf.name }}">
+            <input type="hidden" name="{{ csrf.value_key }}" value="{{ csrf.value }}">
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

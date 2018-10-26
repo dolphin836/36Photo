@@ -4,15 +4,12 @@ namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Librarie\Page;
-use Dolphin\Ting\Model\Common_model;
 use Dolphin\Ting\Constant\Common;
 use OSS\OssClient;
 use OSS\Core\OssException;
 
 class GetRecords extends Pic
 {
-    private $common_model;
-
     private $columns = [
         '缩略图',
         '宽',
@@ -20,13 +17,6 @@ class GetRecords extends Pic
         '大小',
         '创建时间'
     ];
-
-    function __construct(ContainerInterface $app)
-    {
-        parent::__construct($app);
-
-        $this->common_model = new Common_model($app, $this->table_name);
-    }
 
     public function __invoke($request, $response, $args)
     {  

@@ -11,9 +11,22 @@
     <link href="/assets/node_modules/black-dashboard/assets/css/black-dashboard.css" rel="stylesheet" />
     <!-- jQuery DateTimePicker 插件 -->
     <link rel="stylesheet" href="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="/assets/dropzone.min.css">
     <style>
         .form-control option {
             background: #27293d;
+        }
+        .dropzone {
+            border: 2px dashed #0087F7;
+            border-radius: 0.2857rem;
+            background: white;
+        }
+        .dropzone .dz-message {
+            font-size: 2em;
+            font-weight: 400;
+            margin: 2em 0;
+            color: #646C7F;
+            text-rendering: optimizeLegibility;
         }
     </style>
 </head>
@@ -42,7 +55,8 @@
     <script src="/assets/node_modules/black-dashboard/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <script src="/assets/node_modules/black-dashboard/assets/js/black-dashboard.min.js" type="text/javascript"></script>
     <script src="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
-    <script src="/assets/js/common.js?{{ random() }}"></script>
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/dropzone.min.js"></script>
 </body>
 
 </html>

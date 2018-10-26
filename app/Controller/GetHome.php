@@ -3,14 +3,15 @@
 namespace Dolphin\Ting\Controller;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Dolphin\Ting\Constant\Nav;
 
 class GetHome extends Base
 {
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app);
+        parent::__construct($app, '');
 
-        $this->nav = 'home';
+        $this->nav = Nav::HOME;
     }
 
     public function __invoke($request, $response, $args)

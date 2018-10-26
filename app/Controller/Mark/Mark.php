@@ -4,19 +4,18 @@ namespace Dolphin\Ting\Controller\Mark;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Table;
+use Dolphin\Ting\Constant\Nav;
 
 class Mark extends \Dolphin\Ting\Controller\Base
 {
-    protected $table_name = Table::MARK;
-
     protected $conf = [
         
     ];
     
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app);
+        parent::__construct($app, Table::MARK);
 
-        $this->nav = 'mark';
+        $this->nav = Nav::MARK;
     }
 }
