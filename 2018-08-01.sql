@@ -42,7 +42,8 @@ CREATE TABLE `picture` (
     `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_hash` (`hash`)
+    UNIQUE KEY `uk_hash` (`hash`),
+    KEY `idx_categroy` (`categroy_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片信息记录表';
 
 CREATE TABLE `mark` (

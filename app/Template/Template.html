@@ -57,6 +57,17 @@
     <script src="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/dropzone.min.js"></script>
+    <script>
+        Dropzone.options.dropzone = {
+            paramName: "photo",
+            parallelUploads: 1,
+            acceptedFiles: "image/*",
+            success: function(photo, response) {
+                $("#csrf_name").val(response.name);
+                $("#csrf_value").val(response.value);
+            }
+        };
+    </script>
 </body>
 
 </html>

@@ -41,36 +41,35 @@ class PostUpload extends Pic
 
     public function __invoke($request, $response, $args)
     {  
+        $uri = $request->getUri();
+
+        parse_str($uri->getQuery(), $querys);
+
+        if (isset($querys['categroy'])) { // 分类
+            $categroy_code = $querys['categroy'];
+        }
+
         $upload_files = $request->getUploadedFiles();
 
-        $upload_file  = $upload_files['file'];
+        $upload_file  = $upload_files['photo'];
 
         if ($upload_file->getError() === UPLOAD_ERR_OK) {
             $data = $this->move($upload_file);
 
             if (! empty($data)) { // 本地上传成功
                 // 插入数据库
-                $data['uuid']   = $this->uuid;
-                $data['is_oss'] = 0;
+                $data['uuid']          = $this->uuid;
+                $data['is_oss']        = 0;
+                $data['categroy_code'] = isset($categroy_code) ? $categroy_code : '';
           
-                $query = $this->common_model->add($data);
-
-                if ($query->rowCount()) {
-                    $code = 0;
-                } else {
-                    $code = 3;
-                }
-            } else {
-                $code = 2;
+                $this->common_model->add($data);
             }
-        } else {
-            $code = 1;
         }
 
         return $response->withJson([
-            "code" => $code,
-            "note" => $this->note[$code]
-       ]);
+             'name' => $request->getAttribute('next_name'),
+            'value' => $request->getAttribute('next_value')
+        ]);
     }
 
     private function move($file)
