@@ -3,9 +3,19 @@
 namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Dolphin\Ting\Model\Categroy_model;
 
 class GetAdd extends Pic
 {
+    protected $categroy_model;
+
+    function __construct(ContainerInterface $app)
+    {
+        parent::__construct($app);
+
+        $this->categroy_model = new Categroy_model($app);
+    }
+
     public function __invoke($request, $response, $args)
     {  
         $data = [
@@ -16,6 +26,19 @@ class GetAdd extends Pic
                    'value' => $request->getAttribute('next_value')
             ]
         ];
+
+        $uri = $request->getUri();
+
+        parse_str($uri->getQuery(), $querys);
+
+        if (isset($querys['categroy']) && $this->categroy_model->is_has("code", $querys['categroy'])) { // 分类
+            $record = $this->categroy_model->record(['code' => $querys['categroy']]);
+
+            $data['categroy'] = [
+                'code' => $record['code'],
+                'name' => $record['name']
+            ];
+        }
         
         $this->respond('Pic/Add', $data);
     }

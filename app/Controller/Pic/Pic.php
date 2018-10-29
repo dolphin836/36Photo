@@ -33,7 +33,5 @@ class Pic extends \Dolphin\Ting\Controller\Base
             printf($e->getMessage() . "\n");
             exit();
         }
-
-        
     }
 }
