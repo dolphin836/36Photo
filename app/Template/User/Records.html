@@ -4,6 +4,14 @@
 列表 - 用户 - {{ site.web_name }}
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
+{% endblock %}
+
+{% block js %}
+<script src="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+{% endblock %}
+
 {% block Content %}
 <div class="card">
     <div class="card-body">

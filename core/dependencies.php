@@ -21,11 +21,11 @@ $container['guzzle'] = function ($c) {
 
 // view renderer
 $container['template'] = function ($c) {
-    $loader = new Twig_Loader_Filesystem('../app/Template');
-
     if (getenv('DEBUG') == 'TRUE') {
+        $loader = new Twig_Loader_Filesystem('../app/Template');
         $debug  = true;
     } else {
+        $loader = new Twig_Loader_Filesystem('../app/View');
         $debug  = false;
     }
 
