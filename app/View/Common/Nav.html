@@ -1,0 +1,50 @@
+<div class="sidebar"data-color="blue">
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="/" class="simple-text logo-mini">
+                EM
+            </a>
+            <a href="/" class="simple-text logo-normal">
+                Emage Center
+            </a>
+        </div>
+        <ul class="nav">
+            <li class="{{ site.nav_item == 'home' ? 'active' : '' }}">
+                <a href="/">
+                    <i class="tim-icons icon-chart-pie-36"></i>
+                    <p>主 页</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'pic' ? 'active' : '' }}">
+                <a href="/pic/records">
+                    <i class="tim-icons icon-image-02"></i>
+                    <p>图 片</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'collection' ? 'active' : '' }}">
+                <a href="/collection/records">
+                    <i class="tim-icons icon-wallet-43"></i>
+                    <p>专 题</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'mark' ? 'active' : '' }}">
+                <a href="/mark/records">
+                    <i class="tim-icons icon-tag"></i>
+                    <p>标 签</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'categroy' ? 'active' : '' }}">
+                <a href="/categroy/records">
+                    <i class="tim-icons icon-align-center"></i>
+                    <p>分 类</p>
+                </a>
+            </li>
+            <li class="{{ site.nav_item == 'user' ? 'active' : '' }}">
+                <a href="/user/records">
+                    <i class="tim-icons icon-single-02"></i>
+                    <p>用 户</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

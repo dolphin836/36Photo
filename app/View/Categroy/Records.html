@@ -1,0 +1,78 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+列表 - 分类 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">名 称</label>
+                    <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label class="form-label">别 名</label>
+                    <input type="text" class="form-control" name="search_code_~" value="{{ text.code is defined ? text.code : '' }}" maxlength="16">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-right">
+        <div class="d-flex">
+            <a href="/categroy/records" class="btn btn-warning btn-link">清 除</a>
+            <button type="button" id="search" class="btn btn-info ml-auto">检 索</button>
+            <a href="/categroy/add" class="btn btn-success btn-simple ml-2">新 增</a>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <caption>共 {{ total }} 条记录</caption>
+                {% include 'Component/Thead.html' %}
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td class="text-center">
+                            <div>{{ record.code }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.name }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.count }}</div>
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.gmt_create }}</div>
+                        </td>
+                        <td class="text-center">
+                            <a href="/pic/records?categroy={{ record.code }}" class="btn btn-info btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-image-02"></i>
+                            </a>
+                            <a href="/categroy/modify?code={{ record.code }}" class="btn btn-success btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-pencil"></i>
+                            </a>
+                            <a href="/pic/add?categroy={{ record.code }}" class="btn btn-primary btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-cloud-upload-94"></i>
+                            </a>
+                            <a href="/categroy/delete?id={{ record.id }}" class="btn btn-danger btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

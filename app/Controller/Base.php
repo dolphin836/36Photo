@@ -13,12 +13,16 @@ class Base
     protected $nav;
 
     protected $common_model;
+    // 前端资源存储路径
+    private $asset_path;
 
     function __construct(ContainerInterface $app, $table_name)
     {
         $this->app = $app;
 
         $this->common_model = new Common_model($app, $table_name);
+        
+        $this->asset_path = getenv('DEBUG') == 'TRUE' ? '/assets' : '/assets/dist';
     }
 
     protected function respond($html, $data = [])
@@ -26,8 +30,9 @@ class Base
         // 公共数据
         // 页面信息
         $data['site'] = [
-            'web_name' => getenv('WEB_NAME'),
-            'nav_item' => $this->nav
+              'web_name' => getenv('WEB_NAME'),
+              'nav_item' => $this->nav,
+            'asset_path' => $this->asset_path
         ];
         // class
         $data['class'] = ['blue', 'azure', 'indigo', 'purple', 'pink', 'orange'];
