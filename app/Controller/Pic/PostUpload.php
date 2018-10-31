@@ -7,6 +7,7 @@ use Dolphin\Ting\Constant\Common;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
+use Dolphin\Ting\Model\Collection_model;
 
 class PostUpload extends Pic
 {
@@ -18,13 +19,8 @@ class PostUpload extends Pic
     private $is_debug;
     // 
     private $uuid;
-    //
-    private $note = [
-        '上传成功.',
-        '上传失败.',
-        '已经存在.',
-        '保存失败.'
-    ];
+    // 专题
+    protected $collection_model;
 
     function __construct(ContainerInterface $app)
     {
@@ -37,6 +33,8 @@ class PostUpload extends Pic
         $this->is_debug     = getenv("DEBUG") === "TRUE" ? true : false;
 
         $this->uuid         = $app->session->get('uuid');
+
+        $this->collection_model = new Collection_model($app);
     }
 
     public function __invoke($request, $response, $args)
@@ -47,6 +45,10 @@ class PostUpload extends Pic
 
         if (isset($querys['categroy'])) { // 分类
             $categroy_code = $querys['categroy'];
+        }
+
+        if (isset($querys['collection'])) { // 专题
+            $collection_code = $querys['collection'];
         }
 
         $upload_files = $request->getUploadedFiles();
@@ -62,7 +64,11 @@ class PostUpload extends Pic
                 $data['is_oss']        = 0;
                 $data['categroy_code'] = isset($categroy_code) ? $categroy_code : '';
           
-                $this->common_model->add($data);
+                $db = $this->common_model->add($data);
+
+                if ($db->rowCount() && isset($collection_code)) {
+                    $this->collection_model->add_picture($collection_code, $data['hash']);
+                }
             }
         }
 

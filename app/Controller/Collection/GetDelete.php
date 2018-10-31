@@ -1,0 +1,33 @@
+<?php
+
+namespace Dolphin\Ting\Controller\Collection;
+
+use Psr\Container\ContainerInterface as ContainerInterface;
+
+class GetDelete extends Collection
+{
+    public function __invoke($request, $response, $args)
+    {        
+        $uri = $request->getUri();
+
+        parse_str($uri->getQuery(), $querys);
+
+        $collection_code = $querys['code'];
+
+        $db = $this->common_model->delete(["code" => $collection_code]);
+
+        if (! $db->rowCount()) { // 删除失败
+            $this->app->flash->addMessage('note', [
+                'code' => 'danger',
+                'text' => '删除专题失败'
+            ]);
+        } else {
+            $this->app->flash->addMessage('note', [
+                'code' => 'success',
+                'text' => '删除专题成功'
+            ]);  
+        }
+
+        return $response->withRedirect('/collection/records', 302);
+    }
+}
