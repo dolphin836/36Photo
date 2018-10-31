@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 从 Unsplash 随机下载图片
+ * @author whb
+ * @create 2018-09-26 18:14:00
+ * @update 2018-10-31 18:00:00
+ */
+
 define('ROOTPATH', __DIR__);
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';

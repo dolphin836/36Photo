@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 自动添加本地的图片（包括入库、上传阿里云 OSS、智能设置标签）
+ * @author whb
+ * @create 2018-09-14 18:18:00
+ * @update 2018-10-31 18:00:00
+ */
+
 use Medoo\Medoo;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
