@@ -3,18 +3,17 @@
 namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
-use Dolphin\Ting\Constant\Table;
-use Dolphin\Ting\Constant\Nav;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
+use Dolphin\Ting\Constant\Table;
+use Dolphin\Ting\Constant\Nav;
+use Dolphin\Ting\Model\Pic_model;
 
 class Pic extends \Dolphin\Ting\Controller\Base
 {
-    protected $conf = [
-        
-    ];
-
     protected $oss_client;
+
+    protected $pic_model;
     
     function __construct(ContainerInterface $app)
     {
@@ -33,5 +32,20 @@ class Pic extends \Dolphin\Ting\Controller\Base
             printf($e->getMessage() . "\n");
             exit();
         }
+
+        $this->pic_model = new Pic_model($app);
+    }
+
+    protected function size($size)
+    {
+        $kb = ceil($size / 1024);
+
+        if ($kb < 1024) {
+            return $kb . ' KB';
+        }
+
+        $mb = round($kb / 1024, 2);
+
+        return $mb . ' M';
     }
 }

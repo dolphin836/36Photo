@@ -64,7 +64,7 @@ class PostUpload extends Pic
                 $data['is_oss']        = 0;
                 $data['categroy_code'] = isset($categroy_code) ? $categroy_code : '';
           
-                $db = $this->common_model->add($data);
+                $db = $this->pic_model->add($data);
 
                 if ($db->rowCount() && isset($collection_code)) {
                     $this->collection_model->add_picture($collection_code, $data['hash']);
@@ -91,7 +91,7 @@ class PostUpload extends Pic
         
         $is_success = false;
         // 判断是否存在
-        if (! $this->common_model->is_has('hash', $hash)) {
+        if (! $this->pic_model->is_has('hash', $hash)) {
             $now = time();
 
             $y   = date("Y", $now);

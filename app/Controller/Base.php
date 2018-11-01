@@ -4,15 +4,12 @@ namespace Dolphin\Ting\Controller;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Ramsey\Uuid\Uuid as U;
-use Dolphin\Ting\Model\Common_model;
 
 class Base
 {
     protected $app;
     
     protected $nav;
-
-    protected $common_model;
     // 前端资源存储路径
     private $asset_path;
 
@@ -20,8 +17,6 @@ class Base
     {
         $this->app = $app;
 
-        $this->common_model = new Common_model($app, $table_name);
-        
         $this->asset_path = getenv('DEBUG') == 'TRUE' ? '/assets' : '/assets/dist';
     }
 

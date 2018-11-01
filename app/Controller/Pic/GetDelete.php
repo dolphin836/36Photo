@@ -14,9 +14,9 @@ class GetDelete extends Pic
 
         $hash = $querys['hash'];
 
-        $pic  = $this->common_model->record(["hash" => $hash]);
+        $pic  = $this->pic_model->record(["hash" => $hash]);
 
-        $db   = $this->common_model->delete(["hash" => $hash]);
+        $db   = $this->pic_model->delete(["hash" => $hash]);
 
         if (! $db->rowCount()) { // 删除失败
             $this->app->flash->addMessage('note', [

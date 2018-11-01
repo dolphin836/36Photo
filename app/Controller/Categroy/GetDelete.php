@@ -14,7 +14,7 @@ class GetDelete extends Categroy
 
         $categroy_id = $querys['id'];
 
-        $db = $this->common_model->delete(["id" => $categroy_id]);
+        $db = $this->categroy_model->delete(["id" => $categroy_id]);
 
         if (! $db->rowCount()) { // 删除失败
             $this->app->flash->addMessage('note', [

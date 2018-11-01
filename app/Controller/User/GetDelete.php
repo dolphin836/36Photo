@@ -8,7 +8,7 @@ class GetDelete extends \Dolphin\Ting\Controller\Base
 {
     public function __invoke($request, $response, $args)
     {   
-        $db = $this->app->db->delete("user", [
+        $db = $this->user_model->delete([
                 "uuid" => $args['uuid'],
             "group[!]" => 2
         ]);

@@ -114,7 +114,9 @@
 
                 <div class="form-group">
                     <label class="form-label">签&nbsp;&nbsp;&nbsp;名</label>
-                    <textarea class="form-control {{ form_v_error.sign is defined ? 'is-invalid' : '' }}" name="sign" rows="3" maxlength="128">{{ form_data.sign is defined ? form_data.sign : '' }}</textarea>
+                    <textarea class="form-control {{ form_v_error.sign is defined ? 'is-invalid' : '' }}" name="sign" rows="3" maxlength="128">
+                        {{ form_data.sign is defined ? form_data.sign : '' }}
+                    </textarea>
                     {% if form_v_error.sign is defined %}
                     <div class="invalid-feedback">
                         {% for err in form_v_error.sign %}

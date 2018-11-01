@@ -4,23 +4,7 @@
 列表 - 图片 - {{ site.web_name }}
 {% endblock %}
 
-{% block Note %} 
-    {% if note is defined %}
-    <div class="page-header" id="note">
-        <div class="alert alert-{{ note.code }} alert-dismissible" style="margin: 0 auto;min-width: 320px;">
-            <button data-dismiss="alert" class="close"></button>
-            <h4>系统消息</h4>
-            <p>{{ note.text }}</p>
-        </div>
-    </div>
-    <script>
-        setTimeout(function () { document.getElementById("note").innerHTML = ''; }, 3000);
-    </script> 
-    {% endif %} 
-{% endblock %} 
-
 {% block Content %}
-
 <div class="card">
     <div class="card-body">
         <a href="/pic/add" class="btn btn-success">上 传</a>
@@ -42,14 +26,14 @@
                                 <img src="{{ record.path }}" class="rounded" style="width: 120px;">
                             </a>
                             {% if record.is_oss %}
-                            <div><i class="fa fa-cloud text-success" title="已上传至阿里云"></i></div>
+                            <div><i class="tim-icons icon-cloud-upload-94 text-success" title="已上传至阿里云"></i></div>
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <div>{{ record.width }}</div>
+                            <a href="/pic/records?search_categroy={{ record.categroy_code }}">{{ record.categroy_name }}</a>
                         </td>
                         <td class="text-center">
-                            <div>{{ record.height }}</div>
+                            <a href="/pic/records?search_uuid={{ record.uuid }}">{{ record.username }}</a>
                         </td>
                         <td class="text-center">
                             <div>{{ record.size }}</div>
