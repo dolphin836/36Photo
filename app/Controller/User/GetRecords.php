@@ -4,14 +4,11 @@ namespace Dolphin\Ting\Controller\User;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Librarie\Page;
-use Dolphin\Ting\Model\User_model;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
 
 class GetRecords extends User
 {
-  private $user_model;
-
   private $columns = [
     '基本信息',
     '用户组',
@@ -19,13 +16,6 @@ class GetRecords extends User
     '创建时间',
     '最近登录'
   ];
-
-  function __construct(ContainerInterface $app)
-  {
-    parent::__construct($app);
-
-    $this->user_model = new User_model($app, Table::USER);
-  }
 
   public function __invoke($request, $response, $args)
   {  

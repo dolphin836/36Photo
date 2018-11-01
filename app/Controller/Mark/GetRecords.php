@@ -18,7 +18,7 @@ class GetRecords extends Mark
     {  
         $page = $request->getAttribute('page');
 
-        $records = $this->common_model->records([
+        $records = $this->mark_model->records([
             "LIMIT" => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT],
             "ORDER" => ["count" => "DESC"]
         ]);
@@ -26,7 +26,7 @@ class GetRecords extends Mark
         $data = [
             "records" => $records,
             "columns" => $this->columns,
-               "page" => Page::reder('/mark/records', $this->common_model->total(), $page, Common::PAGE_COUNT, '')
+               "page" => Page::reder('/mark/records', $this->mark_model->total(), $page, Common::PAGE_COUNT, '')
         ];
 
         $this->respond('Mark/Records', $data);

@@ -39,13 +39,13 @@ class GetRecords extends Collection
     
         $search['ORDER'] = ["gmt_create" => $order];
     
-        $records = $this->common_model->records($search);
+        $records = $this->collection_model->records($search);
 
         $data = [
             "records" => $records,
             "columns" => $this->columns,
                'text' => $request->getAttribute('text'),
-               "page" => Page::reder('/collection/records', $this->common_model->total($search), $page, Common::PAGE_COUNT, $query)
+               "page" => Page::reder('/collection/records', $this->collection_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Collection/Records', $data);

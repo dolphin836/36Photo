@@ -14,7 +14,7 @@ class GetDelete extends Collection
 
         $collection_code = $querys['code'];
 
-        $db = $this->common_model->delete(["code" => $collection_code]);
+        $db = $this->collection_model->delete(["code" => $collection_code]);
 
         if (! $db->rowCount()) { // 删除失败
             $this->app->flash->addMessage('note', [

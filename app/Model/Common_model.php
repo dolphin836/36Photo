@@ -10,10 +10,10 @@ class Common_model
 
     protected $table_name;
 
-    function __construct(ContainerInterface $app, $table_name)
+    function __construct(ContainerInterface $app)
     {
         $this->app        = $app;
-        $this->table_name = $table_name;
+        // $this->table_name = $table_name;
     }
 
     /**

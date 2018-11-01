@@ -5,12 +5,11 @@ namespace Dolphin\Ting\Controller\User;
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Constant\Nav;
+use Dolphin\Ting\Model\User_model;
 
 class User extends \Dolphin\Ting\Controller\Base
 {
-    protected $conf = [
-        
-    ];
+    protected $user_model;
 
     protected $group = [
         '普通用户',
@@ -32,5 +31,7 @@ class User extends \Dolphin\Ting\Controller\Base
         parent::__construct($app, Table::USER);
 
         $this->nav = Nav::USER;
+
+        $this->user_model = new User_model($app);
     }
 }

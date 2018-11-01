@@ -20,7 +20,7 @@ class PostAdd extends Categroy
             'name' => trim($body['name']),
         ];
 
-        $db = $this->app->db->insert($this->table_name, $data);
+        $db = $this->categroy_model->add($data);
 
         if (! $db->rowCount()) { // 插入失败
             $this->app->flash->addMessage('note', [
@@ -49,12 +49,9 @@ class PostAdd extends Categroy
             if (! v::stringType()->length(1, 16)->validate($body['name'])) {
                 $error[] = '别名格式不正确.';
             } else {
-                $table_name = $this->table_name;
-                if (! v::stringType()->callback(function($code) use ($table_name) {
+                if (! v::stringType()->callback(function($code) {
                     // 别名是否已经存在
-                    return ! $this->app->db->has($table_name, [
-                        "code" => $code
-                    ]);
+                    return ! $this->categroy_model->is_has('code', $code);
                 })->validate($body['code'])) {
                     $error[] = '别名已存在.';
                 } 
@@ -74,12 +71,9 @@ class PostAdd extends Categroy
             if (! v::stringType()->length(1, 32)->validate($body['name'])) {
                 $error[] = '名称格式不正确.';
             } else {
-                $table_name = $this->table_name;
-                if (v::stringType()->callback(function($name) use ($table_name) {
+                if (v::stringType()->callback(function($name) {
                     // 名称是否已经存在
-                    return $this->app->db->has($table_name, [
-                        "name" => $name
-                    ]);
+                    return $this->categroy_model->is_has('name', $name);
                 })->validate($body['name'])) {
                     $error[] = '名称已存在.';
                 } 

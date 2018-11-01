@@ -12,21 +12,24 @@ class GetRecords extends Pic
 {
     private $columns = [
         '缩略图',
-        '宽',
-        '高',
+        '分类',
+        '所有者',
         '大小',
         '创建时间'
     ];
 
     public function __invoke($request, $response, $args)
     {  
-        $page = $request->getAttribute('page');
+        // 分页
+        $page   = $request->getAttribute('page');
+        // 检索
+        $search = $request->getAttribute('search');
 
-        $records = $this->common_model->records([
-            "LIMIT" => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
-        ]);
+        $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
 
-        $images = [];
+        $records = $this->pic_model->records($search);
+
+        $images  = [];
 
         foreach ($records as $record) {
             if ($record['is_oss']) {
@@ -44,35 +47,26 @@ class GetRecords extends Pic
             }
             
             $images[] = [
-                     'hash' => $record['hash'],
-                    'width' => $record['width'],
-                   'height' => $record['height'],
-                     'size' => $this->size($record['size']),
-               'gmt_create' => $record['gmt_create'],
-                     'path' => $path,
-                   'is_oss' => $record['is_oss'] ? true : false
+                         'hash' => $record['hash'],
+                        'width' => $record['width'],
+                       'height' => $record['height'],
+                         'size' => $this->size($record['size']),
+                   'gmt_create' => $record['gmt_create'],
+                         'path' => $path,
+                       'is_oss' => $record['is_oss'] ? true : false,
+                'categroy_code' => $record['code'],
+                'categroy_name' => $record['name'],
+                         'uuid' => $record['uuid'],
+                     'username' => $record['username']
             ];
         }
 
         $data = [
             "records" => $images,
             "columns" => $this->columns,
-               "page" => Page::reder('/pic/records', $this->common_model->total(), $page, Common::PAGE_COUNT, '')
+               "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, '')
         ];
 
         $this->respond('Pic/Records', $data);
-    }
-
-    private function size($size)
-    {
-        $kb = ceil($size / 1024);
-
-        if ($kb < 1024) {
-            return $kb . ' KB';
-        }
-
-        $mb = round($kb / 1024, 2);
-
-        return $mb . ' M';
     }
 }

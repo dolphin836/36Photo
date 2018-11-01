@@ -9,7 +9,9 @@ class Collection_model extends Common_model
 {
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app, Table::COLLECTION);
+        parent::__construct($app);
+
+        $this->table_name = Table::COLLECTION;
     }
 
     /**

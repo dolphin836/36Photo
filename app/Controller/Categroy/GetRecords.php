@@ -19,8 +19,8 @@ class GetRecords extends Categroy
         $search = $request->getAttribute('search');
 
         $data = [
-              "total" => $this->common_model->total(),
-            "records" => $this->common_model->records($search),
+              "total" => $this->categroy_model->total(),
+            "records" => $this->categroy_model->records($search),
                'text' => $request->getAttribute('text'),
             "columns" => $this->columns
         ];

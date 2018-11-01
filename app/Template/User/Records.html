@@ -121,8 +121,15 @@
                             <div>{{ user.last_login }}</div>
                         </td>
                         <td class="text-center">
-                            <a href="/user/delete?uuid={{ user.uuid }}" class="btn btn-danger btn-sm btn-round btn-icon"><i class="tim-icons icon-simple-remove"></i></a>
-                            <a href="/user/modify?uuid={{ user.uuid }}" class="btn btn-info btn-sm btn-round btn-icon"><i class="tim-icons icon-pencil"></i></a>
+                            <a href="/pic/records?search_uuid={{ user.uuid }}" class="btn btn-info btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-image-02"></i>
+                            </a>
+                            <a href="/user/delete?uuid={{ user.uuid }}" class="btn btn-danger btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </a>
+                            <a href="/user/modify?uuid={{ user.uuid }}" class="btn btn-info btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-pencil"></i>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
