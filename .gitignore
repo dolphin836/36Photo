@@ -1,17 +1,23 @@
-.env
-
-/cache
-
-/node_modules
-
-/vendor
-
-/public/assets/node_modules
-
 /.idea
 
 /.vscode
 
-/public/uploads
+/Manage/.env
 
-/public/picture
+/Manage/composer.lock
+
+/Manage/cache
+
+/Manage/vendor
+
+/Manage/public/assets/node_modules
+
+/Manage/public/uploads
+
+/Manage/public/picture
+
+/Manage/public/assets/gulpfile.js
+
+/Manage/public/assets/package.json
+
+/Manage/public/assets/package-lock.json

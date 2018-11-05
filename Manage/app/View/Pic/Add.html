@@ -1,0 +1,63 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+添加 - 图片 - {{ site.web_name }}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ site.asset_path }}/css/dropzone-d4f6ecd137.min.css">
+<style>
+.dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 0.2857rem;
+    background: white;
+}
+.dropzone .dz-message {
+    font-size: 2em;
+    font-weight: 400;
+    margin: 2em 0;
+    color: #646C7F;
+    text-rendering: optimizeLegibility;
+}
+</style>
+{% endblock %}
+
+{% block js %}
+<script src="{{ site.asset_path }}/js/dropzone-f5b6aacc2a.min.js"></script>
+<script>
+    Dropzone.options.dropzone = {
+        paramName: "photo",
+        parallelUploads: 1,
+        acceptedFiles: "image/*",
+        success: function(photo, response) {
+            $("#csrf_name").val(response.name);
+            $("#csrf_value").val(response.value);
+        }
+    };
+</script>
+{% endblock %}
+
+{% block Content %}
+<div class="card">
+    <div class="card-body">
+        {% set action = '/pic/upload' %}
+        {% if categroy is defined %}
+        <h4 class="card-title">分类：{{ categroy.name }}</h4>
+        {% set action = '/pic/upload?categroy=' ~ categroy.code %}
+        {% endif %}
+
+        {% if collection is defined %}
+        <h4 class="card-title">专题：{{ collection.name }}</h4>
+        {% set action = '/pic/upload?collection=' ~ collection.code %}
+        {% endif %}
+
+        <form action="{{ action }}" class="dropzone" id="dropzone" method="POST" enctype="multipart/form-data">
+            {% if csrf is defined %}
+            <input type="hidden" name="{{ csrf.name_key }}" id="csrf_name" value="{{ csrf.name }}">
+            <input type="hidden" name="{{ csrf.value_key }}" id="csrf_value" value="{{ csrf.value }}">
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
