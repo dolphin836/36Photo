@@ -27,3 +27,9 @@
 /API/composer.lock
 
 /API/vendor
+
+/Web/node_modules
+
+/Web/package.json
+
+/Web/package-lock.json
