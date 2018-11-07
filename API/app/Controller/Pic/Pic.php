@@ -6,7 +6,6 @@ use Psr\Container\ContainerInterface as ContainerInterface;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Dolphin\Ting\Constant\Table;
-use Dolphin\Ting\Constant\Nav;
 use Dolphin\Ting\Model\Pic_model;
 
 class Pic extends \Dolphin\Ting\Controller\Base
@@ -18,8 +17,6 @@ class Pic extends \Dolphin\Ting\Controller\Base
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
-
-        $this->nav = Nav::PICTURE;
 
         try {
             $this->oss_client = new OssClient(

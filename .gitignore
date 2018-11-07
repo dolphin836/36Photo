@@ -21,3 +21,9 @@
 /Manage/public/assets/package.json
 
 /Manage/public/assets/package-lock.json
+
+/API/.env
+
+/API/composer.lock
+
+/API/vendor

@@ -13,7 +13,7 @@ class Base
     // 前端资源存储路径
     private $asset_path;
 
-    function __construct(ContainerInterface $app, $table_name)
+    function __construct(ContainerInterface $app)
     {
         $this->app = $app;
 

@@ -13,7 +13,7 @@ class Mark extends \Dolphin\Ting\Controller\Base
     
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app, Table::MARK);
+        parent::__construct($app);
 
         $this->nav = Nav::MARK;
 
