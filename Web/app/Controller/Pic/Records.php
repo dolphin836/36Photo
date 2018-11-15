@@ -32,10 +32,7 @@ class Records extends Pic
                         getenv('OSS_BUCKET_NAME'),
                         $record['path'],
                         $valid,
-                        "GET",
-                        [
-                            OssClient::OSS_PROCESS => Common::OSS_PROCESS
-                        ]
+                        "GET"
                     );
                 } catch (OssException $e) {
                     $path = getenv('WEB_URL') . '/' . $record['path'];
