@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block Title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/assets/dist/css/common-ffd1b4b9bc.min.css">
+
+    <link rel="stylesheet" href="/assets/dist/css/app-2965fee881.css">
+
+    {% block Css %} {% endblock %}
+</head>
+
+<body>
+    <div id="app">
+        {% block Content %}{% endblock %}
+    </div>
+
+    <script src="/assets/dist/js/common-ce839fe10d.min.js"></script>
+
+    {% block Js %} {% endblock %}
+</body>
+
+</html>

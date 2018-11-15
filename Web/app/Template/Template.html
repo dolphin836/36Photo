@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block Title %}{% endblock %}</title>
+    <!-- build:common-css -->
+    <link rel="stylesheet" href="/assets/node_modules/progressively/src/progressively.css">
+    <!-- endbuild -->
+    <!-- build:app-css -->
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <!-- endbuild -->
+    {% block Css %} {% endblock %}
+</head>
+
+<body>
+    <div id="app">
+        {% block Content %}{% endblock %}
+    </div>
+
+    <!-- build:common-script -->
+    <script src="/assets/node_modules/progressively/src/progressively.js"></script>
+    <script src="/assets/node_modules/justified-layout/dist/justified-layout.js"></script>
+    <!-- endbuild -->
+    {% block Js %} {% endblock %}
+</body>
+
+</html>

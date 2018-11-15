@@ -28,8 +28,26 @@
 
 /API/vendor
 
-/Web/node_modules
+/M/node_modules
 
-/Web/package.json
+/M/package.json
 
-/Web/package-lock.json
+/M/package-lock.json
+
+/M/.babelrc
+
+/M/webpack.config.js
+
+/Web/.env
+
+/Web/vendor
+
+/Web/cache
+
+/Web/public/assets/node_modules
+
+/Web/public/assets/gulpfile.js
+
+/Web/public/assets/package.json
+
+/Web/public/assets/package-lock.json
