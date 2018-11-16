@@ -7,10 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block Title %}{% endblock %}</title>
     <!-- build:common-css -->
+    <link rel="stylesheet" href="/assets/node_modules/normalize.css/normalize.css">
     <link rel="stylesheet" href="/assets/node_modules/progressively/src/progressively.css">
     <!-- endbuild -->
     <!-- build:app-css -->
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css?{{ site.timestamp }}">
     <!-- endbuild -->
     {% block Css %} {% endblock %}
 </head>
@@ -21,6 +22,7 @@
     </div>
 
     <!-- build:common-script -->
+    <script src="/assets/js/pace.min.js"></script>
     <script src="/assets/node_modules/progressively/src/progressively.js"></script>
     <script src="/assets/node_modules/justified-layout/dist/justified-layout.js"></script>
     <!-- endbuild -->
