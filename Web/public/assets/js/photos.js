@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         var picElement = document.createElement("img");
         picElement.setAttribute("src", photos[i]['small']);
-        picElement.setAttribute("data-progressive", photos[i]['full']);
+        picElement.setAttribute("data-progressive", photos[i]['large']);
         picElement.className    = "progressive__img progressive--not-loaded";
         photoElement.appendChild(picElement);
     });

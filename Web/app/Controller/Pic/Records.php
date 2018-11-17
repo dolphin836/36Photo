@@ -27,6 +27,15 @@ class Records extends Pic
 
         $photos  = [];
 
+        $sma   = $lar = Common::OSS_PROCESS;
+        $sma  .= Common::OSS_PROCESS_RESIZE_320;
+        $lar  .= Common::OSS_PROCESS_RESIZE_640;
+
+        if ($this->is_support_webp) {
+            $sma .= Common::OSS_PROCESS_FORMAT;
+            $lar .= Common::OSS_PROCESS_FORMAT; 
+        }
+
         foreach ($records as $record) {
             if ($record['is_oss']) {
                 $valid = Common::OSS_VALID;
@@ -38,38 +47,29 @@ class Records extends Pic
                         $valid,
                         "GET",
                         [
-                            OssClient::OSS_PROCESS => Common::OSS_PROCESS_RESIZE
+                            OssClient::OSS_PROCESS => $sma
                         ]
                     );
 
-                    if ($this->is_support_webp) {
-                        $full = $this->oss_client->signUrl(
-                            getenv('OSS_BUCKET_NAME'),
-                            $record['path'],
-                            $valid,
-                            "GET",
-                            [
-                                OssClient::OSS_PROCESS => Common::OSS_PROCESS_FORMAT
-                            ]
-                        );
-                    } else {
-                        $full = $this->oss_client->signUrl(
-                            getenv('OSS_BUCKET_NAME'),
-                            $record['path'],
-                            $valid,
-                            "GET"
-                        );
-                    }
+                    $large = $this->oss_client->signUrl(
+                        getenv('OSS_BUCKET_NAME'),
+                        $record['path'],
+                        $valid,
+                        "GET",
+                        [
+                            OssClient::OSS_PROCESS => $lar
+                        ]
+                    );
                 } catch (OssException $e) {
-                    $full = $small = getenv('WEB_URL') . '/' . $record['path'];
+                    $large = $small = getenv('WEB_URL') . '/' . $record['path'];
                 }
             } else {
-                $full = $small = getenv('WEB_URL') . '/' .$record['path'];
+                $large = $small = getenv('WEB_URL') . '/' .$record['path'];
             }
 
             $photos[] = [
                   'hash' => $record['hash'],
-                  'full' => $full,
+                 'large' => $large,
                  'small' => $small,
                  'width' => $record['width'],
                 'height' => $record['height']
