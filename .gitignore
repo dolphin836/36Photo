@@ -16,10 +16,6 @@
 
 /Manage/public/picture
 
-/Manage/public/assets/gulpfile.js
-
-/Manage/public/assets/package.json
-
 /Manage/public/assets/package-lock.json
 
 /API/.env
@@ -45,9 +41,5 @@
 /Web/cache
 
 /Web/public/assets/node_modules
-
-/Web/public/assets/gulpfile.js
-
-/Web/public/assets/package.json
 
 /Web/public/assets/package-lock.json
