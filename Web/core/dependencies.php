@@ -1,5 +1,8 @@
 <?php
 
+use Slim\Http\Response;
+use GuzzleHttp\Psr7;
+
 $container = $app->getContainer();
 
 // db
@@ -30,4 +33,22 @@ $container['template'] = function ($c) {
              'auto_reload' => true,
         'strict_variables' => $debug
     ));
+};
+
+// 自定义 404 页面
+unset($container['notFoundHandler']);
+
+$container['notFoundHandler'] = function ($c) {
+    return function ($request, $response) use ($c) {
+        if (getenv('DEBUG') == 'TRUE') {
+            $not_found_template = '../app/Template/NotFound.html';
+        } else {
+            $not_found_template = '../app/View/NotFound.html';
+        }
+
+        $stream   = new Psr7\LazyOpenStream($not_found_template, 'r');
+        $response = new Response(404);
+
+        return $response->withBody($stream);
+    };
 };

@@ -33,11 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         photosElement.appendChild(photoElement);
 
+        var aElement = document.createElement("a");
+        aElement.setAttribute("href", '/photo/' + photos[i]['hash']);
+        aElement.setAttribute("target", '_blank');
+
+        photoElement.appendChild(aElement);
+
         var picElement = document.createElement("img");
         picElement.setAttribute("src", photos[i]['small']);
         picElement.setAttribute("data-progressive", photos[i]['large']);
         picElement.className    = "progressive__img progressive--not-loaded";
-        photoElement.appendChild(picElement);
+
+        aElement.appendChild(picElement);
     });
     
     appElement.appendChild(photosElement);

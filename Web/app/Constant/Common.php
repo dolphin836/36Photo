@@ -19,7 +19,7 @@ class Common
     // 阿里云 OSS 图片略缩图参数
     const OSS_PROCESS = 'image';
     const OSS_PROCESS_RESIZE_320 = '/resize,m_lfit,w_320';
-    const OSS_PROCESS_RESIZE_640 = '/resize,m_lfit,w_800';
+    const OSS_PROCESS_RESIZE_640 = '/resize,m_lfit,w_640';
     // 阿里云 OSS 图片格式转换参数
     const OSS_PROCESS_FORMAT = '/format,webp';
 }

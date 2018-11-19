@@ -1,6 +1,6 @@
 <?php
 
-$app->GET('/', "Dolphin\Ting\Controller\Discover");
+$app->get('/', "Dolphin\Ting\Controller\Discover");
 
 $app->get('/photo/{hash}', 'Dolphin\Ting\Controller\Pic\Record');
 

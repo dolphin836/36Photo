@@ -14,7 +14,8 @@
         "vlucas/phpdotenv": "^2.5",
         "catfan/medoo": "^1.5",
         "twig/twig": "^2.4",
-        "aliyuncs/oss-sdk-php": "^2.3"
+        "aliyuncs/oss-sdk-php": "^2.3",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
         "psr-4": {

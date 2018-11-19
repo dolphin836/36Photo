@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Common;
 use OSS\OssClient;
 use OSS\Core\OssException;
+use Slim\Exception\NotFoundException;
 
 class Record extends Pic
 {
@@ -14,12 +15,12 @@ class Record extends Pic
         $hash = $args['hash'];
 
         $record = $this->pic_model->record(["hash" => $hash]);
-
-        if (is_null($record)) {
-            return $response->withJson($this->respond(Common::ERROR_CODE_DATA));
+        // 生产环境
+        if (is_null($record) || (getenv('DEBUG') === 'FALSE' && $record['is_oss'] === 0)) {
+            throw new NotFoundException($request, $response);
         }
 
-        if ($record['is_oss']) {
+        if ($record['is_oss'] === 1) {
             $valid = Common::OSS_VALID;
 
             try {
@@ -28,7 +29,7 @@ class Record extends Pic
                 $path = getenv('WEB_URL') . '/' . $record['path'];
             }
         } else {
-            $path = getenv('WEB_URL') . '/' .$record['path'];
+            $path = getenv('WEB_URL') . '/' . $record['path'];
         }
 
         $data = [
@@ -38,13 +39,12 @@ class Record extends Pic
                      'size' => $this->size($record['size']),
                'gmt_create' => $record['gmt_create'],
                      'path' => $path,
-                   'is_oss' => $record['is_oss'] ? '1' : '0',
             'categroy_code' => $record['code'],
             'categroy_name' => $record['name'],
                      'uuid' => $record['uuid'],
                  'username' => $record['username']
         ];
 
-        return $response->withJson($this->respond(Common::ERROR_CODE_SUCCESS, $data));
+        $this->respond('Pic/Record', $data);
     }
 }

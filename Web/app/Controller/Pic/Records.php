@@ -7,9 +7,19 @@ use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
 use OSS\OssClient;
 use OSS\Core\OssException;
+use Slim\Exception\NotFoundException;
 
 class Records extends Pic
 {
+    /**
+     * 最新图片
+     *
+     * @param object $request  HTTP 请求对象
+     * @param object $response HTTP 响应对象
+     * @param array  $args     HTTP 请求参数
+     * 
+     * @return void
+     */
     public function __invoke($request, $response, $args)
     { 
         $page    = isset($args['page']) ? $args['page'] : 1;
@@ -24,6 +34,10 @@ class Records extends Pic
         }
 
         $records = $this->pic_model->records($fifter);
+
+        if (empty($records)) {
+            throw new NotFoundException($request, $response);
+        }
 
         $photos  = [];
 
