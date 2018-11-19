@@ -1,20 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     var appElement  = document.getElementById("app");
     var photoLayout = require('justified-layout');
-    var max         = document.body.clientWidth; // 页面可视区域宽度
+    var max         = document.body.clientWidth, // 页面可视区域宽度
+        topSpace    = 80,
+        bottomSpace = 80,
+        leftSpace   = parseInt(max * 0.1),
+        rightSpace  = leftSpace;
 
     var records = photoLayout(photos, {
           containerWidth: max,
         containerPadding: {
-               top: 80,
-             right: 80,
-              left: 80,
-            bottom: 80
+               top: topSpace,
+             right: rightSpace,
+              left: leftSpace,
+            bottom: bottomSpace
         },
-        boxSpacing: {
-            horizontal: 20,
-              vertical: 40
-        },
+        boxSpacing: 20,
         showWidows: false
     });
 

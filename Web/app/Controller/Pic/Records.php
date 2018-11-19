@@ -22,7 +22,7 @@ class Records extends Pic
      */
     public function __invoke($request, $response, $args)
     { 
-        $page    = isset($args['page']) ? $args['page'] : 1;
+        $page    = isset($args['page']) ? (int) $args['page'] : 1;
 
         $fifter  = [
             'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
@@ -89,9 +89,18 @@ class Records extends Pic
                 'height' => $record['height']
             ];
         }
+        // 总数量
+        $total = $this->pic_model->total($fifter);
+
+        $page_count = ceil($total / Common::PAGE_COUNT);
+
+        $next = $page >= $page_count ? 0 : $page + 1;
+        $prev = $page <= 1 ? 0 : $page - 1;
 
         $data = [
-            'photos' => $photos
+            'photos' => $photos,
+              'next' => $next,
+              'prev' => $prev
         ];
 
         $this->respond('Pic/Records', $data);

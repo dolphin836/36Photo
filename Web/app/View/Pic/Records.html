@@ -9,10 +9,22 @@
     // 获取图像数据
     var photos      = {{ photos|json_encode()|raw }};
 </script>
-<script src="/assets/dist/js/photos-61aa894973.js"></script>
+<script src="/assets/dist/js/photos-0e19e0be2d.js"></script>
 
 {% endblock %}
 
 {% block Content %}
+<div class="page">
+    {% if prev == 0 %}
+        <i data-feather="chevron-left"></i>
+    {% else %}
+        <a href="/photos/{{ prev }}"><i data-feather="chevron-left"></i></a>
+    {% endif %}
 
+    {% if next == 0 %}
+        <i data-feather="chevron-right"></i>
+    {% else %}
+        <a href="/photos/{{ next }}"><i data-feather="chevron-right"></i></a>
+    {% endif %}
+</div>
 {% endblock %}

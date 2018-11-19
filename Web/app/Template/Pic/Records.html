@@ -15,5 +15,17 @@
 {% endblock %}
 
 {% block Content %}
+<div class="page">
+    {% if prev == 0 %}
+        <i data-feather="chevron-left"></i>
+    {% else %}
+        <a href="/photos/{{ prev }}"><i data-feather="chevron-left"></i></a>
+    {% endif %}
 
+    {% if next == 0 %}
+        <i data-feather="chevron-right"></i>
+    {% else %}
+        <a href="/photos/{{ next }}"><i data-feather="chevron-right"></i></a>
+    {% endif %}
+</div>
 {% endblock %}
