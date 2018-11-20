@@ -38,7 +38,7 @@ class Pic extends \Dolphin\Ting\Controller\Base
 
     protected function size($size)
     {
-        $kb = ceil($size / 1024);
+        $kb = floor($size / 1024);
 
         if ($kb < 1024) {
             return $kb . ' KB';

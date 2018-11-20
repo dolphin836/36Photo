@@ -6,6 +6,8 @@ use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Common;
 use OSS\OssClient;
 use OSS\Core\OssException;
+use ColorThief\ColorThief;
+use Spatie\Color\Rgb;
 
 class GetRecord extends Pic
 {
@@ -44,6 +46,12 @@ class GetRecord extends Pic
                      'uuid' => $record['uuid'],
                  'username' => $record['username']
         ];
+
+        $dominantColor = ColorThief::getColor($record['path']);
+
+        $color = Rgb::fromString('rgb(0, 0, 255)')->toHex();
+
+        var_dump((string) $color);
 
         var_dump($data);
 

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * 自动添加本地的图片（包括入库、上传阿里云 OSS、智能设置标签）
+ * 自动添加本地的图片（包括入库、上传阿里云 OSS、智能设置标签、获取主色）
  * @author whb
  * @create 2018-09-14 18:18:00
- * @update 2018-10-31 18:00:00
+ * @update 2018-11-20 18:00:00
  */
 
 use Medoo\Medoo;
@@ -13,6 +13,8 @@ use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
+use ColorThief\ColorThief;
+use Spatie\Color\Rgb;
 
 define('ROOTPATH', __DIR__);
 // 设置时区
@@ -93,7 +95,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
         continue;
       }
 
-      $size = $result->getSize();
+      // $size = $result->getSize();
 
       list($width, $height, $type, $attr) = getimagesize($path);
       // 移动到上传目录
@@ -104,7 +106,9 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
       }
 
       var_dump(date("Y-m-d H:i:s") . ':Move To:' . $upload);
-
+      // 获取压缩后的文件大小
+      $size = filesize('./public/' . $upload);
+      // 生产环境下上传 OSS
       $is_oss = 0;
 
       if (! $is_debug) {
@@ -117,15 +121,20 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
         var_dump(date("Y-m-d H:i:s") . ':OSS Upload Over.');
       }
+      // 获取主色
+      $rgb   = ColorThief::getColor('./public/' . $upload);
 
-      $data = [
+      $color = (string) Rgb::fromString('rgb(' . $rgb[0] . ', ' . $rgb[1] . ', ' . $rgb[2] . ')')->toHex();
+
+      $data  = [
           'hash' => $hash,
           'uuid' => 'a22c38198f4b4ad992c4a1b89123d6e3',
          'width' => $width,
         'height' => $height,
           'path' => $upload,
           'size' => $size,
-        'is_oss' => $is_oss
+        'is_oss' => $is_oss,
+         'color' => substr($color, 1)
       ];
 
       $query = $db->insert('picture', $data);

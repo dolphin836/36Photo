@@ -8,6 +8,8 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Dolphin\Ting\Model\Collection_model;
+use ColorThief\ColorThief;
+use Spatie\Color\Rgb;
 
 class PostUpload extends Pic
 {
@@ -63,7 +65,11 @@ class PostUpload extends Pic
                 $data['uuid']          = $this->uuid;
                 $data['is_oss']        = 0;
                 $data['categroy_code'] = isset($categroy_code) ? $categroy_code : '';
-          
+                // 获取主色
+                $rgb   = ColorThief::getColor($data['path']);
+                $color = (string) Rgb::fromString('rgb(' . $rgb[0] . ', ' . $rgb[1] . ', ' . $rgb[2] . ')')->toHex();
+                $data['color'] = substr($color, 1);
+
                 $db = $this->pic_model->add($data);
 
                 if ($db->rowCount() && isset($collection_code)) {
@@ -81,7 +87,7 @@ class PostUpload extends Pic
     private function move($file)
     {
         $extension = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
-        $file_size = $file->getSize();
+        // $file_size = $file->getSize();
         $temp_name = md5($file->getClientFilename()) . '.' . $extension;
         $temp_path = Common::PHOTO_DIR . '/' . Common::PHOTO_DIR_TEMP . '/' . $temp_name;
         // 先将文件移入临时目录
@@ -108,6 +114,8 @@ class PostUpload extends Pic
             $file_path = $dir . '/' . $file_name;
     
             $this->image_opt->optimize($temp_path, $file_path);
+
+            $file_size = filesize($file_path);
 
             $is_success = true;
         }
