@@ -22,13 +22,18 @@
 }
 
 /* 公共部分 */
-
-body {
-    background-color: #141414;
-    color: white;
-}
-
 .photo {
     position: absolute;
+}
+
+.button-small {
+    font-size: .6rem;
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0 1.5rem;
+}
+
+.button-no-radius {
+    border-radius: 0;
 }
   

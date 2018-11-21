@@ -3,6 +3,8 @@
 namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Dolphin\Ting\Constant\Common;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Jenssegers\ImageHash\ImageHash;
@@ -39,7 +41,7 @@ class PostUpload extends Pic
         $this->collection_model = new Collection_model($app);
     }
 
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     {  
         $uri = $request->getUri();
 

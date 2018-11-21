@@ -2,7 +2,8 @@
 
 namespace Dolphin\Ting\Controller\Categroy;
 
-use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 class GetRecords extends Categroy
 {
@@ -13,7 +14,7 @@ class GetRecords extends Categroy
         '创建时间'
     ];
 
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     { 
         // 检索
         $search = $request->getAttribute('search');

@@ -3,6 +3,8 @@
 namespace Dolphin\Ting\Controller;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 class GetLogout
 {
@@ -13,7 +15,7 @@ class GetLogout
         $this->app = $app;
     }
 
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     {   
         if ($this->app->session->exists('uuid')) {
             $this->app->session->delete('uuid', $user['uuid']);

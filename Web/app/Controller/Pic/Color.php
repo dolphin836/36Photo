@@ -2,12 +2,13 @@
 
 namespace Dolphin\Ting\Controller\Pic;
 
-use Psr\Container\ContainerInterface as ContainerInterface;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use Slim\Exception\NotFoundException;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 class Color extends Pic
 {
@@ -20,7 +21,7 @@ class Color extends Pic
      * 
      * @return void
      */
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     { 
         $color = $args['color'];
 

@@ -22,4 +22,8 @@ class Common
     const OSS_PROCESS_RESIZE_640 = '/resize,m_lfit,w_640';
     // 阿里云 OSS 图片格式转换参数
     const OSS_PROCESS_FORMAT = '/format,webp';
+    // 已上传阿里云 OSS
+    const IS_OSS = '1';
+    // 未上传阿里云 OSS
+    const IS_NOT_OSS = '0';
 }

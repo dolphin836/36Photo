@@ -3,6 +3,8 @@
 namespace Dolphin\Ting\Controller\User;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
@@ -17,7 +19,7 @@ class GetRecords extends User
     '最近登录'
   ];
 
-  public function __invoke($request, $response, $args)
+  public function __invoke(Request $request, Response $response, $args)
   {  
     $page   = $request->getAttribute('page');
     // 检索

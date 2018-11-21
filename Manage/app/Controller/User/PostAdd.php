@@ -2,9 +2,12 @@
 
 namespace Dolphin\Ting\Controller\User;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class PostAdd extends \Dolphin\Ting\Controller\Base
 {
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     {   
         $body = $request->getParsedBody();
 

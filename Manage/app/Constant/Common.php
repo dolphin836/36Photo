@@ -18,4 +18,8 @@ class Common
     const COLOR_COUNT = 5;
     // 从图片中提取颜色时的计算精度
     const COLOR_QUALITY = 1;
+    // 已上传阿里云 OSS
+    const IS_OSS = 1;
+    // 未上传阿里云 OSS
+    const IS_NOT_OSS = 0;
 }

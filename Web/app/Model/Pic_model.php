@@ -96,6 +96,26 @@ class Pic_model extends Common_model
             'picture_hash'
         ], $data);
     }
+
+    public function pic_color($hash)
+    {
+        return $this->app->db->select(Table::PICTURE_COLOR, [
+            'color'
+        ], [
+            'picture_hash' => $hash
+        ]);
+    }
+
+    public function pic_mark($hash)
+    {
+        return $this->app->db->select(Table::MARK, [
+            "[>]" . Table::PICTURE_MARK => ["id" => "id"]
+        ], [
+            Table::MARK  . ".name"
+        ], [
+            Table::PICTURE_MARK . ".picture_hash" => $hash
+        ]);
+    }
 }
 
 

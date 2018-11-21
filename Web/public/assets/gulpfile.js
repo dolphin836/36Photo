@@ -10,9 +10,9 @@ let pump = require('pump');
 
 // 框架 CSS 文件处理：合并 => 压缩 => 添加后缀
 // 这部分 CSS 除非框架升级，不然不会变化，可以长期缓存在客户端来优化页面性能
-// 目前包括：Progressively
+// 目前包括：Normalize、Progressively、Milligram
 gulp.task('common-css', function() {
-    gulp.src(['./node_modules/normalize.css/normalize.css', './node_modules/progressively/src/progressively.css'])
+    gulp.src(['./node_modules/normalize.css/normalize.css', './node_modules/progressively/src/progressively.css', './node_modules/milligram/dist/milligram.css'])
         .pipe(concat('common.min.css'))
         .pipe(miniCss())
         .pipe(rev())

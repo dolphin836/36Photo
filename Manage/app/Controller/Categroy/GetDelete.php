@@ -2,11 +2,12 @@
 
 namespace Dolphin\Ting\Controller\Categroy;
 
-use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 class GetDelete extends Categroy
 {
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     {        
         $uri = $request->getUri();
 

@@ -3,6 +3,8 @@
 namespace Dolphin\Ting\Controller;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Respect\Validation\Validator as v;
 
 class PostLogin
@@ -14,7 +16,7 @@ class PostLogin
         $this->app = $app;
     }
 
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     {   
         $body = $request->getParsedBody();
 

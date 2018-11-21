@@ -3,6 +3,8 @@
 namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Dolphin\Ting\Model\Categroy_model;
 use Dolphin\Ting\Model\Collection_model;
 
@@ -21,7 +23,7 @@ class GetAdd extends Pic
         $this->collection_model = new Collection_model($app);
     }
 
-    public function __invoke($request, $response, $args)
+    public function __invoke(Request $request, Response $response, $args)
     {  
         $data = [
             'csrf' => [

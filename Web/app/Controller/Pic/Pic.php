@@ -67,7 +67,7 @@ class Pic extends \Dolphin\Ting\Controller\Base
         }
 
         foreach ($records as $record) {
-            if ($record['is_oss']) {
+            if ($record['is_oss'] === Common::IS_OSS) {
                 $valid = Common::OSS_VALID;
 
                 try {
