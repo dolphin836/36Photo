@@ -22,7 +22,7 @@ define('ROOTPATH', __DIR__);
 // 设置时区
 date_default_timezone_set('PRC');
 // 设置临时最大内存
-ini_set('memory_limit', '512M');
+ini_set('memory_limit', '1024M');
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 // 载入设置标签类文件
