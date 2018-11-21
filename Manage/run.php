@@ -4,7 +4,7 @@
  * 自动添加本地的图片（包括入库、上传阿里云 OSS、智能设置标签、获取主色）
  * @author whb
  * @create 2018-09-14 18:18:00
- * @update 2018-11-20 18:00:00
+ * @update 2018-11-21 11:00:00
  */
 
 use Medoo\Medoo;
@@ -15,6 +15,8 @@ use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use ColorThief\ColorThief;
 use Spatie\Color\Rgb;
+use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Table;
 
 define('ROOTPATH', __DIR__);
 // 设置时区
@@ -95,8 +97,6 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
         continue;
       }
 
-      // $size = $result->getSize();
-
       list($width, $height, $type, $attr) = getimagesize($path);
       // 移动到上传目录
       $upload = upload($path, $result->getExtension(), $image_opt);
@@ -121,10 +121,6 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
         var_dump(date("Y-m-d H:i:s") . ':OSS Upload Over.');
       }
-      // 获取主色
-      $rgb   = ColorThief::getColor('./public/' . $upload);
-
-      $color = (string) Rgb::fromString('rgb(' . $rgb[0] . ', ' . $rgb[1] . ', ' . $rgb[2] . ')')->toHex();
 
       $data  = [
           'hash' => $hash,
@@ -133,15 +129,27 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
         'height' => $height,
           'path' => $upload,
           'size' => $size,
-        'is_oss' => $is_oss,
-         'color' => substr($color, 1)
+        'is_oss' => $is_oss
       ];
 
-      $query = $db->insert('picture', $data);
+      $query = $db->insert(Table::PICTURE, $data);
 
       if ($query->rowCount()) {
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
-        // 图片操作成功后继续添加标签
+        // 主要颜色
+        $color_arr = ColorThief::getPalette('./public/' . $upload,  Common::COLOR_COUNT, Common::COLOR_QUALITY);
+
+        foreach ($color_arr as $color) {
+          $rgb = 'rgb(' . $color[0] . ', ' . $color[1] . ', ' . $color[2] . ')';
+          $hex = (string) Rgb::fromString($rgb)->toHex();
+          $hex = substr($hex, 1);
+
+          $db->insert(Table::PICTURE_COLOR, [
+            'picture_hash' => $hash,
+                   'color' => $hex
+          ]);
+        }
+        // 标签
         if ($is_oss) { // 只处理 OSS 上传成功的
           $valid = 60;
 
@@ -154,20 +162,20 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
           $marks = $mark->run($pic);
 
           foreach ($marks as $mark_name) {
-            if (! $db->has('mark', ['name' => $mark_name])) {
-              $query = $db->insert('mark', [
+            if (! $db->has(Table::MARK, ['name' => $mark_name])) {
+              $query = $db->insert(Table::MARK, [
                 'name' => $mark_name
               ]);
 
               $mark_id = $db->id();
             } else {
-              $query = $db->update('mark', [
+              $query = $db->update(Table::MARK, [
                 'count[+]' => 1
               ], [
                 'name' => $mark_name
               ]);
 
-              $mark_info = $db->get('mark', [
+              $mark_info = $db->get(Table::MARK, [
                 'id'
               ], [
                 'name' => $mark_name
@@ -177,7 +185,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
             }
 
             if ($query->rowCount()) {
-              $db->insert('picture_mark', [
+              $db->insert(Table::PICTURE_MARK, [
                 'picture_hash' => $hash,
                      'mark_id' => $mark_id
               ]);

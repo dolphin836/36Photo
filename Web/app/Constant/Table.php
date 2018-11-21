@@ -22,4 +22,6 @@ class Table
     const COLLECTION = 'collection';
     // 专题 - 图片
     const PICTURE_COLLECTION = 'picture_collection';
+    // 图片 - 颜色
+    const PICTURE_COLOR = 'picture_color';
 }

@@ -39,13 +39,11 @@ CREATE TABLE `picture` (
     `is_public` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否公开：0 - 否、1 - 是',
     `is_oss` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否已上传阿里云 OSS：0 - 否、1 - 是',
     `categroy_code` VARCHAR(16) NOT NULL DEFAULT 'default' COMMENT '分类标识符',
-    `color` CHAR(6) NOT NULL DEFAULT '' COMMENT '主色',
     `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_hash` (`hash`),
-    KEY `idx_categroy` (`categroy_code`),
-    KEY `idx_color` (`color`)
+    KEY `idx_categroy` (`categroy_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片信息记录表';
 
 CREATE TABLE `mark` (
@@ -59,8 +57,10 @@ CREATE TABLE `mark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标签信息记录表';
 
 CREATE TABLE `picture_mark` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
     `mark_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '标签 ID',
+    PRIMARY KEY (`id`),
     KEY `idx_picture` (`picture_hash`),
     KEY `idx_mark` (`mark_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 标签映射关系记录表';
@@ -100,7 +100,18 @@ CREATE TABLE `collection` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题信息记录表';
 
 CREATE TABLE `picture_collection` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
     `collection_code` CHAR(16) NOT NULL DEFAULT '' COMMENT '专题 Code',
+    PRIMARY KEY (`id`),
     KEY `idx_collection_code` (`collection_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题 - 图片映射关系记录表';
+
+CREATE TABLE `picture_color` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
+    `color` CHAR(6) NOT NULL DEFAULT '' COMMENT '颜色 HEX 值',
+    PRIMARY KEY (`id`),
+    KEY `idx_picture_hash` (`picture_hash`),
+    KEY `idx_color` (`color`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 颜色映射关系记录表';

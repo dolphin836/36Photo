@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bottom: bottomSpace
         },
         boxSpacing: 20,
-        showWidows: false
+        showWidows: true
     });
 
     var photosElement               = document.createElement("div");

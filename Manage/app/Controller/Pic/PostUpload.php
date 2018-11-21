@@ -65,15 +65,23 @@ class PostUpload extends Pic
                 $data['uuid']          = $this->uuid;
                 $data['is_oss']        = 0;
                 $data['categroy_code'] = isset($categroy_code) ? $categroy_code : '';
-                // 获取主色
-                $rgb   = ColorThief::getColor($data['path']);
-                $color = (string) Rgb::fromString('rgb(' . $rgb[0] . ', ' . $rgb[1] . ', ' . $rgb[2] . ')')->toHex();
-                $data['color'] = substr($color, 1);
 
                 $db = $this->pic_model->add($data);
-
+                // 专题
                 if ($db->rowCount() && isset($collection_code)) {
                     $this->collection_model->add_picture($collection_code, $data['hash']);
+                }
+                // 主要颜色
+                if ($db->rowCount()) {
+                    $color_arr = ColorThief::getPalette($data['path'], Common::COLOR_COUNT, Common::COLOR_QUALITY);
+
+                    foreach ($color_arr as $color) {
+                        $rgb = 'rgb(' . $color[0] . ', ' . $color[1] . ', ' . $color[2] . ')';
+                        $hex = (string) Rgb::fromString($rgb)->toHex();
+                        $hex = substr($hex, 1);
+              
+                        $this->pic_model->add_color($data['hash'], $hex);
+                    }
                 }
             }
         }

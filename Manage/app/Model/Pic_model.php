@@ -77,6 +77,14 @@ class Pic_model extends Common_model
             Table::USER     . ".username"
         ], $data);
     }
+
+    public function add_color($hash, $color)
+    {
+        return $this->app->db->insert(Table::PICTURE_COLOR, [
+            'picture_hash' => $hash,
+                   'color' => $color
+        ]);
+    }
 }
 
 

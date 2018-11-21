@@ -17,7 +17,7 @@ class Pic_model extends Common_model
     public function records($data = [])
     {
         if (! isset($data["ORDER"])) {
-            $data["ORDER"] = [Table::PICTURE . ".gmt_create" => "DESC"];
+            $data["ORDER"] = [Table::PICTURE . ".id" => "DESC"];
         }
 
         if (isset($data['categroy'])) {
@@ -28,6 +28,11 @@ class Pic_model extends Common_model
         if (isset($data['uuid'])) {
             $data[Table::PICTURE . '.uuid'] = $data['uuid'];
             unset($data['uuid']);
+        }
+
+        // 生产环境只展示已上传阿里云的记录
+        if (getenv('DEBUG') === 'FALSE') {
+            $data[Table::PICTURE . '.is_oss'] = 1;
         }
 
         return $this->app->db->select(Table::PICTURE, [
@@ -75,6 +80,20 @@ class Pic_model extends Common_model
             Table::CATEGROY . ".name",
             Table::USER     . ".uuid",
             Table::USER     . ".username"
+        ], $data);
+    }
+
+    public function color_hash_total($color)
+    {
+        return $this->app->db->count(Table::PICTURE_COLOR, [
+            'color' => $color
+        ]);
+    }
+
+    public function color_hash($data)
+    {
+        return $this->app->db->select(Table::PICTURE_COLOR, [
+            'picture_hash'
         ], $data);
     }
 }

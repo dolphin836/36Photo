@@ -7,6 +7,7 @@ use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Model\Pic_model;
+use Dolphin\Ting\Constant\Common;
 
 class Pic extends \Dolphin\Ting\Controller\Base
 {
@@ -44,5 +45,93 @@ class Pic extends \Dolphin\Ting\Controller\Base
         $mb = round($kb / 1024, 2);
 
         return $mb . ' M';
+    }
+
+    /**
+     * 将数据库查询的多条图片信息记录转换成最终输出的格式
+     *
+     * @param  array $data
+     * @return array
+     */
+    protected function convert($records)
+    {
+        $photos = [];
+
+        $sma   = $lar = Common::OSS_PROCESS;
+        $sma  .= Common::OSS_PROCESS_RESIZE_320;
+        $lar  .= Common::OSS_PROCESS_RESIZE_640;
+
+        if ($this->is_support_webp) {
+            $sma .= Common::OSS_PROCESS_FORMAT;
+            $lar .= Common::OSS_PROCESS_FORMAT; 
+        }
+
+        foreach ($records as $record) {
+            if ($record['is_oss']) {
+                $valid = Common::OSS_VALID;
+
+                try {
+                    $small = $this->oss_client->signUrl(
+                        getenv('OSS_BUCKET_NAME'),
+                        $record['path'],
+                        $valid,
+                        "GET",
+                        [
+                            OssClient::OSS_PROCESS => $sma
+                        ]
+                    );
+
+                    $large = $this->oss_client->signUrl(
+                        getenv('OSS_BUCKET_NAME'),
+                        $record['path'],
+                        $valid,
+                        "GET",
+                        [
+                            OssClient::OSS_PROCESS => $lar
+                        ]
+                    );
+                } catch (OssException $e) {
+                    $large = $small = getenv('WEB_URL') . '/' . $record['path'];
+                }
+            } else {
+                $large = $small = getenv('WEB_URL') . '/' .$record['path'];
+            }
+
+            $photos[] = [
+                  'hash' => $record['hash'],
+                 'large' => $large,
+                 'small' => $small,
+                 'width' => $record['width'],
+                'height' => $record['height']
+            ];
+        }
+
+        return $photos;
+    }
+
+    /**
+     * 根据记录总数计算下一页的值
+     *
+     * @param  int $total
+     * @return int
+     */
+    protected function next($total, $page)
+    {
+        $page_count = ceil($total / Common::PAGE_COUNT);
+
+        return $page >= $page_count ? 0 : $page + 1;
+    }
+
+    /**
+     * 根据记录总数计算上一页的值
+     *
+     * @param  int $total
+     * @return int
+     */
+    protected function prev($total, $page)
+    {
+        $page_count = ceil($total / Common::PAGE_COUNT);
+
+        return $page <= 1 ? 0 : $page - 1;
     }
 }
