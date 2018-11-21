@@ -137,6 +137,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
       if ($query->rowCount()) {
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
         // 主要颜色
+        var_dump(memory_get_usage());
         $color_arr = ColorThief::getPalette('./public/' . $upload,  Common::COLOR_COUNT, Common::COLOR_QUALITY);
 
         foreach ($color_arr as $color) {
