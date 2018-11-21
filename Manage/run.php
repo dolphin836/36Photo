@@ -139,7 +139,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
         // 主要颜色
         var_dump(memory_get_usage());
         $color_arr = ColorThief::getPalette('./public/' . $upload,  Common::COLOR_COUNT, Common::COLOR_QUALITY);
-
+        var_dump(memory_get_usage());
         foreach ($color_arr as $color) {
           $rgb = 'rgb(' . $color[0] . ', ' . $color[1] . ', ' . $color[2] . ')';
           $hex = (string) Rgb::fromString($rgb)->toHex();
