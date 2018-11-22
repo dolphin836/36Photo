@@ -11,7 +11,9 @@ use Dolphin\Ting\Constant\Common;
 class GetColor extends Pic
 {
     public function __invoke(Request $request, Response $response, $args)
-    {        
+    {   
+        ini_set('memory_limit', '512M');
+
         $uri = $request->getUri();
 
         parse_str($uri->getQuery(), $querys);
