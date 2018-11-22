@@ -12,7 +12,7 @@ class GetColor extends Pic
 {
     public function __invoke(Request $request, Response $response, $args)
     {   
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '1024M');
 
         $uri = $request->getUri();
 
