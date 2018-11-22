@@ -13,8 +13,6 @@ use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
-use ColorThief\ColorThief;
-use Spatie\Color\Rgb;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
 
@@ -136,20 +134,6 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       if ($query->rowCount()) {
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
-        // 主要颜色
-        var_dump(memory_get_usage());
-        $color_arr = ColorThief::getPalette('./public/' . $upload,  Common::COLOR_COUNT, Common::COLOR_QUALITY);
-        var_dump(memory_get_usage());
-        foreach ($color_arr as $color) {
-          $rgb = 'rgb(' . $color[0] . ', ' . $color[1] . ', ' . $color[2] . ')';
-          $hex = (string) Rgb::fromString($rgb)->toHex();
-          $hex = substr($hex, 1);
-
-          $db->insert(Table::PICTURE_COLOR, [
-            'picture_hash' => $hash,
-                   'color' => $hex
-          ]);
-        }
         // 标签
         if ($is_oss) { // 只处理 OSS 上传成功的
           $valid = 60;
