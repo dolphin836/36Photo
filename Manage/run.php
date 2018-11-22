@@ -138,7 +138,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
       if ($query->rowCount()) {
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
         // 主要颜色
-        $host = $is_debug ? 'http://xiaoxi.com.cn' : 'https://manage.haibing.site';
+        $host = $is_debug ? 'http://xiaoxi.com.cn' : 'http://xiaoxi.com.cn';
 
         $guzzle->request('GET', $host . '/pic/color', [
             'query' => ['hash' => $hash]
@@ -216,6 +216,8 @@ function upload($path, $extension, $image_opt)
   $file_path = $dir . '/' . $file_name;
 
   $image_opt->optimize($path, './public/' . $file_path);
+
+  unlink($path);
 
   return $file_path;
 }

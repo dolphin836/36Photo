@@ -7,6 +7,8 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\Stream;
 use Dolphin\Ting\Constant\Common;
+use OSS\OssClient;
+use OSS\Core\OssException;
 
 class D extends Pic
 {
@@ -21,6 +23,24 @@ class D extends Pic
         }
 
         $photo  = '../../Manage/public/' . $record['path'];
+        // 本地不存在则先从 OSS 下载
+        if (! file_exists($photo)) {
+
+            $dir = dirname($photo);
+
+            if (! is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+
+            try {
+                $this->oss_client->getObject(getenv('OSS_BUCKET_NAME'), $record['path'], [
+                    OssClient::OSS_FILE_DOWNLOAD => $photo
+                ]);
+            } catch (OssException $e) {
+                return $response->write($e->getMessage());
+            }
+        }
+
         $file   = fopen($photo, 'rb');
         $stream = new Stream($file);
 
