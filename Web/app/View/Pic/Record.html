@@ -14,17 +14,17 @@
                 <dt>颜色</dt>
                 {% for hex in color %}
                     <dd>
-                        <a href="/photos/color/{{ hex }}" class="button button-small button-no-radius" style="background-color: #{{ hex }}; border: none;">
+                        <a href="/color/{{ hex }}" class="button button-small button-no-radius" style="background-color: #{{ hex }}; border: none;">
                             #{{ hex }}
                         </a>
                     </dd>
                 {% endfor %}
                 <dt>标签</dt>
                 {% for m in mark %}
-                    <dd><a href="/photos/mark/{{ m }}">{{ m }}</a></dd>
+                    <dd><a href="/mark/{{ m.name }}">{{ m.name }}（{{ m.count }}）</a></dd>
                 {% endfor %}
                 <dt>分类</dt>
-                <dd><a href="/photos/categroy/{{ categroy_code }}">{{ categroy_name }}</a></dd>
+                <dd><a href="/categroy/{{ categroy_code }}">{{ categroy_name }}</a></dd>
             </dl>
             <a href="/photo/d/{{ hash }}" class="button button-outline" download target="_blank">免费下载</a>
         </div>

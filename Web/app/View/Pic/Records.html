@@ -7,14 +7,16 @@
 {% block Js %}
 <script>
     // 获取图像数据
-    var photos      = {{ photos|json_encode()|raw }};
+    var photos  = {{ photos|json_encode()|raw }};
+    var is_show = "{{ is_show }}";
 </script>
-<script src="/assets/dist/js/photos-9c7ebfa3bf.js"></script>
+<script src="/assets/dist/js/photos-a57ae5c5d0.js"></script>
 
 {% endblock %}
 
 {% block Content %}
-<div class="container" style="padding-top: 4rem;">
+<div id="photo"></div>
+<div class="container" style="padding-bottom: 4rem;">
     <div class="row">
         <div class="column">
             <a href="{{ prev }}" class="button button-outline float-right">上一页</a>

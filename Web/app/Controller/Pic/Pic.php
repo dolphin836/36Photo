@@ -2,12 +2,13 @@
 
 namespace Dolphin\Ting\Controller\Pic;
 
-use Psr\Container\ContainerInterface as ContainerInterface;
+use Psr\Container\ContainerInterface;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Model\Pic_model;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Nav;
 
 class Pic extends \Dolphin\Ting\Controller\Base
 {
@@ -32,6 +33,8 @@ class Pic extends \Dolphin\Ting\Controller\Base
         }
 
         $this->pic_model = new Pic_model($app);
+
+        $this->nav = Nav::PICTURE;
     }
 
     protected function size($size)

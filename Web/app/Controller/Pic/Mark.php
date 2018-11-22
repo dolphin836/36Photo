@@ -4,21 +4,22 @@ namespace Dolphin\Ting\Controller\Pic;
 
 use Psr\Container\ContainerInterface;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Table;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Constant\Nav;
 
-class Color extends Pic
+class Mark extends Pic
 {
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
 
-        $this->nav = Nav::COLOR;
+        $this->nav = Nav::MARK;
     }
     /**
-     * 按颜色查询图片记录
+     * 按标签查询图片记录
      *
      * @param object $request  HTTP 请求对象
      * @param object $response HTTP 响应对象
@@ -28,18 +29,18 @@ class Color extends Pic
      */
     public function __invoke(Request $request, Response $response, $args)
     { 
-        $color = $args['color'];
+        $mark = $args['mark'];
 
         $page  = isset($args['page']) ? (int) $args['page'] : 1;
         // 总数量
-        $total = $this->pic_model->color_hash_total($color);
+        $total = $this->pic_model->mark_hash_total($mark);
 
         $fifter = [
-            'color' => $color,
+            Table::MARK . '.name' => $mark,
             'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
         ];
         // 当前页 Hash
-        $hash    = $this->pic_model->color_hash($fifter);
+        $hash    = $this->pic_model->mark_hash($fifter);
 
         $records = $this->pic_model->records(['hash' => array_column($hash, 'picture_hash')]);
 
@@ -52,7 +53,7 @@ class Color extends Pic
         $next   = $this->next($total, $page);
         $prev   = $this->prev($total, $page);
 
-        $common = '/color/' . $color . '/';
+        $common = '/mark/' . $mark . '/';
 
         $data   = [
              'photos' => $photos,

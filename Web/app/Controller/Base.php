@@ -2,7 +2,7 @@
 
 namespace Dolphin\Ting\Controller;
 
-use Psr\Container\ContainerInterface as ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class Base
 {
@@ -37,7 +37,7 @@ class Base
         // 页面信息
         $data['site'] = [
               'web_name' => getenv('WEB_NAME'),
-              'nav_item' => $this->nav,
+                   'nav' => $this->nav,
             'asset_path' => $this->asset_path,
              'timestamp' => $this->timestamp,
         ];

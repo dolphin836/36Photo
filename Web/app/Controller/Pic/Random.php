@@ -9,16 +9,16 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Constant\Nav;
 
-class Color extends Pic
+class Random extends Pic
 {
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
 
-        $this->nav = Nav::COLOR;
+        $this->nav = Nav::RANDOM;
     }
     /**
-     * 按颜色查询图片记录
+     * 随机查询图片记录
      *
      * @param object $request  HTTP 请求对象
      * @param object $response HTTP 响应对象
@@ -28,20 +28,13 @@ class Color extends Pic
      */
     public function __invoke(Request $request, Response $response, $args)
     { 
-        $color = $args['color'];
-
-        $page  = isset($args['page']) ? (int) $args['page'] : 1;
-        // 总数量
-        $total = $this->pic_model->color_hash_total($color);
+        $page   = isset($args['page']) ? (int) $args['page'] : 1;
 
         $fifter = [
-            'color' => $color,
-            'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
+            "LIMIT" => [0, Common::PAGE_COUNT]
         ];
-        // 当前页 Hash
-        $hash    = $this->pic_model->color_hash($fifter);
 
-        $records = $this->pic_model->records(['hash' => array_column($hash, 'picture_hash')]);
+        $records = $this->pic_model->random($fifter);
 
         if (empty($records)) {
             throw new NotFoundException($request, $response);
@@ -49,16 +42,18 @@ class Color extends Pic
         // 转换数据格式
         $photos = $this->convert($records);
         // 上下页
+        $total  = $this->pic_model->total([]);
+
         $next   = $this->next($total, $page);
         $prev   = $this->prev($total, $page);
 
-        $common = '/color/' . $color . '/';
+        $common = '/random/';
 
         $data   = [
              'photos' => $photos,
                'next' => $next ? $common . $next : 'javascript:void(0)',
                'prev' => $prev ? $common . $prev : 'javascript:void(0)',
-            'is_show' => true
+            'is_show' => false
         ];
 
         $this->respond('Pic/Records', $data);

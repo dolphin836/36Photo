@@ -3,9 +3,6 @@
 namespace Dolphin\Ting\Controller\Pic;
 
 use Dolphin\Ting\Constant\Common;
-use Dolphin\Ting\Constant\Table;
-use OSS\OssClient;
-use OSS\Core\OssException;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -45,9 +42,10 @@ class Records extends Pic
         $common = '/photos/';
 
         $data   = [
-            'photos' => $photos,
-              'next' => $next ? $common . $next : 'javascript:void(0)',
-              'prev' => $prev ? $common . $prev : 'javascript:void(0)'
+             'photos' => $photos,
+               'next' => $next ? $common . $next : 'javascript:void(0)',
+               'prev' => $prev ? $common . $prev : 'javascript:void(0)',
+            'is_show' => false
         ];
 
         $this->respond('Pic/Records', $data);

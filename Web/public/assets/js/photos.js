@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    var appElement  = document.getElementById("app");
+    var appElement  = document.getElementById("photo");
     var photoLayout = require('justified-layout');
     var max         = document.body.clientWidth, // 页面可视区域宽度
-        topSpace    = 80,
-        bottomSpace = 80,
-        leftSpace   = parseInt(max * 0.1),
-        rightSpace  = leftSpace;
+        topSpace    = 10,
+        bottomSpace = 60,
+        leftSpace   = 20,
+        rightSpace  = 20;
 
     var records = photoLayout(photos, {
           containerWidth: max,
@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
             bottom: bottomSpace
         },
         boxSpacing: 20,
-        showWidows: true
+        showWidows: is_show,
+        targetRowHeight: 240
     });
 
     var photosElement               = document.createElement("div");
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var picElement = document.createElement("img");
         picElement.setAttribute("src", photos[i]['small']);
         picElement.setAttribute("data-progressive", photos[i]['large']);
-        picElement.className    = "progressive__img progressive--not-loaded";
+        picElement.className = "progressive__img progressive--not-loaded";
 
         aElement.appendChild(picElement);
     });

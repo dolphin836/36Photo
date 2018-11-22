@@ -49,7 +49,7 @@ class Record extends Pic
                      'uuid' => $record['uuid'],
                  'username' => $record['username'],
                     'color' => array_column($color, 'color'),
-                     'mark' => array_column($mark, 'name')
+                     'mark' => $mark
         ];
 
         $this->respond('Pic/Record', $data);

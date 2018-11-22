@@ -6,16 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block Title %} {{ site.web_name }} {% endblock %}</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="/assets/dist/css/common-3698ca301b.min.css">
 
-    <link rel="stylesheet" href="/assets/dist/css/app-2450d8dffa.css">
+    <link rel="stylesheet" href="/assets/dist/css/app-4229b12a13.css">
 
     {% block Css %} {% endblock %}
 </head>
 
 <body>
     <div id="app">
+        {{ include('Common/Nav.html') }}
+        
         {% block Content %}{% endblock %}
+
+        {{ include('Common/Footer.html') }}
     </div>
 
     <script src="/assets/dist/js/common-ba6e55911f.min.js"></script>

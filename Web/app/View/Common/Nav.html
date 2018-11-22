@@ -1,62 +1,19 @@
-<nav class="navbar is-transparent is-fixed-top is-dark" role="navigation" aria-label="main navigation">
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo-white.png" width="112" height="28">
-            </a>
-
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+<div class="container nav">
+    <div class="row">
+        <div class="column">
+            <ul>
+                <li><a href="/" class="button {{ site.nav == 'discover' ? 'button-black' : '' }} button-clear button-middle">Discover</a></li>
+                <li><a href="/photos" class="button {{ site.nav == 'photos' ? 'button-black' : '' }} button-clear button-middle">Photo</a></li>
+                <li><a href="/marks" class="button {{ site.nav == 'marks' ? 'button-black' : '' }} button-clear button-middle">Mark</a></li>
+                <li><a href="/colors" class="button {{ site.nav == 'colors' ? 'button-black' : '' }} button-clear button-middle">Color</a></li>
+                <li><a href="/random" class="button {{ site.nav == 'random' ? 'button-black' : '' }} button-clear button-middle">Random</a></li>
+            </ul>
         </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item">
-                    Home
-                </a>
-
-                <a class="navbar-item">
-                    Documentation
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        More
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            About
-                        </a>
-                        <a class="navbar-item">
-                            Jobs
-                        </a>
-                        <a class="navbar-item">
-                            Contact
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Report an issue
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light">
-                            Log in
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="column right">
+            <ul>
+                <li><a href="/signup" class="button {{ site.nav == 'signup' ? 'button-black' : '' }} button-outline button-middle">Get started</a></li>
+                <li><a href="/signin" class="button {{ site.nav == 'signin' ? 'button-black' : '' }} button-clear button-middle">Sign In</a></li>
+            </ul>
         </div>
     </div>
-</nav>
+</div>

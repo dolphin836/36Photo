@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block Title %} {{ site.web_name }} {% endblock %}</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <!-- build:common-css -->
     <link rel="stylesheet" href="/assets/node_modules/normalize.css/normalize.css">
     <link rel="stylesheet" href="/assets/node_modules/progressively/src/progressively.css">
@@ -19,7 +20,11 @@
 
 <body>
     <div id="app">
+        {{ include('Common/Nav.html') }}
+        
         {% block Content %}{% endblock %}
+
+        {{ include('Common/Footer.html') }}
     </div>
 
     <!-- build:common-script -->

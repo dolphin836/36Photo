@@ -61,6 +61,7 @@ CREATE TABLE `picture_mark` (
     `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
     `mark_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '标签 ID',
     PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_pic_mark` (`picture_hash`, `mark_id`),
     KEY `idx_picture` (`picture_hash`),
     KEY `idx_mark` (`mark_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 标签映射关系记录表';
@@ -116,3 +117,7 @@ CREATE TABLE `picture_color` (
     KEY `idx_picture_hash` (`picture_hash`),
     KEY `idx_color` (`color`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 颜色映射关系记录表';
+
+-- 查询颜色出现的次数，从高到低排序
+
+-- SELECT `color` FROM `picture_color` GROUP BY `color` ORDER BY COUNT(`color`) DESC LIMIT 30

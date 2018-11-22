@@ -1,0 +1,21 @@
+{% extends "Template.html" %}
+
+{% block Title %}
+热门标签
+{% endblock %}
+
+{% block Content %}
+<div class="container" style="padding: 4rem 0;">
+    {% for mark in marks %}
+        {% if loop.index0 % 4 == 0 %}
+        <div class="row">
+        {% endif %}
+            <div class="column">
+                <a href="/mark/{{ mark.name }}">{{ mark.name }} - {{ mark.count }}</a>
+            </div>
+        {% if loop.index0 % 4 == 3 %}
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
