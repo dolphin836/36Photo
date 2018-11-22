@@ -96,7 +96,7 @@ CREATE TABLE `collection` (
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_code` (`code`),
-    KEY `uk_uuid` (`uuid`)
+    KEY `idx_uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题信息记录表';
 
 CREATE TABLE `picture_collection` (
@@ -112,6 +112,7 @@ CREATE TABLE `picture_color` (
     `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
     `color` CHAR(6) NOT NULL DEFAULT '' COMMENT '颜色 HEX 值',
     PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_pic_color` (`picture_hash`, `color`),
     KEY `idx_picture_hash` (`picture_hash`),
     KEY `idx_color` (`color`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 颜色映射关系记录表';

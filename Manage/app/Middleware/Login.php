@@ -19,7 +19,7 @@ class Login
 
         $route = $uri->getPath();
 
-        if ($route != '/login' && ! $this->app->session->exists('uuid')) {
+        if ($route != '/login' && $route != '/pic/color' && ! $this->app->session->exists('uuid')) {
             return $response->withRedirect('/login', 302);
         }
 

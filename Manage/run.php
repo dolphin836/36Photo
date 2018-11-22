@@ -15,6 +15,7 @@ use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
+use GuzzleHttp\Client;
 
 define('ROOTPATH', __DIR__);
 // 设置时区
@@ -57,15 +58,17 @@ try {
 }
 // 标签
 $mark = new Mark(getenv('OSS_ACCESS_KEY_ID'), getenv('OSS_ACCESS_SECRET'));
+// HTTP Client
+$guzzle = new Client();
 
 var_dump(date("Y-m-d H:i:s") . ':**********Start Run**********');
 
-found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug);
+found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle);
 
 /**
  * 遍历文件夹，处理图片
  */
-function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug)
+function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle)
 {
   $results = new \FilesystemIterator($dir);
 
@@ -73,7 +76,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
   {
       // 递归目录
       if ($result->isDir()) {
-        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug);
+        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle);
         // 删除目录
         rmdir($result->getPathname());
       }
@@ -134,6 +137,12 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       if ($query->rowCount()) {
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
+        // 主要颜色
+        $host = $is_debug ? 'http://xiaoxi.com.cn' : 'https://manage.haibing.site';
+
+        $guzzle->request('GET', $host . '/pic/color', [
+            'query' => ['hash' => $hash]
+        ]);
         // 标签
         if ($is_oss) { // 只处理 OSS 上传成功的
           $valid = 60;
