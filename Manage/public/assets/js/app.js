@@ -69,10 +69,9 @@ $(document).ready(function() {
 
                 path += name + "=" + encodeURIComponent(value);
             }
+
         });
 
-        if (path != window.location.pathname) {
-            window.location.href = path;
-        }
+        window.location.href = path;
     });
 });

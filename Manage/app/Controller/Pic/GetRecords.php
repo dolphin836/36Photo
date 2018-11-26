@@ -26,6 +26,12 @@ class GetRecords extends Pic
         // 检索
         $search = $request->getAttribute('search');
 
+        $query  = '&';
+
+        if (! empty($search)) {
+            $query .= http_build_query($search);
+        }
+
         $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
 
         $records = $this->pic_model->records($search);
@@ -65,7 +71,8 @@ class GetRecords extends Pic
         $data = [
             "records" => $images,
             "columns" => $this->columns,
-               "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, '')
+               "text" => $request->getAttribute('text'),
+               "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Pic/Records', $data);

@@ -30,6 +30,11 @@ class Pic_model extends Common_model
             unset($data['uuid']);
         }
 
+        if (isset($data['oss'])) {
+            $data[Table::PICTURE . '.is_oss'] = $data['oss'];
+            unset($data['oss']);
+        }
+
         return $this->app->db->select(Table::PICTURE, [
             "[>]" . Table::CATEGROY => ["categroy_code" => "code"],
             "[>]" . Table::USER     => ["uuid" => "uuid"],
@@ -84,6 +89,32 @@ class Pic_model extends Common_model
             'picture_hash' => $hash,
                    'color' => $color
         ]);
+    }
+
+    /**
+     * 记录总数
+     */
+    public function total($data = [])
+    {
+        if (isset($data['LIMIT'])) {
+            unset($data['LIMIT']);
+        }
+
+        if (isset($data['ORDER'])) {
+            unset($data['ORDER']);
+        }
+
+        if (isset($data['oss'])) {
+            $data['is_oss'] = $data['oss'];
+            unset($data['oss']);
+        }
+
+        if (isset($data['categroy'])) {
+            $data['categroy_code'] = $data['categroy'];
+            unset($data['categroy']);
+        }
+
+        return $this->app->db->count($this->table_name, $data);
     }
 }
 

@@ -43,3 +43,7 @@
 /Web/public/assets/node_modules
 
 /Web/public/assets/package-lock.json
+
+/Photo/vendor
+
+/Photo/Pic
