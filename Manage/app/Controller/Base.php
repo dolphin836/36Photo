@@ -58,5 +58,24 @@ class Base
     {
         return str_replace('-', '', U::uuid4()->toString()); 
     }
+
+    /**
+     * 转换字节数为 KB、MB
+     *
+     * @param [type] $size
+     * @return void
+     */
+    protected function size($size)
+    {
+        $kb = floor($size / 1024);
+
+        if ($kb < 1024) {
+            return $kb . ' KB';
+        }
+
+        $mb = round($kb / 1024, 2);
+
+        return $mb . ' M';
+    }
 }
 

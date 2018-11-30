@@ -51,9 +51,14 @@ class Query
                         $filter[$k[1]] = $value;
                     }
 
-                    $text[$k[1]] = $value;
+                    $text[$key] = $value;
                 }
             }
+
+            // var_dump($filter);
+            // var_dump($text);
+
+            // exit();
 
             $request = $request->withAttribute('page',   $page);
             $request = $request->withAttribute('order',  $order);

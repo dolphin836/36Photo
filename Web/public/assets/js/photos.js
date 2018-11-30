@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         boxSpacing: 20,
         showWidows: is_show,
-        targetRowHeight: 240
+        targetRowHeight: 360
     });
 
     var photosElement               = document.createElement("div");

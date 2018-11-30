@@ -11,6 +11,9 @@ $container['db'] = function($c) {
              'username' => getenv('DB_USERNAME'),
              'password' => getenv('DB_PASSWORD'),
               'charset' => 'utf8',
+               'option' => [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                ]
     ]);
 };
 

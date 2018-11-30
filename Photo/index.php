@@ -10,8 +10,8 @@ use GuzzleHttp\Exception\RequestException;
 $server = 'https://alpha.wallhaven.cc/wallpaper/';
 
 $guzzle = new Client();
-
-$i      = 1;
+// Last ID
+$i      = 718126;
 
 $dir    = "./Pic/";
 

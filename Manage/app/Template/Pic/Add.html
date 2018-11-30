@@ -27,12 +27,8 @@
 <script>
     Dropzone.options.dropzone = {
         paramName: "photo",
-        parallelUploads: 1,
-        acceptedFiles: "image/*",
-        success: function(photo, response) {
-            $("#csrf_name").val(response.name);
-            $("#csrf_value").val(response.value);
-        }
+        parallelUploads: 10,
+        acceptedFiles: "image/*"
     };
 </script>
 {% endblock %}
@@ -51,12 +47,7 @@
         {% set action = '/pic/upload?collection=' ~ collection.code %}
         {% endif %}
 
-        <form action="{{ action }}" class="dropzone" id="dropzone" method="POST" enctype="multipart/form-data">
-            {% if csrf is defined %}
-            <input type="hidden" name="{{ csrf.name_key }}" id="csrf_name" value="{{ csrf.name }}">
-            <input type="hidden" name="{{ csrf.value_key }}" id="csrf_value" value="{{ csrf.value }}">
-            {% endif %}
-        </form>
+        <form action="{{ action }}" class="dropzone" id="dropzone" method="POST" enctype="multipart/form-data"></form>
     </div>
 </div>
 

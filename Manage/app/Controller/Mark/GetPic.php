@@ -1,18 +1,19 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Pic;
+namespace Dolphin\Ting\Controller\Mark;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
-use OSS\OssClient;
-use OSS\Core\OssException;
-use Dolphin\Ting\Model\Mark_model;
+use Dolphin\Ting\Constant\Nav;
+use Dolphin\Ting\Model\Pic_model;
 use Dolphin\Ting\Model\Categroy_model;
+use OSS\OssClient as OssClient;
+use OSS\Core\OssException as OssException;
 
-class GetRecords extends Pic
+class GetPic extends Mark
 {
     private $columns = [
         '缩略图',
@@ -23,40 +24,47 @@ class GetRecords extends Pic
         '创建时间'
     ];
 
-    private $mark_model;
-
     private $categroy_model;
+
+    private $pic_model;
 
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
 
-        $this->mark_model = new Mark_model($app);
+        $this->nav = Nav::PICTURE;
+
+        $this->pic_model = new Pic_model($app);
         $this->categroy_model = new Categroy_model($app);
     }
 
     public function __invoke(Request $request, Response $response, $args)
     {  
         // 分页
-        $page   = $request->getAttribute('page');
-        // 检索
-        $search = $request->getAttribute('search');
+        $page = $request->getAttribute('page');
 
-        $text   = $request->getAttribute('text');
+        $uri  = $request->getUri();
 
-        $query  = '&';
+        parse_str($uri->getQuery(), $querys);
+        // 标签 ID
+        $mark_id = $querys['mark'];
 
-        if (! empty($text)) {
-            $query .= http_build_query($text);
-        }
+        $query   = '&mark=' . $mark_id;
 
-        $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
+        $search  = [
+            'mark_id' => $mark_id,
+              'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
+        ];
 
-        $records = $this->pic_model->records($search);
+        $records = $this->mark_model->pic($search);
+
+        $hashs = array_column($records, 'picture_hash');
 
         $images  = [];
 
-        foreach ($records as $record) {
+        foreach ($hashs as $hash) {
+            $record = $this->pic_model->record(["hash" => $hash]);
+
             if ($record['is_oss']) {
                 $valid = 3600;
 
@@ -90,9 +98,8 @@ class GetRecords extends Pic
         $data = [
              "records" => $images,
              "columns" => $this->columns,
-                "text" => $search,
             "categroy" => $this->categroy_model->records(),
-                "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
+                "page" => Page::reder('/mark/pic', $this->mark_model->pic_total($mark_id), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Pic/Records', $data);

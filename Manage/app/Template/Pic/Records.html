@@ -36,6 +36,23 @@
                     </div>
                 </div>
 
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">分 类</label>
+                        {% set select_value = text.categroy is defined ? text.categroy : -1 %}
+                        <select class="form-control" name="search_categroy">
+                            <option value="-1">全部</option>
+                            {% for cate in categroy %}
+                            {% if cate.code == select_value %}
+                            <option value="{{ cate.code }}" selected>{{ cate.name }}</option>
+                            {% else %}
+                            <option value="{{ cate.code }}">{{ cate.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
             {% include 'Component/DateTime.html' %}
         </div>
     </div>
@@ -68,6 +85,11 @@
                         </td>
                         <td class="text-center">
                             <a href="/pic/records?search_categroy={{ record.categroy_code }}">{{ record.categroy_name }}</a>
+                        </td>
+                        <td class="text-center">
+                            {% for mark in record.mark %}
+                                <p><a href="/mark/pic?mark={{ mark.id }}">{{ mark.name }}</a></p>
+                            {% endfor %}
                         </td>
                         <td class="text-center">
                             <a href="/pic/records?search_uuid={{ record.uuid }}">{{ record.username }}</a>

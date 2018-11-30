@@ -4,10 +4,64 @@
 列表 - 图片 - {{ site.web_name }}
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
+{% endblock %}
+
+{% block js %}
+<script src="/assets/node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+{% endblock %}
+
 {% block Content %}
 <div class="card">
     <div class="card-body">
-        <a href="/pic/add" class="btn btn-success">上 传</a>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">云存储</label>
+                        {% set select_value = text.oss is defined ? text.oss : -1 %}
+                        <select class="form-control" name="search_oss">
+                            <option value="-1">全部</option>
+                                {% if 0 == select_value %}
+                                <option value="0" selected>未上传</option>
+                                {% else %}
+                                <option value="0">未上传</option>
+                                {% endif %}
+                                {% if 1 == select_value %}
+                                <option value="1" selected>已上传</option>
+                                {% else %}
+                                <option value="1">已上传</option>
+                                {% endif %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">分 类</label>
+                        {% set select_value = text.categroy is defined ? text.categroy : -1 %}
+                        <select class="form-control" name="search_categroy">
+                            <option value="-1">全部</option>
+                            {% for cate in categroy %}
+                            {% if cate.code == select_value %}
+                            <option value="{{ cate.code }}" selected>{{ cate.name }}</option>
+                            {% else %}
+                            <option value="{{ cate.code }}">{{ cate.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+            {% include 'Component/DateTime.html' %}
+        </div>
+    </div>
+    <div class="card-footer text-right">
+        <div class="d-flex">
+            <a href="/pic/records" class="btn btn-warning btn-link">清 除</a>
+            <button type="button" id="search" class="btn btn-info ml-auto">检 索</button>
+            <a href="/pic/add" class="btn btn-success btn-simple ml-2">批量上传</a>
+        </div>
     </div>
 </div>
 
@@ -31,6 +85,11 @@
                         </td>
                         <td class="text-center">
                             <a href="/pic/records?search_categroy={{ record.categroy_code }}">{{ record.categroy_name }}</a>
+                        </td>
+                        <td class="text-center">
+                            {% for mark in record.mark %}
+                                <p><a href="/mark/pic?mark={{ mark.id }}">{{ mark.name }}</a></p>
+                            {% endfor %}
                         </td>
                         <td class="text-center">
                             <a href="/pic/records?search_uuid={{ record.uuid }}">{{ record.username }}</a>

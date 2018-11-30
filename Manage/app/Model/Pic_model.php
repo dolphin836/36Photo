@@ -92,6 +92,16 @@ class Pic_model extends Common_model
     }
 
     /**
+     * 删除颜色
+     */
+    public function delete_color($hash)
+    {
+        return $this->app->db->delete(Table::PICTURE_COLOR, [
+            "picture_hash" => $hash
+        ]);
+    }
+
+    /**
      * 记录总数
      */
     public function total($data = [])

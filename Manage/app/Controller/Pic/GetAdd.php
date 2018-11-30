@@ -25,18 +25,11 @@ class GetAdd extends Pic
 
     public function __invoke(Request $request, Response $response, $args)
     {  
-        $data = [
-            'csrf' => [
-                'name_key' => 'next_name',
-               'value_key' => 'next_value',
-                    'name' => $request->getAttribute('next_name'),
-                   'value' => $request->getAttribute('next_value')
-            ]
-        ];
-
         $uri = $request->getUri();
 
         parse_str($uri->getQuery(), $querys);
+
+        $data = [];
 
         if (isset($querys['categroy']) && $this->categroy_model->is_has("code", $querys['categroy'])) { // 分类
             $record = $this->categroy_model->record(['code' => $querys['categroy']]);

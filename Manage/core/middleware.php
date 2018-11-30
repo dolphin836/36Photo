@@ -1,6 +1,8 @@
 <?php
 // CSRF
-$app->add($container->get('csrf'));
+if ($container->request->getUri()->getPath() !== "/pic/upload") { // 排除图片批量上传路由
+    $app->add($container->get('csrf'));
+}
 // 参数获取
 $app->add(new Dolphin\Ting\Middleware\Query($container));
 

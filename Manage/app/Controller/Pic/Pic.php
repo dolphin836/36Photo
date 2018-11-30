@@ -35,17 +35,4 @@ class Pic extends \Dolphin\Ting\Controller\Base
 
         $this->pic_model = new Pic_model($app);
     }
-
-    protected function size($size)
-    {
-        $kb = floor($size / 1024);
-
-        if ($kb < 1024) {
-            return $kb . ' KB';
-        }
-
-        $mb = round($kb / 1024, 2);
-
-        return $mb . ' M';
-    }
 }
