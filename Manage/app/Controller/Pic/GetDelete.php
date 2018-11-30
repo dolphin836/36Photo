@@ -46,7 +46,7 @@ class GetDelete extends Pic
             // 删除图片的颜色记录
             $this->pic_model->delete_color($hash);
             // 删除专题中的图片记录
-            $this->collection_model->delete_color($hash);
+            $this->collection_model->delete_pic($hash);
             // 提交事务
             $this->app->db->pdo->commit();
             // 删除本地文件
