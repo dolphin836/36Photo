@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface as ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Model\Mark_model;
+use Dolphin\Ting\Model\Collection_model;
 use Dolphin\Ting\Constant\Common;
 use OSS\OssClient;
 use OSS\Core\OssException;
@@ -14,15 +15,19 @@ class GetDelete extends Pic
 {
     private $mark_model;
 
+    private $collection_model;
+
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
 
         $this->mark_model = new Mark_model($app);
+
+        $this->collection_model = new Collection_model($app);
     }
 
     public function __invoke(Request $request, Response $response, $args)
-    {        
+    {     
         $uri = $request->getUri();
 
         parse_str($uri->getQuery(), $querys);
@@ -34,12 +39,14 @@ class GetDelete extends Pic
         $this->app->db->pdo->beginTransaction();
 
         try {
-            // 删除主记录
+            // 删除图片的主记录
             $this->pic_model->delete(["hash" => $hash]);
-            // 删除标签
+            // 删除图片的标签记录
             $this->mark_model->delete_pic($hash);
-            // 删除颜色
+            // 删除图片的颜色记录
             $this->pic_model->delete_color($hash);
+            // 删除专题中的图片记录
+            $this->collection_model->delete_color($hash);
             // 提交事务
             $this->app->db->pdo->commit();
             // 删除本地文件

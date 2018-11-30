@@ -1,4 +1,5 @@
 {
   "app.js": "app-67cb24445e.js",
-  "dropzone.min.js": "dropzone-f5b6aacc2a.min.js"
+  "dropzone.min.js": "dropzone-f5b6aacc2a.min.js",
+  "jquery.datetimepicker.full.min.js": "jquery.datetimepicker-024dfa4e0b.full.min.js"
 }

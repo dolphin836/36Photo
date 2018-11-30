@@ -24,6 +24,16 @@ class Collection_model extends Common_model
                'picture_hash' => $picture_hash
         ]);
     }
+
+    /**
+     * 删除图片的专题记录
+     */
+    public function delete_pic($hash)
+    {
+        return $this->app->db->delete(Table::PICTURE_COLLECTION, [
+            "picture_hash" => $hash
+        ]);
+    }
 }
 
 
