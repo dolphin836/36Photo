@@ -26,6 +26,8 @@ ini_set('memory_limit', '1024M');
 require ROOTPATH . '/vendor/autoload.php';
 // 载入设置标签类文件
 require ROOTPATH . '/mark.php';
+// 载入设置分类类文件
+require ROOTPATH . '/categroy.php';
 // 载入配置文件
 $env = new Dotenv\Dotenv(ROOTPATH);
 $env->load();
@@ -62,13 +64,34 @@ $mark = new Mark(getenv('OSS_ACCESS_KEY_ID'), getenv('OSS_ACCESS_SECRET'));
 $guzzle = new Client();
 
 var_dump(date("Y-m-d H:i:s") . ':**********Start Run**********');
+// 获取超级管理员的 UUID
+$users = $db->select(Table::USER, ['uuid'], [
+  'group' => 2,
+  'LIMIT' => [0, 10]
+]);
 
-found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle);
+$uuid = [];
+
+foreach ($users as $user) {
+  $uuid[] = $user['uuid'];
+}
+// 获取专题编号
+$collection_code = isset($argv[1]) ? $argv[1] : '';
+
+if ($collection_code !== '') { // 判断是否存在
+  if (! $db->has(Table::COLLECTION, [
+    'code' => $collection_code
+  ])) {
+    $collection_code = '';
+  }
+}
+
+found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle, $uuid, $collection_code);
 
 /**
  * 遍历文件夹，处理图片
  */
-function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle)
+function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle, $uuid, $collection_code)
 {
   $results = new \FilesystemIterator($dir);
 
@@ -76,7 +99,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
   {
       // 递归目录
       if ($result->isDir()) {
-        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle);
+        found($result->getPathname(), $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle, $uuid, $collection_code);
         // 删除目录
         rmdir($result->getPathname());
       }
@@ -125,7 +148,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       $data  = [
           'hash' => $hash,
-          'uuid' => 'a22c38198f4b4ad992c4a1b89123d6e3',
+          'uuid' => array_rand($uuid),
          'width' => $width,
         'height' => $height,
           'path' => $upload,
@@ -187,6 +210,27 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
             var_dump(date("Y-m-d H:i:s") . ':Add Mark Success:' . $mark_name);
           }
+          // 设置分类
+          $categroy_code = Categroy::set($marks);
+
+          if ($categroy_code !== 'default') {
+            $db->update(Table::PICTURE, [
+              'categroy_code' => $categroy_code
+            ], [
+              'hash' => $hash
+            ]);
+
+            var_dump(date("Y-m-d H:i:s") . ':Set Categroy:' . $categroy_code);
+          }
+        }
+        // 专题
+        if ($collection_code !== '') {
+          $db->insert(Table::PICTURE_COLLECTION, [
+               'picture_hash' => $hash,
+            'collection_code' => $collection_code
+          ]);
+
+          var_dump(date("Y-m-d H:i:s") . ':Set Collection:' . $collection_code);
         }
       }
   }

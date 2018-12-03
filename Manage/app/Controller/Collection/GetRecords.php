@@ -10,6 +10,7 @@ use Dolphin\Ting\Constant\Common;
 class GetRecords extends Collection
 {
     private $columns = [
+        '编码',
         '标题',
         '图片数量',
         '是否公开',
