@@ -17,7 +17,8 @@ use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
 use GuzzleHttp\Client;
 
-define('ROOTPATH', __DIR__);
+define('BASEPATH', __DIR__);
+define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 // 设置时区
 date_default_timezone_set('PRC');
 // 设置临时最大内存
@@ -25,9 +26,9 @@ ini_set('memory_limit', '1024M');
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 // 载入设置标签类文件
-require ROOTPATH . '/mark.php';
+require BASEPATH . '/mark.php';
 // 载入设置分类类文件
-require ROOTPATH . '/categroy.php';
+require BASEPATH . '/categroy.php';
 // 载入配置文件
 $env = new Dotenv\Dotenv(ROOTPATH);
 $env->load();
@@ -86,7 +87,7 @@ if ($collection_code !== '') { // 判断是否存在
   }
 }
 
-found('./public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle, $uuid, $collection_code);
+found(ROOTPATH . '/public/picture', $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug, $guzzle, $uuid, $collection_code);
 
 /**
  * 遍历文件夹，处理图片
@@ -131,13 +132,13 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       var_dump(date("Y-m-d H:i:s") . ':Move To:' . $upload);
       // 获取压缩后的文件大小
-      $size = filesize('./public/' . $upload);
+      $size = filesize(ROOTPATH . '/public/' . $upload);
       // 生产环境下上传 OSS
       $is_oss = 0;
 
       if (! $is_debug) {
         try {
-            $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $upload, './public/' .$upload);
+            $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $upload, ROOTPATH . '/public/' . $upload);
             $is_oss = 1;
         } catch (OssException $e) {
             var_dump(date("Y-m-d H:i:s") . ':OSS Upload Faild.');
@@ -148,7 +149,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       $data  = [
           'hash' => $hash,
-          'uuid' => array_rand($uuid),
+          'uuid' => $uuid[array_rand($uuid)],
          'width' => $width,
         'height' => $height,
           'path' => $upload,
@@ -161,9 +162,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
       if ($query->rowCount()) {
         var_dump(date("Y-m-d H:i:s") . ':Insert Picture Success:' . $hash);
         // 主要颜色
-        $host = $is_debug ? 'http://xiaoxi.com.cn' : 'http://xiaoxi.com.cn';
-
-        $guzzle->request('GET', $host . '/pic/color', [
+        $guzzle->request('GET', getenv("WEB_URL") . '/pic/color', [
             'query' => ['hash' => $hash]
         ]);
         // 标签
@@ -251,15 +250,15 @@ function upload($path, $extension, $image_opt)
 
   $dir = $upload . '/' . $y . '/' . $m . '/' . $d;
 
-  if (! is_dir('./public/' . $dir)) {
-    mkdir('./public/' . $dir, 0755, true);
+  if (! is_dir(ROOTPATH . '/public/' . $dir)) {
+    mkdir(ROOTPATH . '/public/' . $dir, 0755, true);
   }
 
   $file_name = md5_file($path) . '.' . $extension;
 
   $file_path = $dir . '/' . $file_name;
 
-  $image_opt->optimize($path, './public/' . $file_path);
+  $image_opt->optimize($path, ROOTPATH . '/public/' . $file_path);
 
   unlink($path);
 

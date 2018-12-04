@@ -21,3 +21,4 @@ $ yum -y install pngquant
 - [ ] 页面 TDK 个性化设置
 - [ ] CSS 自动化处理 PostCss 插件
 - [ ] 标签样式
+- [ ] 浏览器缩放自动调整图片布局

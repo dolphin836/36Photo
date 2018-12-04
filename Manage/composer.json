@@ -34,6 +34,9 @@
         }
     },
     "scripts": {
-        "start": "php -S localhost:8080 -t public"
+        "start": "php -S localhost:8080 -t public",
+        "download": "php console/download.php",
+        "run": "php console/run.php",
+        "sync": "php console/sync.php"
     }
 }

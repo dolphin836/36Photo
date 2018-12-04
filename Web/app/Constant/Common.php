@@ -18,8 +18,8 @@ class Common
     const OSS_VALID = 3600;
     // 阿里云 OSS 图片略缩图参数
     const OSS_PROCESS = 'image';
-    const OSS_PROCESS_RESIZE_320 = '/resize,m_lfit,w_360';
-    const OSS_PROCESS_RESIZE_640 = '/resize,m_lfit,w_1080';
+    const OSS_PROCESS_RESIZE_320 = '/resize,m_lfit,w_140';
+    const OSS_PROCESS_RESIZE_640 = '/resize,m_lfit,w_560';
     // 阿里云 OSS 图片格式转换参数
     const OSS_PROCESS_FORMAT = '/format,webp';
     // 已上传阿里云 OSS
@@ -27,7 +27,7 @@ class Common
     // 未上传阿里云 OSS
     const IS_NOT_OSS = '0';
     // 标签聚合页展示的标签数量
-    const MARK_MAX_COUNT = 60;
+    const MARK_MAX_COUNT = 100;
     // 颜色聚合页展示的颜色数量
-    const COLOR_MAX_COUNT = 40;
+    const COLOR_MAX_COUNT = 100;
 }

@@ -7,7 +7,8 @@
  * @update 2018-10-31 18:00:00
  */
 
-define('ROOTPATH', __DIR__);
+define('BASEPATH', __DIR__);
+define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 

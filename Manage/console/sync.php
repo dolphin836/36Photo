@@ -14,13 +14,14 @@ use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Dolphin\Ting\Constant\Table;
 
-define('ROOTPATH', __DIR__);
+define('BASEPATH', __DIR__);
+define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 // 设置时区
 date_default_timezone_set('PRC');
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 // 载入设置标签类文件
-require ROOTPATH . '/mark.php';
+require BASEPATH . '/mark.php';
 // 载入配置文件
 $env = new Dotenv\Dotenv(ROOTPATH);
 $env->load();
@@ -117,7 +118,7 @@ foreach ($records as $record) {
 function sync($oss_client, $pic)
 {
     try {
-        $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $pic, './public/' . $pic);
+        $oss_client->uploadFile(getenv('OSS_BUCKET_NAME'), $pic, ROOTPATH . '/public/' . $pic);
 
         var_dump(date("Y-m-d H:i:s") . ':OSS Upload Over.');
 
