@@ -47,8 +47,8 @@ class PostUpload extends Pic
 
         parse_str($uri->getQuery(), $querys);
 
-        if (isset($querys['categroy'])) { // 分类
-            $categroy_code = $querys['categroy'];
+        if (isset($querys['category'])) { // 分类
+            $category_code = $querys['category'];
         }
 
         if (isset($querys['collection'])) { // 专题
@@ -66,7 +66,7 @@ class PostUpload extends Pic
                 // 插入数据库
                 $data['uuid']          = $this->uuid;
                 $data['is_oss']        = 0;
-                $data['categroy_code'] = isset($categroy_code) ? $categroy_code : '';
+                $data['category_code'] = isset($category_code) ? $category_code : '';
 
                 $db = $this->pic_model->add($data);
                 // 专题

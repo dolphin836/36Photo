@@ -37,9 +37,9 @@
 <div class="card">
     <div class="card-body">
         {% set action = '/pic/upload' %}
-        {% if categroy is defined %}
-        <h4 class="card-title">分类：{{ categroy.name }}</h4>
-        {% set action = '/pic/upload?categroy=' ~ categroy.code %}
+        {% if category is defined %}
+        <h4 class="card-title">分类：{{ category.name }}</h4>
+        {% set action = '/pic/upload?category=' ~ category.code %}
         {% endif %}
 
         {% if collection is defined %}

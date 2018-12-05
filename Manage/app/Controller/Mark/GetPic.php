@@ -9,7 +9,7 @@ use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Nav;
 use Dolphin\Ting\Model\Pic_model;
-use Dolphin\Ting\Model\Categroy_model;
+use Dolphin\Ting\Model\Category_model;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 
@@ -24,7 +24,7 @@ class GetPic extends Mark
         '创建时间'
     ];
 
-    private $categroy_model;
+    private $category_model;
 
     private $pic_model;
 
@@ -35,7 +35,7 @@ class GetPic extends Mark
         $this->nav = Nav::PICTURE;
 
         $this->pic_model = new Pic_model($app);
-        $this->categroy_model = new Categroy_model($app);
+        $this->category_model = new Category_model($app);
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -87,8 +87,8 @@ class GetPic extends Mark
                    'gmt_create' => $record['gmt_create'],
                          'path' => $path,
                        'is_oss' => $record['is_oss'] ? true : false,
-                'categroy_code' => $record['code'],
-                'categroy_name' => $record['name'],
+                'category_code' => $record['code'],
+                'category_name' => $record['name'],
                          'uuid' => $record['uuid'],
                      'username' => $record['username'],
                          'mark' => $this->mark_model->pic_mark($record['hash'])
@@ -98,7 +98,7 @@ class GetPic extends Mark
         $data = [
              "records" => $images,
              "columns" => $this->columns,
-            "categroy" => $this->categroy_model->records(),
+            "category" => $this->category_model->records(),
                 "page" => Page::reder('/mark/pic', $this->mark_model->pic_total($mark_id), $page, Common::PAGE_COUNT, $query)
         ];
 

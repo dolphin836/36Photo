@@ -1,19 +1,19 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Categroy;
+namespace Dolphin\Ting\Controller\Category;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as v;
 
-class PostAdd extends Categroy
+class PostAdd extends Category
 {
     public function __invoke(Request $request, Response $response, $args)
     {   
         $body = $request->getParsedBody();
 
         if (! $this->validate($body)) {
-            return $response->withRedirect('/categroy/add', 302);
+            return $response->withRedirect('/categor/add', 302);
         }
 
         $data = [
@@ -21,7 +21,7 @@ class PostAdd extends Categroy
             'name' => trim($body['name']),
         ];
 
-        $db = $this->categroy_model->add($data);
+        $db = $this->category_model->add($data);
 
         if (! $db->rowCount()) { // 插入失败
             $this->app->flash->addMessage('note', [
@@ -35,7 +35,7 @@ class PostAdd extends Categroy
             ]);  
         }
 
-        return $response->withRedirect('/categroy/records', 302);
+        return $response->withRedirect('/categor/records', 302);
     }
 
     private function validate($body)
@@ -52,7 +52,7 @@ class PostAdd extends Categroy
             } else {
                 if (! v::stringType()->callback(function($code) {
                     // 别名是否已经存在
-                    return ! $this->categroy_model->is_has('code', $code);
+                    return ! $this->category_model->is_has('code', $code);
                 })->validate($body['code'])) {
                     $error[] = '别名已存在.';
                 } 
@@ -74,7 +74,7 @@ class PostAdd extends Categroy
             } else {
                 if (v::stringType()->callback(function($name) {
                     // 名称是否已经存在
-                    return $this->categroy_model->is_has('name', $name);
+                    return $this->category_model->is_has('name', $name);
                 })->validate($body['name'])) {
                     $error[] = '名称已存在.';
                 } 

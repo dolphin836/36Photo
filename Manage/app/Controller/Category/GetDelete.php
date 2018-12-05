@@ -1,11 +1,11 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Categroy;
+namespace Dolphin\Ting\Controller\Category;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetDelete extends Categroy
+class GetDelete extends Category
 {
     public function __invoke(Request $request, Response $response, $args)
     {        
@@ -13,9 +13,9 @@ class GetDelete extends Categroy
 
         parse_str($uri->getQuery(), $querys);
 
-        $categroy_id = $querys['id'];
+        $category_id = $querys['id'];
 
-        $db = $this->categroy_model->delete(["id" => $categroy_id]);
+        $db = $this->category_model->delete(["id" => $category_id]);
 
         if (! $db->rowCount()) { // 删除失败
             $this->app->flash->addMessage('note', [
@@ -29,6 +29,6 @@ class GetDelete extends Categroy
             ]);  
         }
 
-        return $response->withRedirect('/categroy/records', 302);
+        return $response->withRedirect('/category/records', 302);
     }
 }

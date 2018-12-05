@@ -15,13 +15,13 @@ class Nav
     // 图片
     const PICTURE = 'photos';
     // 标签
-    const MARK = 'marks';
+    const MARK = 'mark';
     // 分类
-    const CATEGROY = 'categroy';
+    const CATEGORY = 'category';
     // 专题
     const COLLECTION = 'collection';
     // 颜色
-    const COLOR = 'colors';
+    const COLOR = 'color';
     // 随机
     const RANDOM = 'random';
 }

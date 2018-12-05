@@ -40,8 +40,8 @@ class GetRecord extends Pic
                'gmt_create' => $record['gmt_create'],
                      'path' => $path,
                    'is_oss' => $record['is_oss'] ? true : false,
-            'categroy_code' => $record['code'],
-            'categroy_name' => $record['name'],
+            'category_code' => $record['code'],
+            'category_name' => $record['name'],
                      'uuid' => $record['uuid'],
                  'username' => $record['username']
         ];

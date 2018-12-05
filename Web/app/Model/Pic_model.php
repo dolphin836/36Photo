@@ -21,9 +21,9 @@ class Pic_model extends Common_model
             $data["ORDER"] = [Table::PICTURE . ".id" => "DESC"];
         }
 
-        if (isset($data['categroy'])) {
-            $data[Table::PICTURE . '.categroy_code'] = $data['categroy'];
-            unset($data['categroy']);
+        if (isset($data['category'])) {
+            $data[Table::PICTURE . '.category_code'] = $data['category'];
+            unset($data['category']);
         }
 
         if (isset($data['uuid'])) {
@@ -37,7 +37,7 @@ class Pic_model extends Common_model
         }
 
         return $this->app->db->select(Table::PICTURE, [
-            "[>]" . Table::CATEGROY => ["categroy_code" => "code"],
+            "[>]" . Table::CATEGORY => ["category_code" => "code"],
             "[>]" . Table::USER     => ["uuid" => "uuid"],
         ], [
             Table::PICTURE  . ".hash",
@@ -52,8 +52,8 @@ class Pic_model extends Common_model
             Table::PICTURE  . ".like",
             Table::PICTURE  . ".is_public",
             Table::PICTURE  . ".gmt_create",
-            Table::CATEGROY . ".code",
-            Table::CATEGROY . ".name",
+            Table::CATEGORY . ".code",
+            Table::CATEGORY . ".name",
             Table::USER     . ".uuid",
             Table::USER     . ".username"
         ], $data);
@@ -67,7 +67,7 @@ class Pic_model extends Common_model
         }
 
         return $this->app->db->rand(Table::PICTURE, [
-            "[>]" . Table::CATEGROY => ["categroy_code" => "code"],
+            "[>]" . Table::CATEGORY => ["category_code" => "code"],
             "[>]" . Table::USER     => ["uuid" => "uuid"],
         ], [
             Table::PICTURE  . ".hash",
@@ -82,8 +82,8 @@ class Pic_model extends Common_model
             Table::PICTURE  . ".like",
             Table::PICTURE  . ".is_public",
             Table::PICTURE  . ".gmt_create",
-            Table::CATEGROY . ".code",
-            Table::CATEGROY . ".name",
+            Table::CATEGORY . ".code",
+            Table::CATEGORY . ".name",
             Table::USER     . ".uuid",
             Table::USER     . ".username"
         ], $data);
@@ -92,7 +92,7 @@ class Pic_model extends Common_model
     public function record($data = [])
     {
         return $this->app->db->get(Table::PICTURE, [
-            "[>]" . Table::CATEGROY => ["categroy_code" => "code"],
+            "[>]" . Table::CATEGORY => ["category_code" => "code"],
             "[>]" . Table::USER     => ["uuid" => "uuid"],
         ], [
             Table::PICTURE  . ".hash",
@@ -107,8 +107,8 @@ class Pic_model extends Common_model
             Table::PICTURE  . ".like",
             Table::PICTURE  . ".is_public",
             Table::PICTURE  . ".gmt_create",
-            Table::CATEGROY . ".code",
-            Table::CATEGROY . ".name",
+            Table::CATEGORY . ".code",
+            Table::CATEGORY . ".name",
             Table::USER     . ".uuid",
             Table::USER     . ".username"
         ], $data);

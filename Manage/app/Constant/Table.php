@@ -17,7 +17,7 @@ class Table
     // 图片 - 标签
     const PICTURE_MARK = 'picture_mark';
     // 分类
-    const CATEGROY = 'categroy';
+    const CATEGORY = 'category';
     // 专题
     const COLLECTION = 'collection';
     // 专题 - 图片

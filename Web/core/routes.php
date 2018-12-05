@@ -14,7 +14,11 @@ $app->get('/mark/{mark}[/{page:[0-9]+}]', 'Dolphin\Ting\Controller\Pic\Mark');
 // 随机图片列表页
 $app->get('/random[/{page:[0-9]+}]', 'Dolphin\Ting\Controller\Pic\Random');
 // 标签聚合页
-$app->get('/marks', 'Dolphin\Ting\Controller\Mark\Records');
+$app->get('/mark', 'Dolphin\Ting\Controller\Mark\Records');
 // 颜色聚合页
-$app->get('/colors', 'Dolphin\Ting\Controller\Color\Records');
+$app->get('/color', 'Dolphin\Ting\Controller\Color\Records');
+// 分类聚合页
+$app->get('/category', 'Dolphin\Ting\Controller\Category\Records');
+// 某分类的图片列表页
+$app->get('/category/{code}[/{page:[0-9]+}]', 'Dolphin\Ting\Controller\Pic\Category');
 

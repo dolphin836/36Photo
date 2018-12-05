@@ -1,11 +1,11 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Categroy;
+namespace Dolphin\Ting\Controller\Category;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetAdd extends Categroy
+class GetAdd extends Category
 {
     public function __invoke(Request $request, Response $response, $args)
     {   
@@ -18,6 +18,6 @@ class GetAdd extends Categroy
             ]
         ];
 
-        $this->respond('Categroy/Add', $data);
+        $this->respond('Category/Add', $data);
     }
 }

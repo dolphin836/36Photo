@@ -17,7 +17,7 @@ class Nav
     // 标签
     const MARK = 'mark';
     // 分类
-    const CATEGROY = 'categroy';
+    const CATEGORY = 'category';
     // 专题
     const COLLECTION = 'collection';
 }

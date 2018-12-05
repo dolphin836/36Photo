@@ -10,7 +10,7 @@ use Dolphin\Ting\Constant\Common;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use Dolphin\Ting\Model\Mark_model;
-use Dolphin\Ting\Model\Categroy_model;
+use Dolphin\Ting\Model\Category_model;
 
 class GetRecords extends Pic
 {
@@ -25,14 +25,14 @@ class GetRecords extends Pic
 
     private $mark_model;
 
-    private $categroy_model;
+    private $category_model;
 
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
 
-        $this->mark_model = new Mark_model($app);
-        $this->categroy_model = new Categroy_model($app);
+        $this->mark_model     = new Mark_model($app);
+        $this->category_model = new Category_model($app);
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -79,8 +79,8 @@ class GetRecords extends Pic
                    'gmt_create' => $record['gmt_create'],
                          'path' => $path,
                        'is_oss' => $record['is_oss'] ? true : false,
-                'categroy_code' => $record['code'],
-                'categroy_name' => $record['name'],
+                'category_code' => $record['code'],
+                'category_name' => $record['name'],
                          'uuid' => $record['uuid'],
                      'username' => $record['username'],
                          'mark' => $this->mark_model->pic_mark($record['hash'])
@@ -91,7 +91,7 @@ class GetRecords extends Pic
              "records" => $images,
              "columns" => $this->columns,
                 "text" => $search,
-            "categroy" => $this->categroy_model->records(),
+            "category" => $this->category_model->records(),
                 "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 

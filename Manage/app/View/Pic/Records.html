@@ -39,10 +39,10 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="form-group">
                         <label class="form-label">分 类</label>
-                        {% set select_value = text.categroy is defined ? text.categroy : -1 %}
-                        <select class="form-control" name="search_categroy">
+                        {% set select_value = text.category is defined ? text.category : -1 %}
+                        <select class="form-control" name="search_category">
                             <option value="-1">全部</option>
-                            {% for cate in categroy %}
+                            {% for cate in category %}
                             {% if cate.code == select_value %}
                             <option value="{{ cate.code }}" selected>{{ cate.name }}</option>
                             {% else %}
@@ -84,7 +84,7 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <a href="/pic/records?search_categroy={{ record.categroy_code }}">{{ record.categroy_name }}</a>
+                            <a href="/pic/records?search_category={{ record.category_code }}">{{ record.category_name }}</a>
                         </td>
                         <td class="text-center">
                             {% for mark in record.mark %}

@@ -1,11 +1,11 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Categroy;
+namespace Dolphin\Ting\Controller\Category;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class GetRecords extends Categroy
+class GetRecords extends Category
 {
     private $columns = [
         '别名',
@@ -20,12 +20,12 @@ class GetRecords extends Categroy
         $search = $request->getAttribute('search');
 
         $data = [
-              "total" => $this->categroy_model->total(),
-            "records" => $this->categroy_model->records($search),
+              "total" => $this->category_model->total(),
+            "records" => $this->category_model->records($search),
                'text' => $request->getAttribute('text'),
             "columns" => $this->columns
         ];
 
-        $this->respond('Categroy/Records', $data);
+        $this->respond('Category/Records', $data);
     }
 }

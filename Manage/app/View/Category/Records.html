@@ -25,9 +25,9 @@
     </div>
     <div class="card-footer text-right">
         <div class="d-flex">
-            <a href="/categroy/records" class="btn btn-warning btn-link">清 除</a>
+            <a href="/category/records" class="btn btn-warning btn-link">清 除</a>
             <button type="button" id="search" class="btn btn-info ml-auto">检 索</button>
-            <a href="/categroy/add" class="btn btn-success btn-simple ml-2">新 增</a>
+            <a href="/category/add" class="btn btn-success btn-simple ml-2">新 增</a>
         </div>
     </div>
 </div>
@@ -54,16 +54,16 @@
                             <div>{{ record.gmt_create }}</div>
                         </td>
                         <td class="text-center">
-                            <a href="/pic/records?search_categroy={{ record.code }}" class="btn btn-info btn-sm btn-round btn-icon">
+                            <a href="/pic/records?search_category={{ record.code }}" class="btn btn-info btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-image-02"></i>
                             </a>
-                            <a href="/categroy/modify?code={{ record.code }}" class="btn btn-success btn-sm btn-round btn-icon">
+                            <a href="/category/modify?code={{ record.code }}" class="btn btn-success btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-pencil"></i>
                             </a>
-                            <a href="/pic/add?categroy={{ record.code }}" class="btn btn-primary btn-sm btn-round btn-icon">
+                            <a href="/pic/add?category={{ record.code }}" class="btn btn-primary btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-cloud-upload-94"></i>
                             </a>
-                            <a href="/categroy/delete?id={{ record.id }}" class="btn btn-danger btn-sm btn-round btn-icon">
+                            <a href="/category/delete?id={{ record.id }}" class="btn btn-danger btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-simple-remove"></i>
                             </a>
                         </td>

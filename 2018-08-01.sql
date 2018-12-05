@@ -38,7 +38,7 @@ CREATE TABLE `picture` (
     `like` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数',
     `is_public` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否公开：0 - 否、1 - 是',
     `is_oss` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否已上传阿里云 OSS：0 - 否、1 - 是',
-    `categroy_code` VARCHAR(16) NOT NULL DEFAULT 'default' COMMENT '分类标识符',
+    `category_code` VARCHAR(16) NOT NULL DEFAULT 'default' COMMENT '分类标识符',
     `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
@@ -66,7 +66,7 @@ CREATE TABLE `picture_mark` (
     KEY `idx_mark` (`mark_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 标签映射关系记录表';
 
-CREATE TABLE `categroy` (
+CREATE TABLE `category` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '标识符',
     `name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '名字',

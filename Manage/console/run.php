@@ -28,7 +28,7 @@ require ROOTPATH . '/vendor/autoload.php';
 // 载入设置标签类文件
 require BASEPATH . '/mark.php';
 // 载入设置分类类文件
-require BASEPATH . '/categroy.php';
+require BASEPATH . '/category.php';
 // 载入配置文件
 $env = new Dotenv\Dotenv(ROOTPATH);
 $env->load();
@@ -210,16 +210,24 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
             var_dump(date("Y-m-d H:i:s") . ':Add Mark Success:' . $mark_name);
           }
           // 设置分类
-          $categroy_code = Categroy::set($marks);
+          $category_code = Category::set($marks);
 
-          if ($categroy_code !== 'default') {
-            $db->update(Table::PICTURE, [
-              'categroy_code' => $categroy_code
+          if ($category_code !== 'default') {
+            $query = $db->update(Table::PICTURE, [
+              'category_code' => $category_code
             ], [
               'hash' => $hash
             ]);
 
-            var_dump(date("Y-m-d H:i:s") . ':Set Categroy:' . $categroy_code);
+            if ($query->rowCount()) { // 更新成功，分类的图片数量加一
+              $db->update(Table::CATEGORY, [
+                'count[+]' => 1
+              ], [
+                'code' => $category_code
+              ]);
+            }
+
+            var_dump(date("Y-m-d H:i:s") . ':Set Category:' . $category_code);
           }
         }
         // 专题
