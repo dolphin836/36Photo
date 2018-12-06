@@ -203,7 +203,7 @@ class Category
         ],
         'art' => [ // 艺术
             ['mark' => '演出', 'level' => 60],
-            ['画' => '演出', 'level' => 80]
+            ['mark' => '画', 'level' => 80]
         ],
         'movie' => [ // 影视
 
