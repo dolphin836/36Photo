@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 {% block Content %}
 <div class="container" style="padding-top: 4rem;">
     <div class="row">
-        <div class="column column-75">
+        <div class="column column-80" style="margin:0 auto;">
             <img src="{{ photo }}" alt="" class="img-zoomable">
         </div>
         <div class="column">
@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="/color/{{ hex }}" class="color" style="background-color: #{{ hex }};"></a>
                 {% endfor %}
                 <dt>标签</dt>
-                <ul class="tags">
+                <ul style="list-style-type: none;">
                     {% for m in mark %}
-                    <li><a href="/mark/{{ m.name }}" class="tag">{{ m.name }}</a></li>
+                    <li><a href="/mark/{{ m.name }}" class="mark">{{ m.name }}</a></li>
                     {% endfor %}
                 </ul>
                 <dt>分类</dt>

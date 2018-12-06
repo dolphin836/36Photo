@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block Content %}
-<div class="container" style="padding: 4rem 0;">
+<div class="container">
     {% for color in colors %}
         {% if loop.index0 % 4 == 0 %}
         <div class="row">
         {% endif %}
-            <div class="column">
+            <div class="column text-center">
                 <a href="/color/{{ color }}" class="color animated fadeIn" style="background-color: #{{ color }};"></a>
             </div>
         {% if loop.index0 % 4 == 3 %}
