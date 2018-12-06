@@ -36,7 +36,8 @@ class Color extends Pic
 
         $fifter = [
             'color' => $color,
-            'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
+            'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT],
+            'ORDER' => ['id' => 'DESC']
         ];
         // 当前页 Hash
         $hash    = $this->pic_model->color_hash($fifter);

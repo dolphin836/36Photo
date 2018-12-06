@@ -8,10 +8,10 @@
 <div class="container" style="padding: 4rem 0;">
     {% for mark in marks %}
         {% if loop.index0 % 4 == 0 %}
-        <div class="row">
+        <div class="row tags">
         {% endif %}
             <div class="column">
-                <a href="/mark/{{ mark.name }}">{{ mark.name }} - {{ mark.count }}</a>
+                <a href="/mark/{{ mark.name }}" class="tag animated fadeIn">{{ mark.name }}</a>
             </div>
         {% if loop.index0 % 4 == 3 %}
         </div>

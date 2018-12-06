@@ -37,7 +37,8 @@ class Mark extends Pic
 
         $fifter = [
             Table::MARK . '.name' => $mark,
-            'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
+            'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT],
+            'ORDER' => [Table::PICTURE_MARK . '.id' => 'DESC']
         ];
         // 当前页 Hash
         $hash    = $this->pic_model->mark_hash($fifter);

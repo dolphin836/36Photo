@@ -45,7 +45,7 @@ class D extends Pic
         $stream = new Stream($file);
 
         return $response->withBody($stream)
-                        ->withHeader('Content-Disposition', 'attachment; filename=' . basename($photo) . ';')
+                        ->withHeader('Content-Disposition', 'attachment; filename=' . '36Photo.cn_' . basename($photo) . ';')
                         ->withHeader('Content-Type', mime_content_type($photo))
                         ->withHeader('Content-Length', filesize($photo));
     }

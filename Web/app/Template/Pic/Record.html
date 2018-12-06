@@ -1,8 +1,22 @@
 {% extends "Template.html" %}
 
+{% block Js %}
+<!-- build:zooming-script -->
+<script src="/assets/node_modules/zooming/build/zooming.js"></script>
+<!-- endbuild -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    new Zooming().listen('.img-zoomable');
+}); 
+</script>
+{% endblock %}
+
 {% block Content %}
 <div class="container" style="padding-top: 4rem;">
     <div class="row">
+        <div class="column column-75">
+            <img src="{{ photo }}" alt="" class="img-zoomable">
+        </div>
         <div class="column">
             <dl>
                 <dt>大小</dt>
@@ -13,23 +27,18 @@
                 <dd><em>{{ gmt_create }}</em></dd>
                 <dt>颜色</dt>
                 {% for hex in color %}
-                    <dd>
-                        <a href="/color/{{ hex }}" class="button button-small button-no-radius" style="background-color: #{{ hex }}; border: none;">
-                            #{{ hex }}
-                        </a>
-                    </dd>
+                    <a href="/color/{{ hex }}" class="color" style="background-color: #{{ hex }};"></a>
                 {% endfor %}
                 <dt>标签</dt>
-                {% for m in mark %}
-                    <dd><a href="/mark/{{ m.name }}">{{ m.name }}（{{ m.count }}）</a></dd>
-                {% endfor %}
+                <ul class="tags">
+                    {% for m in mark %}
+                    <li><a href="/mark/{{ m.name }}" class="tag">{{ m.name }}</a></li>
+                    {% endfor %}
+                </ul>
                 <dt>分类</dt>
                 <dd><a href="/category/{{ category_code }}">{{ category_name }}</a></dd>
             </dl>
             <a href="/photo/d/{{ hash }}" class="button button-outline" download target="_blank">免费下载</a>
-        </div>
-        <div class="column column-75">
-            <img src="{{ photo }}" alt="">
         </div>
     </div>
 </div>

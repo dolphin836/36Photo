@@ -11,9 +11,7 @@
         <div class="row">
         {% endif %}
             <div class="column">
-                <a href="/color/{{ color }}" class="button button-small button-no-radius" style="background-color: #{{ color }}; border: none;">
-                    #{{ color }}
-                </a>
+                <a href="/color/{{ color }}" class="color animated fadeIn" style="background-color: #{{ color }};"></a>
             </div>
         {% if loop.index0 % 4 == 3 %}
         </div>
