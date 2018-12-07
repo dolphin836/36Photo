@@ -20,4 +20,6 @@ class Nav
     const CATEGORY = 'category';
     // 专题
     const COLLECTION = 'collection';
+    // 推荐
+    const RECOMMEND = 'recommend';
 }

@@ -1,0 +1,51 @@
+{% extends "Template.html" %} 
+
+{% block Title %}
+列表 - 推荐 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<div class="card">
+    <div class="card-body">
+        {% if records is defined %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <caption>{{ page.text }}</caption>
+                {% include 'Component/Thead.html' %}
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td class="text-center">
+                            <a href="{{ record.path }}" target="_blank">
+                                <img src="{{ record.path }}" class="rounded" style="width: 120px;">
+                            </a>
+                            {% if record.is_oss %}
+                            <div><i class="tim-icons icon-cloud-upload-94 text-success" title="已上传至阿里云"></i></div>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div>{{ record.gmt_create }}</div>
+                        </td>
+                        <td class="text-center">
+                            <a href="/recommend/delete?hash={{ record.hash }}" class="btn btn-danger btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        暂无数据。
+        {% endif %}
+    </div>
+
+    {% if page.link != '' %}
+    <div class="card-footer">
+        {% autoescape false %} {{ page.link }} {% endautoescape %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

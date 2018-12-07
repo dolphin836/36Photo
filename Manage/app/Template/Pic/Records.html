@@ -101,11 +101,14 @@
                             <div>{{ record.gmt_create }}</div>
                         </td>
                         <td class="text-center">
-                            <a href="/pic/record?hash={{ record.hash }}" class="btn btn-info btn-sm btn-round btn-icon">
+                            <a href="/pic/record?hash={{ record.hash }}" class="btn btn-primary btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-link-72"></i>
                             </a>
                             <a href="/pic/modify?hash={{ record.hash }}" class="btn btn-info btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-pencil"></i>
+                            </a>
+                            <a href="/recommend/add?hash={{ record.hash }}" class="btn btn-success btn-sm btn-round btn-icon">
+                                <i class="tim-icons icon-simple-add"></i>
                             </a>
                             <a href="/pic/delete?hash={{ record.hash }}" class="btn btn-danger btn-sm btn-round btn-icon">
                                 <i class="tim-icons icon-simple-remove"></i>
