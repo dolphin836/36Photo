@@ -21,4 +21,6 @@ $app->get('/color', 'Dolphin\Ting\Controller\Color\Records');
 $app->get('/category', 'Dolphin\Ting\Controller\Category\Records');
 // 某分类的图片列表页
 $app->get('/category/{code}[/{page:[0-9]+}]', 'Dolphin\Ting\Controller\Pic\Category');
+// 推荐
+$app->get('/recommend[/{day:[0-9]{8}+}]', 'Dolphin\Ting\Controller\Pic\Recommend');
 

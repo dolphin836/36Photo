@@ -1,0 +1,40 @@
+{% extends "Template.html" %}
+
+{% block Title %}
+推荐图片
+{% endblock %}
+
+{% block Content %}
+<div class="container">
+    <h3>当日推荐</h3>
+    {% for r in recommend %}
+        {% if loop.index0 % 4 == 0 %}
+        <div class="row">
+        {% endif %}
+            <div class="column">
+                <a href="/photo/{{ r.hash }}">
+                    <img src="{{ r.small }}" data-progressive="{{ r.large }}" alt="">
+                </a>
+            </div>
+        {% if loop.index0 % 4 == 3 %}
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<div class="container">
+    <h3>最新推荐</h3>
+    {% for p in photo %}
+        {% if loop.index0 % 4 == 0 %}
+        <div class="row">
+        {% endif %}
+            <div class="column">
+                <a href="/photo/{{ p.hash }}">
+                    <img src="{{ p.small }}" data-progressive="{{ p.large }}" alt="">
+                </a>
+            </div>
+        {% if loop.index0 % 4 == 3 %}
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
