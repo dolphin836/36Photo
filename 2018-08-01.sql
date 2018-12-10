@@ -121,3 +121,11 @@ CREATE TABLE `picture_color` (
 -- 查询颜色出现的次数，从高到低排序
 
 -- SELECT `color` FROM `picture_color` GROUP BY `color` ORDER BY COUNT(`color`) DESC LIMIT 30
+
+CREATE TABLE `picture_recommend` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
+    `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_picture_hash` (`picture_hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 推荐映射关系记录表';

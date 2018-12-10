@@ -24,4 +24,6 @@ class Nav
     const COLOR = 'color';
     // 随机
     const RANDOM = 'random';
+    // 推荐
+    const RECOMMEND = 'recommend';
 }

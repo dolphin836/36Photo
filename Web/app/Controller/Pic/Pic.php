@@ -61,8 +61,8 @@ class Pic extends \Dolphin\Ting\Controller\Base
         $photos = [];
 
         $sma   = $lar = Common::OSS_PROCESS;
-        $sma  .= Common::OSS_PROCESS_RESIZE_320;
-        $lar  .= Common::OSS_PROCESS_RESIZE_640;
+        $sma  .= Common::PHOTO_RESIZE_SMA;
+        $lar  .= Common::PHOTO_RESIZE_LAR;
 
         if ($this->is_support_webp) {
             $sma .= Common::OSS_PROCESS_FORMAT;
