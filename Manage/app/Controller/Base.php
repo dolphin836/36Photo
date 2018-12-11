@@ -26,6 +26,7 @@ class Base
         // 页面信息
         $data['site'] = [
               'web_name' => getenv('WEB_NAME'),
+                'pc_url' => getenv('PC_URL'),
               'nav_item' => $this->nav,
             'asset_path' => $this->asset_path
         ];

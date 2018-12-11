@@ -56,13 +56,26 @@ class Pic extends \Dolphin\Ting\Controller\Base
      * @param  array $data
      * @return array
      */
-    protected function convert($records)
+    protected function convert($records, $resize_name = 'PHOTO')
     {
         $photos = [];
 
         $sma   = $lar = Common::OSS_PROCESS;
-        $sma  .= Common::PHOTO_RESIZE_SMA;
-        $lar  .= Common::PHOTO_RESIZE_LAR;
+
+        switch ($resize_name) {
+            case 'PHOTO': // 图片列表页
+                $sma .= Common::PHOTO_RESIZE_SMA;
+                $lar .= Common::PHOTO_RESIZE_LAR;
+                break;
+            case 'RECOMMEND': // 推荐页
+                $sma .= Common::RECOMMEND_RESIZE_SMA;
+                $lar .= Common::RECOMMEND_RESIZE_LAR;
+                break;    
+            default:
+                $sma .= Common::PHOTO_RESIZE_SMA;
+                $lar .= Common::PHOTO_RESIZE_LAR;
+                break;
+        }
 
         if ($this->is_support_webp) {
             $sma .= Common::OSS_PROCESS_FORMAT;

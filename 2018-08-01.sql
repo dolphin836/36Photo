@@ -129,3 +129,11 @@ CREATE TABLE `picture_recommend` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_picture_hash` (`picture_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 推荐映射关系记录表';
+
+CREATE TABLE `picture_compare` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
+    `hash` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '相似图片的 Hash 拼接',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_picture_hash` (`picture_hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 相似关系映射记录表';

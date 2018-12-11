@@ -50,17 +50,26 @@ class Recommend extends Pic
         // 每日推荐的图片记录
         $recommend = $this->pic_model->records(['hash' => $hash]);
         // 最新推荐
-        $records = $this->recommend_model->records([
-            "picture_hash[!]" => $hash, // 排除每日推荐中已经存在的记录
-                      "ORDER" => ["id" => "DESC"],
-                      "LIMIT" => [0, Common::RECOMMEND_NEW_MAX]
-        ]);
+        $fifter  = [
+            "ORDER" => ["id" => "DESC"],
+            "LIMIT" => [0, Common::RECOMMEND_NEW_MAX]
+        ];
+
+        if (! empty($hash)) { // 排除每日推荐中已经存在的记录
+            $fifter["picture_hash[!]"] = $hash;
+        }
+
+        $records = $this->recommend_model->records($fifter);
 
         $photos = $this->pic_model->records(['hash' => array_column($records, 'picture_hash')]);
 
         $data = [
-            'recommend' => $this->convert($recommend),
-                'photo' => $this->convert($photos),
+                  'day' => date("Y-m-d", strtotime($day)),
+                'today' => date("Ymd"),
+             'tomorrow' => date("Ymd", strtotime('+1 day', strtotime($day))),
+            'yesterday' => date("Ymd", strtotime('-1 day', strtotime($day))),
+            'recommend' => $this->convert($recommend, 'RECOMMEND'),
+                'photo' => $this->convert($photos, 'RECOMMEND'),
         ];
 
         $this->respond('Recommend/Record', $data);

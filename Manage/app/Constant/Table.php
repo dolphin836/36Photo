@@ -26,4 +26,6 @@ class Table
     const PICTURE_COLOR = 'picture_color';
     // 图片 - 推荐
     const PICTURE_RECOMMEND = 'picture_recommend';
+    // 图片 - 相似
+    const PICTURE_COMPARE = 'picture_compare';
 }

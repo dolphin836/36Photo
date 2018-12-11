@@ -4,37 +4,62 @@
 推荐图片
 {% endblock %}
 
+{% block Css %}
+<style>
+.recommend {
+    width: 280px;
+}
+</style>
+{% endblock %}
+
+{% block Js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    progressively.init();
+}); 
+</script>
+{% endblock %}
+
 {% block Content %}
 <div class="container">
-    <h3>当日推荐</h3>
-    {% for r in recommend %}
-        {% if loop.index0 % 4 == 0 %}
-        <div class="row">
-        {% endif %}
-            <div class="column">
-                <a href="/photo/{{ r.hash }}">
-                    <img src="{{ r.small }}" data-progressive="{{ r.large }}" alt="">
-                </a>
-            </div>
-        {% if loop.index0 % 4 == 3 %}
+    <h3>{{ day }} 推荐</h3>
+    {% if recommend is empty %}
+        <h5>暂无记录</h5>
+    {% else %}
+        {% for r in recommend %}
+        <div class="recommend">
+            <a href="/photo/{{ r.hash }}">
+                <img src="{{ r.small }}" class="progressive__img progressive--not-loaded" data-progressive="{{ r.large }}" alt="">
+            </a>
         </div>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="container">
+    <div class="row">
+        <div class="column text-center">
+            <a href="/recommend/{{ yesterday }}" class="button button-outline">前一天</a>
+        </div>
+        <div class="column text-center">
+            <a href="/recommend/{{ today }}" class="button button-outline">今 天</a>
+        </div>
+        <div class="column text-center">
+            <a href="/recommend/{{ tomorrow }}" class="button button-outline">后一天</a>
+        </div>
+    </div>
 </div>
 <div class="container">
     <h3>最新推荐</h3>
-    {% for p in photo %}
-        {% if loop.index0 % 4 == 0 %}
-        <div class="row">
-        {% endif %}
-            <div class="column">
-                <a href="/photo/{{ p.hash }}">
-                    <img src="{{ p.small }}" data-progressive="{{ p.large }}" alt="">
-                </a>
-            </div>
-        {% if loop.index0 % 4 == 3 %}
+    {% if photo is empty %}
+    <h5>暂无记录</h5>
+    {% else %}
+        {% for p in photo %}
+        <div class="recommend">
+            <a href="/photo/{{ p.hash }}">
+                <img src="{{ p.small }}" class="progressive__img progressive--not-loaded" data-progressive="{{ p.large }}" alt="">
+            </a>
         </div>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

@@ -125,7 +125,7 @@
     color: white;
 }
 
-.tag:hover::after {
+.mark:hover::after {
     border-left-color: crimson; 
 }
 
