@@ -36,10 +36,11 @@ gulp.task('css', function() {
 });
 // 框架 JS 文件处理：合并 => 添加后缀
 // 这部分 JS 除非框架升级，不然不会变化，可以长期缓存在客户端来优化页面性能
-// 目前包括：Pace、Progressively、Justified-layout、Feather Icons
+// 目前包括：Pace、Progressively、Justified-layout、Feather Icons、JS Cookie
 gulp.task('common-script', function() {                         
-    gulp.src(['./js/pace.min.js', './node_modules/progressively/dist/progressively.min.js', './node_modules/justified-layout/dist/justified-layout.min.js', './node_modules/feather-icons/dist/feather.js'])
+    gulp.src(['./js/pace.min.js', './node_modules/progressively/src/progressively.js', './node_modules/justified-layout/dist/justified-layout.js', './node_modules/feather-icons/dist/feather.js', './node_modules/js-cookie/src/js.cookie.js'])
         .pipe(concat('common.min.js'))
+        .pipe(uglify())
         .pipe(rev())
         .pipe(gulp.dest('./dist/js'))
         .pipe(rev.manifest({

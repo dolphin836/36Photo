@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{feather.replace();var e=document.getElementById("lang");e.addEventListener("change",function(){var n=e.options[e.selectedIndex].value;Cookies.set("Lang",n,{expires:7}),location.reload()})});
