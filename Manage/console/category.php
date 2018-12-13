@@ -40,7 +40,8 @@ class Category
             ['mark' => '防波提', 'level' => 100],
             ['mark' => '珊瑚礁', 'level' => 100],
             ['mark' => '吊桥', 'level' => 60],
-            ['mark' => '喷泉', 'level' => 40]
+            ['mark' => '喷泉', 'level' => 40],
+            ['mark' => '田地', 'level' => 80]
         ],
         'animal' => [ // 动物
             ['mark' => '动物', 'level' => 100],
@@ -72,7 +73,8 @@ class Category
             ['mark' => '爱斯基摩犬', 'level' => 100],
             ['mark' => '红狐狸', 'level' => 100],
             ['mark' => '大白鲨', 'level' => 100],
-            ['mark' => '非洲变色龙', 'level' => 100]
+            ['mark' => '非洲变色龙', 'level' => 100],
+            ['mark' => '蜘蛛网', 'level' => 60]
         ],
         'plant' => [ // 植物 
             ['mark' => '植物', 'level' => 100],
@@ -118,7 +120,8 @@ class Category
             ['mark' => '码头', 'level' => 40],
             ['mark' => '烟花', 'level' => 60],
             ['mark' => '船', 'level' => 40],
-            ['mark' => '城堡', 'level' => 20]
+            ['mark' => '城堡', 'level' => 20],
+            ['mark' => '车站', 'level' => 80]
         ],
         'life' => [ // 生活
             ['mark' => '美女', 'level' => 40],
@@ -143,13 +146,16 @@ class Category
             ['mark' => '黑板', 'level' => 60],
             ['mark' => '城堡', 'level' => 40],
             ['mark' => '相框', 'level' => 80],
-            ['mark' => '谷仓', 'level' => 40]
+            ['mark' => '谷仓', 'level' => 40],
+            ['mark' => '长袍（礼服）', 'level' => 40],
+            ['mark' => '火车', 'level' => 40]
         ],
         'design' => [ // 设计
             ['mark' => '饰品', 'level' => 20],
             ['mark' => '箱包', 'level' => 40],
             ['mark' => '家居物品', 'level' => 40],
-            ['mark' => '衣物', 'level' => 60]
+            ['mark' => '衣物', 'level' => 60],
+            ['mark' => '长袍（礼服）', 'level' => 20]
         ],
         'car' => [ // 汽车
             ['mark' => '街道', 'level' => 20],
@@ -168,7 +174,8 @@ class Category
         ],
         'sport' => [ // 运动
             ['mark' => '公路', 'level' => 20],
-            ['mark' => '运动', 'level' => 100]
+            ['mark' => '运动', 'level' => 100],
+            ['mark' => '滑雪', 'level' => 80]
         ],
         'food' => [ // 食物
             ['mark' => '美食', 'level' => 100]
@@ -181,13 +188,15 @@ class Category
             ['mark' => '饰品', 'level' => 60],
             ['mark' => '女游泳衣', 'level' => 80],
             ['mark' => '老人', 'level' => 80],
-            ['mark' => '比基尼', 'level' => 80]
+            ['mark' => '比基尼', 'level' => 80],
+            ['mark' => '长袍（礼服）', 'level' => 60]
         ],
         'fashion' => [ // 时尚
             ['mark' => '演出', 'level' => 30],
             ['mark' => '女游泳衣', 'level' => 40],
             ['mark' => '衣物', 'level' => 40],
-            ['mark' => '比基尼', 'level' => 50]
+            ['mark' => '比基尼', 'level' => 50],
+            ['mark' => '长袍（礼服）', 'level' => 50]
         ],
         'girl' => [ // 少女
             ['mark' => '美女', 'level' => 60],
