@@ -19,7 +19,8 @@
     "jquery-confirm": "^3.3.2",
     "jquery-datetimepicker": "^2.5.20",
     "popper.js": "^1.14.4",
-    "pump": "^3.0.0"
+    "pump": "^3.0.0",
+    "sleek-dashboard": "^1.0.0-alpha.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1"
