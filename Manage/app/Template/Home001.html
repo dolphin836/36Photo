@@ -1,0 +1,64 @@
+{% extends "Template.html" %}
+
+{% block Title %}
+首页
+{% endblock %}
+
+{% block Content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-nav-tabs">
+            <div class="card-header card-header-success">
+                图 片
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>总 数：{{ photo_total }}</p>
+                    <p>新 增：{{ photo_today }}</p>
+                </blockquote>
+            </div>
+            <div class="card-footer">
+                <p class="text-right">
+                    <a href="/pic/records" class="btn btn-info btn-sm btn-simple">详 情</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-nav-tabs">
+            <div class="card-header card-header-success">
+                标 签
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>总 数：{{ mark_total }}</p>
+                    <p>新 增：{{ mark_today }}</p>
+                </blockquote>
+            </div>
+            <div class="card-footer">
+                <p class="text-right">
+                    <a href="/mark/records" class="btn btn-info btn-sm btn-simple">详 情</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-nav-tabs">
+            <div class="card-header card-header-success">
+                用 户
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>总 数：{{ user_total }}</p>
+                    <p>新 增：{{ user_today }}</p>
+                </blockquote>
+            </div>
+            <div class="card-footer">
+                <p class="text-right">
+                    <a href="/user/records" class="btn btn-info btn-sm btn-simple">详 情</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
