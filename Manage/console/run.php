@@ -118,6 +118,7 @@ function found($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debug
 
       // 已经存在
       if ($db->has('picture', ['hash' => $hash])) {
+        unlink($path);
         var_dump(date("Y-m-d H:i:s") . ':The Picture Is Exist.');
         continue;
       }
