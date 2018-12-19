@@ -10,6 +10,7 @@ class Base
     protected $app;
     
     protected $nav;
+    protected $nav_route;
     // 前端资源存储路径
     private $asset_path;
 
@@ -28,6 +29,7 @@ class Base
               'web_name' => getenv('WEB_NAME'),
                 'pc_url' => getenv('PC_URL'),
               'nav_item' => $this->nav,
+             'nav_route' => $this->nav_route,
             'asset_path' => $this->asset_path
         ];
         // class

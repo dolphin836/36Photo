@@ -8,6 +8,7 @@ use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
+use Dolphin\Ting\Constant\Nav;
 
 class GetRecords extends User
 {
@@ -18,6 +19,13 @@ class GetRecords extends User
     '创建时间',
     '最近登录'
   ];
+
+  function __construct(ContainerInterface $app)
+  {
+    parent::__construct($app);
+
+    $this->nav_route = Nav::RECORDS;
+  }
 
   public function __invoke(Request $request, Response $response, $args)
   {  

@@ -5,48 +5,47 @@
 {% endblock %}
 
 {% block Content %}
-<div class="card">
-    <div class="card-body">
-        {% if records is defined %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <caption>{{ page.text }}</caption>
-                {% include 'Component/Thead.html' %}
-                <tbody>
-                    {% for record in records %}
-                    <tr>
-                        <td class="text-center">
-                            <div>{{ record.name }}</div>
-                        </td>
-                        <td class="text-center">
-                            <div>{{ record.count }}</div>
-                        </td>
-                        <td class="text-center">
-                            <div>{{ record.gmt_create }}</div>
-                        </td>
-                        <td class="text-center">
-                            <a href="/mark/pic?mark={{ record.id }}" class="btn btn-info btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-image-02"></i>
-                            </a>
-                            <a href="/mark/delete?id={{ record.id }}" class="btn btn-danger btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-simple-remove"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="content">
+    <div class="card card-default">
+        <div class="card-body">
+            {% if records is defined %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    {% include 'Component/Thead.html' %}
+                    <tbody>
+                        {% for record in records %}
+                        <tr>
+                            <td class="text-center">
+                                <div>{{ record.name }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div>{{ record.count }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div>{{ record.gmt_create }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="">
+                                    <a href="/mark/pic?mark={{ record.id }}" role="button" class="btn btn-square btn-outline-info">
+                                        <i class="mdi mdi-file-image mr-1"></i> 图片
+                                    </a>
+                                    <a href="/mark/delete?id={{ record.id }}" role="button" class="btn btn-square btn-outline-danger">
+                                        <i class="mdi mdi-close-circle-outline mr-1"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            暂无数据。
+            {% endif %}
         </div>
-        {% else %}
-        暂无数据。
-        {% endif %}
-    </div>
 
-    {% if page.link != '' %}
-    <div class="card-footer">
-        {% autoescape false %} {{ page.link }} {% endautoescape %}
+        {% include 'Component/Page.html' %}
     </div>
-    {% endif %}
 </div>
 
 {% endblock %}

@@ -20,41 +20,92 @@
                         <span class="nav-text">概 况</span> <b class="caret"></b>
                     </a>
                 </li>
-                <li class="has-sub {{ site.nav_item == 'pic' ? 'active' : '' }}">
-                    <a href="/pic/records" class="sidenav-item-link">
+
+
+                <li class="has-sub {{ site.nav_item == 'pic' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pic" aria-expanded="{{ site.nav_item == 'pic' ? 'true' : 'false' }}"
+                        aria-controls="pic">
                         <i class="mdi mdi-image-filter"></i>
                         <span class="nav-text">图 片</span> <b class="caret"></b>
                     </a>
+                    <ul class="collapse {{ site.nav_item == 'pic' ? 'show' : '' }}" id="pic" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/pic/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/pic/add">上 传</a>
+                            </li>
+                        </div>
+                    </ul>
                 </li>
-                <li class="has-sub {{ site.nav_item == 'collection' ? 'active' : '' }}">
-                    <a href="/collection/records" class="sidenav-item-link">
+
+                <li class="has-sub {{ site.nav_item == 'collection' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#collection" aria-expanded="{{ site.nav_item == 'collection' ? 'true' : 'false' }}"
+                        aria-controls="collection">
                         <i class="mdi mdi-library-books"></i>
                         <span class="nav-text">专 题</span> <b class="caret"></b>
                     </a>
+                    <ul class="collapse {{ site.nav_item == 'collection' ? 'show' : '' }}" id="collection" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/collection/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/collection/add">创 建</a>
+                            </li>
+                        </div>
+                    </ul>
                 </li>
+
                 <li class="has-sub {{ site.nav_item == 'mark' ? 'active' : '' }}">
                     <a href="/mark/records" class="sidenav-item-link">
                         <i class="mdi mdi-tag-multiple"></i>
                         <span class="nav-text">标 签</span> <b class="caret"></b>
                     </a>
                 </li>
-                <li class="has-sub {{ site.nav_item == 'category' ? 'active' : '' }}">
-                    <a href="/category/records" class="sidenav-item-link">
+
+                <li class="has-sub {{ site.nav_item == 'category' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#category" aria-expanded="{{ site.nav_item == 'category' ? 'true' : 'false' }}"
+                        aria-controls="category">
                         <i class="mdi mdi-folder-multiple-outline"></i>
                         <span class="nav-text">分 类</span> <b class="caret"></b>
                     </a>
+                    <ul class="collapse {{ site.nav_item == 'category' ? 'show' : '' }}" id="category" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/category/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/category/add">创 建</a>
+                            </li>
+                        </div>
+                    </ul>
                 </li>
+
                 <li class="has-sub {{ site.nav_item == 'recommend' ? 'active' : '' }}">
                     <a href="/recommend/records" class="sidenav-item-link">
                         <i class="mdi mdi-heart-multiple-outline"></i>
                         <span class="nav-text">推 荐</span> <b class="caret"></b>
                     </a>
                 </li>
-                <li class="has-sub {{ site.nav_item == 'user' ? 'active' : '' }}">
-                    <a href="/user/records" class="sidenav-item-link">
+
+                <li class="has-sub {{ site.nav_item == 'user' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#user" aria-expanded="{{ site.nav_item == 'user' ? 'true' : 'false' }}"
+                        aria-controls="user">
                         <i class="mdi mdi-account-box-multiple"></i>
                         <span class="nav-text">用 户</span> <b class="caret"></b>
                     </a>
+                    <ul class="collapse {{ site.nav_item == 'user' ? 'show' : '' }}" id="user" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/user/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/user/add">添 加</a>
+                            </li>
+                        </div>
+                    </ul>
                 </li>
             </ul>
         </div>
