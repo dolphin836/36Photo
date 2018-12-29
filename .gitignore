@@ -18,6 +18,8 @@
 
 /Manage/public/assets/package-lock.json
 
+/Manage/.idea
+
 /API/.env
 
 /API/composer.lock

@@ -66,7 +66,7 @@ class Base
      * 转换字节数为 KB、MB
      *
      * @param [type] $size
-     * @return void
+     * @return string
      */
     protected function size($size)
     {
