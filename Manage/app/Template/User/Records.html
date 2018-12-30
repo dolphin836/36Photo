@@ -13,136 +13,129 @@
 {% endblock %}
 
 {% block Content %}
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">姓名</label>
-                    <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
+<div class="content">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">姓名</label>
+                        <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">昵称</label>
-                    <input type="text" class="form-control" name="search_nickname_~" value="{{ text.nickname is defined ? text.nickname : '' }}" maxlength="32">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">昵称</label>
+                        <input type="text" class="form-control" name="search_nickname_~" value="{{ text.nickname is defined ? text.nickname : '' }}" maxlength="32">
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">手机</label>
-                    <input type="text" class="form-control" name="search_phone_~" value="{{ text.phone is defined ? text.phone : '' }}" maxlength="11">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">手机</label>
+                        <input type="text" class="form-control" name="search_phone_~" value="{{ text.phone is defined ? text.phone : '' }}" maxlength="11">
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">邮箱</label>
-                    <input type="text" class="form-control" name="search_email_~" value="{{ text.email is defined ? text.email : '' }}" maxlength="255">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">邮箱</label>
+                        <input type="text" class="form-control" name="search_email_~" value="{{ text.email is defined ? text.email : '' }}" maxlength="255">
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">用户组</label>
-                    {% set select_value = text.group is defined ? text.group : -1 %}
-                    <select class="form-control" name="search_group">
-                        <option value="-1">全部</option>
-                        {% for grou in group %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">用户组</label>
+                        {% set select_value = text.group is defined ? text.group : -1 %}
+                        <select class="form-control" name="search_group">
+                            <option value="-1">全部</option>
+                            {% for grou in group %}
+                                {% if loop.index0 == select_value %}
+                                <option value="{{ loop.index0 }}" selected>{{ grou }}</option>
+                                {% else %}
+                                <option value="{{ loop.index0 }}">{{ grou }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label">用户来源</label>
+                        {% set select_value = text.client is defined ? text.client : -1 %}
+                        <select class="form-control" name="search_client">
+                            <option value="-1">全部</option>
+                            {% for clien in client %}
                             {% if loop.index0 == select_value %}
-                            <option value="{{ loop.index0 }}" selected>{{ grou }}</option>
+                            <option value="{{ loop.index0 }}" selected>{{ clien }}</option>
                             {% else %}
-                            <option value="{{ loop.index0 }}">{{ grou }}</option>
+                            <option value="{{ loop.index0 }}">{{ clien }}</option>
                             {% endif %}
-                        {% endfor %}
-                    </select>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
+    
+                {% include 'Component/DateTime.html' %}
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="form-group">
-                    <label class="form-label">用户来源</label>
-                    {% set select_value = text.client is defined ? text.client : -1 %}
-                    <select class="form-control" name="search_client">
-                        <option value="-1">全部</option>
-                        {% for clien in client %}
-                        {% if loop.index0 == select_value %}
-                        <option value="{{ loop.index0 }}" selected>{{ clien }}</option>
-                        {% else %}
-                        <option value="{{ loop.index0 }}">{{ clien }}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
- 
-            {% include 'Component/DateTime.html' %}
-        </div>
-    </div>
-    <div class="card-footer text-right">
-        <div class="d-flex">
-            <a href="/user/records" class="btn btn-warning btn-link">清 除</a>
-            <button type="button" id="search" class="btn btn-info ml-auto">检 索</button>
-            <a href="/user/add" class="btn btn-success btn-simple ml-2">新 增</a>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <caption>{{ page.text }}</caption>
-                {% include 'Component/Thead.html' %}
-                <tbody>
-                    {% for user in records %}
-                    <tr>
-                        <td class="text-center">
-                            <div>
-                                {{ user.name }}
-                            </div>
-                            <div class="small text-muted">
-                                {{ user.phone }}
-                            </div>
-                            <div class="small text-muted">
-                                {{ user.email }}
-                            </div>
-                            {% if user.is_wechat %}
-                            <i class="fa fa-weixin text-success" title="已绑定微信"></i>
-                            {% endif %}
-                        </td>
-                        <td class="text-center">
-                            <span class="tag tag-{{ attribute(class, user.group) }}">{{ user.group_name }}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="tag tag-{{ attribute(class, user.client) }}">{{ user.client_name }}</span>
-                        </td>
-                        <td class="text-center">
-                            <div>{{ user.gmt_create }}</div>
-                        </td>
-                        <td class="text-center">
-                            <div>{{ user.last_login }}</div>
-                        </td>
-                        <td class="text-center">
-                            <a href="/pic/records?search_uuid={{ user.uuid }}" class="btn btn-info btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-image-02"></i>
-                            </a>
-                            <a href="/user/delete?uuid={{ user.uuid }}" class="btn btn-danger btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-simple-remove"></i>
-                            </a>
-                            <a href="/user/modify?uuid={{ user.uuid }}" class="btn btn-info btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-pencil"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% include 'Component/Search.html' %}
         </div>
     </div>
 
-    {% if page.link != '' %}
-    <div class="card-footer">
-        {% autoescape false %} {{ page.link }} {% endautoescape %}
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    {% include 'Component/Thead.html' %}
+                    <tbody>
+                        {% for user in records %}
+                        <tr>
+                            <td class="text-center">
+                                <div>
+                                    {{ user.name }}
+                                </div>
+                                <div class="small text-muted">
+                                    {{ user.phone }}
+                                </div>
+                                <div class="small text-muted">
+                                    {{ user.email }}
+                                </div>
+                                {% if user.is_wechat %}
+                                <i class="fa fa-weixin text-success" title="已绑定微信"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <span class="tag tag-{{ attribute(class, user.group) }}">{{ user.group_name }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="tag tag-{{ attribute(class, user.client) }}">{{ user.client_name }}</span>
+                            </td>
+                            <td class="text-center">
+                                <div>{{ user.gmt_create }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div>{{ user.last_login }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="">
+                                    <a href="/pic/records?search_uuid={{ user.uuid }}" role="button" class="btn btn-square btn-outline-info">
+                                        <i class="mdi mdi-file-image mr-1"></i> 图片
+                                    </a>
+                                    <a href="/user/modify?uuid={{ user.uuid }}" role="button" class="btn btn-square btn-outline-primary">
+                                        <i class="mdi mdi-square-edit-outline mr-1"></i> 编辑
+                                    </a>
+                                    <a href="/user/delete?uuid={{ user.uuid }}" role="button" class="btn btn-square btn-outline-danger">
+                                        <i class="mdi mdi-close-circle-outline mr-1"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% include 'Component/Page.html' %}
     </div>
-    {% endif %}
 </div>
 
 {% endblock %}

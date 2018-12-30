@@ -35,7 +35,7 @@ class PostAdd extends Category
             ]);  
         }
 
-        return $response->withRedirect('/categor/records', 302);
+        return $response->withRedirect('/category/records', 302);
     }
 
     private function validate($body)

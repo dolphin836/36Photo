@@ -1,62 +1,43 @@
 {% extends "Template.html" %}
 
 {% block Title %}
-首页
+项目概况 - {{ site.web_name }}
 {% endblock %}
 
 {% block Content %}
-<div class="row">
-    <div class="col-md-4">
-        <div class="card card-nav-tabs">
-            <div class="card-header card-header-success">
-                图 片
-            </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>总 数：{{ photo_total }}</p>
-                    <p>新 增：{{ photo_today }}</p>
-                </blockquote>
-            </div>
-            <div class="card-footer">
-                <p class="text-right">
-                    <a href="/pic/records" class="btn btn-info btn-sm btn-simple">详 情</a>
-                </p>
+<div class="content">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle mr-4 bg-primary">
+                    <i class="mdi mdi-image-filter text-white"></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2"><a href="/pic/records">{{ photo_total }}</a></h4>
+                    <p>{{ photo_today }}</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card card-nav-tabs">
-            <div class="card-header card-header-success">
-                标 签
-            </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>总 数：{{ mark_total }}</p>
-                    <p>新 增：{{ mark_today }}</p>
-                </blockquote>
-            </div>
-            <div class="card-footer">
-                <p class="text-right">
-                    <a href="/mark/records" class="btn btn-info btn-sm btn-simple">详 情</a>
-                </p>
+        <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle bg-warning mr-4">
+                    <i class="mdi mdi-tag-multiple text-white "></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2"><a href="/mark/records">{{ mark_total }}</a></h4>
+                    <p>{{ mark_today }}</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card card-nav-tabs">
-            <div class="card-header card-header-success">
-                用 户
-            </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>总 数：{{ user_total }}</p>
-                    <p>新 增：{{ user_today }}</p>
-                </blockquote>
-            </div>
-            <div class="card-footer">
-                <p class="text-right">
-                    <a href="/user/records" class="btn btn-info btn-sm btn-simple">详 情</a>
-                </p>
+        <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle mr-4 bg-danger">
+                    <i class="mdi mdi-account-box-multiple text-white "></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2"><a href="/user/records">{{ user_total }}</a></h4>
+                    <p>{{ user_today }}</p>
+                </div>
             </div>
         </div>
     </div>

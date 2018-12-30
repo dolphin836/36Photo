@@ -72,7 +72,7 @@ class PostLogin
             $user = $this->app->db->get("user", [
                 "uuid",
                 "name",
-                "email",
+                "avatar",
                 "password"
             ], [
                 "email" => $body['email']
@@ -81,8 +81,9 @@ class PostLogin
             if (! password_verify($body['password'], $user['password'])) {
                 $form_v_error['password'] = ['密码不正确.'];
             } else {
-                $this->app->session->set('uuid', $user['uuid']);
-                $this->app->session->set('name', $user['name']);
+                $this->app->session->set('uuid',   $user['uuid']);
+                $this->app->session->set('name',   $user['name']);
+                $this->app->session->set('avatar', $user['avatar']);
             }
         }
 

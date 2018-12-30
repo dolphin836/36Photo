@@ -22,4 +22,8 @@ class Nav
     const COLLECTION = 'collection';
     // 推荐
     const RECOMMEND = 'recommend';
+    // 
+    const RECORDS = 'records';
+    // 
+    const ADD = 'add';
 }

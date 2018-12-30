@@ -2,8 +2,10 @@
 
 namespace Dolphin\Ting\Controller\Collection;
 
+use Psr\Container\ContainerInterface as ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Dolphin\Ting\Constant\Nav;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
 
@@ -17,6 +19,13 @@ class GetRecords extends Collection
         '推广',
         '创建时间'
     ];
+
+    function __construct(ContainerInterface $app)
+    {
+        parent::__construct($app);
+
+        $this->nav_route = Nav::RECORDS;
+    }
 
     public function __invoke(Request $request, Response $response, $args)
     { 

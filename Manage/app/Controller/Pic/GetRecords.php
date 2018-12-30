@@ -7,6 +7,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Nav;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use Dolphin\Ting\Model\Mark_model;
@@ -33,6 +34,8 @@ class GetRecords extends Pic
 
         $this->mark_model     = new Mark_model($app);
         $this->category_model = new Category_model($app);
+
+        $this->nav_route = Nav::RECORDS;
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -62,7 +65,7 @@ class GetRecords extends Pic
 
                 try {
                     $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $record['path'], $valid, "GET", [
-                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_80,w_80"
+                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_400,w_400"
                     ]);
                 } catch (OssException $e) {
                     $path = getenv('WEB_URL') . '/' . $record['path'];

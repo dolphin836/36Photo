@@ -6,12 +6,14 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Table;
 
 class GetRecords extends Mark
 {
     private $columns = [
         '名称',
         '数量',
+        '分类',
         '创建时间'
     ];
 
@@ -21,7 +23,7 @@ class GetRecords extends Mark
 
         $records = $this->mark_model->records([
             "LIMIT" => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT],
-            "ORDER" => ["count" => "DESC"]
+            "ORDER" => [Table::MARK . ".count" => "DESC"]
         ]);
 
         $data = [
