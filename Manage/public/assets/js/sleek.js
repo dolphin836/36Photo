@@ -1,17 +1,5 @@
-/* ====== Index ======
-
-1. SCROLLBAR SIDEBAR
-2. BACKDROP
-3. SIDEBAR MENU
-4. SIDEBAR TOGGLE FOR MOBILE
-5. SIDEBAR TOGGLE FOR VARIOUS SIDEBAR LAYOUT
-6. TODO LIST
-
-====== End ======*/
-
 $(document).ready(function() {
   "use strict";
-
   /*======== 1. SCROLLBAR SIDEBAR ========*/
   $(".sidebar-scrollbar")
     .slimScroll({
@@ -137,90 +125,4 @@ $(document).ready(function() {
       flag = true;
     }
   }
-
-  /*======== 6. TODO LIST ========*/
-
-  function todoCheckAll() {
-    var mdis = document.querySelectorAll(".todo-single-item .mdi");
-    mdis.forEach(function(fa) {
-      fa.addEventListener("click", function(e) {
-        e.stopPropagation();
-        e.target.parentElement.classList.toggle("finished");
-      });
-    });
-  }
-
-  if (document.querySelector("#todo")) {
-    var list = document.querySelector("#todo-list"),
-      todoInput = document.querySelector("#todo-input"),
-      todoInputForm = todoInput.querySelector("form"),
-      item = todoInputForm.querySelector("input");
-
-    document.querySelector("#add-task").addEventListener("click", function(e) {
-      e.preventDefault();
-      todoInput.classList.toggle("d-block");
-      item.focus();
-    });
-
-    todoInputForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-      if (item.value.length <= 0) {
-        return;
-      }
-      list.innerHTML =
-        '<div class="todo-single-item d-flex flex-row justify-content-between">' +
-        '<i class="mdi"></i>' +
-        '<span class="">' +
-        item.value +
-        '</span>"' +
-        '<span class="badge badge-primary">Today</span>' +
-        "</div>" +
-        list.innerHTML;
-      item.value = "";
-      //Close input field
-      todoInput.classList.toggle("d-block");
-      todoCheckAll();
-    });
-
-    todoCheckAll();
-  }
-
-
-  // Right Sidebar 
-  if ($(window).width() < 1025) {
-    body.addClass('right-sidebar-toggoler-out');
-
-    var btnRightSidebarToggler = $('.btn-right-sidebar-toggler');
-    var materialIcons = btnRightSidebarToggler.find('.material-icons');
-
-    btnRightSidebarToggler.on('click', function () {
-
-      if (!body.hasClass('right-sidebar-toggoler-out')) {
-        body.addClass('right-sidebar-toggoler-out').removeClass('right-sidebar-toggoler-in');
-      } else {
-        body.addClass('right-sidebar-toggoler-in').removeClass('right-sidebar-toggoler-out')
-      }      
-      
-    });
-
-  }
-
-  /* Right Sidebar  */
-  var navRightSidebarLink = $('.nav-right-sidebar .nav-link');
-
-  navRightSidebarLink.on('click', function () {
-    
-    if(!body.hasClass('right-sidebar-in')){
-      body.addClass('right-sidebar-in').removeClass('right-sidebar-out');
-      
-    } else if ($(this).hasClass('show')){
-      body.addClass('right-sidebar-out').removeClass('right-sidebar-in');      
-    }
-  });
-
-  /* Remove Right Sidebar With Card */
-  var cardClosebutton = $('.card-right-sidebar .close');
-  cardClosebutton.on('click', function () {
-    body.removeClass('right-sidebar-in').addClass('right-sidebar-out');
-  })
 });

@@ -10,6 +10,8 @@ class Page
     {
         $paginator = new Paginator($total, $count, $page, $url . '?page=(:num)');
 
+        $paginator->setMaxPagesToShow(5);
+
         $html = "";
 
         if ($paginator->getNumPages() > 1) {

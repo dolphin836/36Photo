@@ -22,12 +22,18 @@
                                 <div>{{ record.count }}</div>
                             </td>
                             <td class="text-center">
+                                <div>{{ record.category_name }} - {{ record.category_count }}</div>
+                            </td>
+                            <td class="text-center">
                                 <div>{{ record.gmt_create }}</div>
                             </td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="">
                                     <a href="/mark/pic?mark={{ record.id }}" role="button" class="btn btn-square btn-outline-info">
                                         <i class="mdi mdi-file-image mr-1"></i> 图片
+                                    </a>
+                                    <a href="/mark/modify?id={{ record.id }}" role="button" class="btn btn-square btn-outline-primary" target="_blank">
+                                        <i class="mdi mdi-circle-edit-outline mr-1"></i> 编辑
                                     </a>
                                     <a href="/mark/delete?id={{ record.id }}" role="button" class="btn btn-square btn-outline-danger">
                                         <i class="mdi mdi-close-circle-outline mr-1"></i> 删除

@@ -75,6 +75,14 @@ class Common_model
     {
         return $this->app->db->delete($this->table_name, $data);
     }
+
+    /**
+     * 更新记录
+     */
+    public function modify($data = [], $where = [])
+    {
+        return $this->app->db->update($this->table_name, $data, $where);
+    }
 }
 
 

@@ -14,6 +14,37 @@ class Mark_model extends Common_model
         $this->table_name = Table::MARK;
     }
 
+    public function records($data = [])
+    {
+        if (! isset($data["ORDER"])) {
+            $data["ORDER"] = [Table::MARK . ".gmt_create" => "DESC"];
+        }
+
+        return $this->app->db->select($this->table_name, [
+            "[>]" . Table::CATEGORY => ["category_code" => "code"]
+        ], [
+            Table::CATEGORY . ".name(category_name)",
+            Table::CATEGORY . ".count(category_count)",
+            Table::MARK . ".id",
+            Table::MARK . ".name",
+            Table::MARK . ".count",
+            Table::MARK . ".category_code",
+            Table::MARK . ".gmt_create"
+        ], $data);
+    }
+
+    public function record($data = [])
+    {
+        return $this->app->db->get($this->table_name, [
+            "[>]" . Table::CATEGORY => ["category_code" => "code"]
+        ], [
+            Table::CATEGORY . ".name(category_name)",
+            Table::MARK . ".name",
+            Table::MARK . ".count",
+            Table::MARK . ".category_code"
+        ], $data);
+    }
+
     public function pic_mark($hash)
     {
         return $this->app->db->select(Table::MARK, [

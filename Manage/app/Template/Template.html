@@ -5,13 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block Title %}{% endblock %}</title>
-    <!-- ICONS -->
-    <link href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css" rel="stylesheet" />
-    <!-- SLEEK CSS -->
-    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <!-- build:common-css -->
+    <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css" />
+    <link rel="stylesheet" href="/assets/css/sleek.css?{{ site.timestamp }}" />
+    <!-- endbuild -->
     {% block css %} {% endblock %}
-    <!-- FAVICON -->
-    <link href="/assets/node_modules/sleek-dashboard/src/assets/img/favicon.png" rel="shortcut icon" />
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
     <div class="mobile-sticky-body-overlay"></div>
@@ -28,15 +26,15 @@
             {{ include('Common/Footer.html') }}
         </div>
     </div>
-
-    <script src="/assets/node_modules/sleek-dashboard/src/assets/plugins/jquery/jquery.min.js"></script>
-    <script src="/assets/node_modules/sleek-dashboard/src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/node_modules/sleek-dashboard/src/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
-    <script src="/assets/js/sleek.js"></script>
-    {% block js %} {% endblock %}
-    <!-- build:app-script -->
-    <script src="/assets/js/app.js"></script>
+    <!-- build:common-script -->
+    <script src="/assets/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/node_modules/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/js/sleek.js?{{ site.timestamp }}"></script>
     <!-- endbuild -->
+    <!-- build:app-script -->
+    <script src="/assets/js/app.js?{{ site.timestamp }}"></script>
+    <!-- endbuild -->
+    {% block js %} {% endblock %}
 </body>
-
 </html>

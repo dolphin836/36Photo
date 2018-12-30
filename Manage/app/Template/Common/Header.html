@@ -10,12 +10,12 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <img src="/assets/node_modules/sleek-dashboard/src/assets/img/user/user.png" class="user-image" alt="User Image" />
-                        <span class="d-none d-lg-inline-block">Abdus Salam</span>
+                        <img src="{{ user.avatar }}" class="user-image" alt="用户头像" />
+                        <span class="d-none d-lg-inline-block">{{ user.name }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <a href="signin.html"> <i class="mdi mdi-logout"></i> Log Out </a>
+                            <a href="/logout"> <i class="mdi mdi-logout"></i> 注 销</a>
                         </li>
                     </ul>
                 </li>

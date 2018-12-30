@@ -13,12 +13,16 @@ class Base
     protected $nav_route;
     // 前端资源存储路径
     private $asset_path;
+    // 时间戳，用于开发环境刷新前端资源
+    private $timestamp = 0;
 
     function __construct(ContainerInterface $app)
     {
         $this->app = $app;
 
         $this->asset_path = getenv('DEBUG') == 'TRUE' ? '/assets' : '/assets/dist';
+
+        getenv('DEBUG') == 'TRUE' ? $this->timestamp = time() : $this->timestamp = 0;
     }
 
     protected function respond($html, $data = [])
@@ -30,10 +34,17 @@ class Base
                 'pc_url' => getenv('PC_URL'),
               'nav_item' => $this->nav,
              'nav_route' => $this->nav_route,
-            'asset_path' => $this->asset_path
+            'asset_path' => $this->asset_path,
+             'timestamp' => $this->timestamp
         ];
         // class
         $data['class'] = ['blue', 'azure', 'indigo', 'purple', 'pink', 'orange'];
+        // 用户信息
+        $data['user'] = [
+            'uuid'   => $this->app->session->get('uuid'),
+            'name'   => $this->app->session->get('name'),
+            'avatar' => getenv('WEB_URL') . '/' . $this->app->session->get('avatar')
+        ];
 
         // Flash Data
         // 表单验证错误信息

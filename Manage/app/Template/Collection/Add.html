@@ -6,11 +6,8 @@
 
 {% block Content %}
 <div class="content">
-    <form action="" method="POST" class="card" id="form">
-        {% if csrf is defined %}
-        <input type="hidden" name="{{ csrf.name_key }}" value="{{ csrf.name }}">
-        <input type="hidden" name="{{ csrf.value_key }}" value="{{ csrf.value }}">
-        {% endif %}
+    <form action="" method="POST" class="card card-default" id="form">
+        {% include 'Component/Csrf.html' %}
 
         <div class="card-body">
             <div class="row">
@@ -80,12 +77,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer text-right">
-            <div class="d-flex">
-                <a href="/collection/add" class="btn btn-warning btn-link">清 除</a>
-                <button type="submit" class="btn btn-info ml-auto">保 存</button>
-            </div>
+
+            {% include 'Component/FormSave.html' %}
         </div>
     </form>
 </div>
