@@ -17,7 +17,27 @@ class Mark_model extends Common_model
     public function records($data = [])
     {
         if (! isset($data["ORDER"])) {
-            $data["ORDER"] = [Table::MARK . ".gmt_create" => "DESC"];
+            $data["ORDER"] = [Table::MARK . ".count" => "DESC"];
+        }
+
+        if (isset($data['name'])) {
+            $data[Table::MARK . '.name[~]'] = $data['name'];
+            unset($data['name']);
+        }
+
+        if (isset($data['category'])) {
+            $data[Table::MARK . '.category_code'] = $data['category'];
+            unset($data['category']);
+        }
+
+        if (isset($data['start'])) {
+            $data[Table::MARK . '.gmt_create[>=]'] = $data['start'];
+            unset($data['start']);
+        }
+
+        if (isset($data['end'])) {
+            $data[Table::MARK . '.gmt_create[<=]'] = $data['end'];
+            unset($data['end']);
         }
 
         return $this->app->db->select($this->table_name, [
@@ -31,6 +51,39 @@ class Mark_model extends Common_model
             Table::MARK . ".category_code",
             Table::MARK . ".gmt_create"
         ], $data);
+    }
+
+    public function total($data = [])
+    {
+        if (isset($data['LIMIT'])) {
+            unset($data['LIMIT']);
+        }
+
+        if (isset($data['ORDER'])) {
+            unset($data['ORDER']);
+        }
+
+        if (isset($data['name'])) {
+            $data[Table::MARK . '.name[~]'] = $data['name'];
+            unset($data['name']);
+        }
+
+        if (isset($data['category'])) {
+            $data[Table::MARK . '.category_code'] = $data['category'];
+            unset($data['category']);
+        }
+
+        if (isset($data['start'])) {
+            $data[Table::MARK . '.gmt_create[>=]'] = $data['start'];
+            unset($data['start']);
+        }
+
+        if (isset($data['end'])) {
+            $data[Table::MARK . '.gmt_create[<=]'] = $data['end'];
+            unset($data['end']);
+        }
+
+        return $this->app->db->count($this->table_name, $data);
     }
 
     public function record($data = [])

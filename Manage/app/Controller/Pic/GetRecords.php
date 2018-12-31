@@ -7,6 +7,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Constant\Nav;
 use OSS\OssClient;
 use OSS\Core\OssException;
@@ -22,6 +23,16 @@ class GetRecords extends Pic
         '所有者',
         '大小',
         '创建时间'
+    ];
+    //
+    private $sort_item = [
+        'gmt_create' => '日期',
+        'size'       => '大小',
+        'width'      => '宽',
+        'height'     => '高',
+        'browse'     => '浏览量',
+        'download'   => '下载量',
+        'collect'    => '收藏量'
     ];
 
     private $mark_model;
@@ -51,6 +62,15 @@ class GetRecords extends Pic
 
         if (! empty($text)) {
             $query .= http_build_query($text);
+        }
+
+        $sort  = $request->getAttribute('sort');
+        $order = $request->getAttribute('order');
+
+        if ($sort != '') {
+            $search['ORDER'] = [Table::PICTURE . "." . $sort => $order];
+            $query .= '&sort='  . $sort;
+            $query .= '&order=' . $order;
         }
 
         $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
@@ -91,11 +111,14 @@ class GetRecords extends Pic
         }
 
         $data = [
-             "records" => $images,
-             "columns" => $this->columns,
-                "text" => $search,
-            "category" => $this->category_model->records(),
-                "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
+              "records" => $images,
+              "columns" => $this->columns,
+            "sort_item" => $this->sort_item,
+                 "sort" => $sort,
+                "order" => $order,
+                 "text" => $search,
+             "category" => $this->category_model->records(),
+                 "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Pic/Records', $data);

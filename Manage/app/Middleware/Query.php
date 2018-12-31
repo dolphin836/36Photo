@@ -30,6 +30,7 @@ class Query
 
             $page   = 1;
             $order  = 'DESC';
+            $sort   = '';
             $filter = [];
             $text   = [];
 
@@ -40,6 +41,10 @@ class Query
 
                 if ($key == 'order' && in_array($value, ['ASC', 'DESC'])) {
                     $order = $value;
+                }
+
+                if ($key == 'sort' && $value != '') {
+                    $sort = $value;
                 }
 
                 if (strpos($key, 'search_') !== false && $value != '') {
@@ -55,12 +60,8 @@ class Query
                 }
             }
 
-            // var_dump($filter);
-            // var_dump($text);
-
-            // exit();
-
             $request = $request->withAttribute('page',   $page);
+            $request = $request->withAttribute('sort',   $sort);
             $request = $request->withAttribute('order',  $order);
             $request = $request->withAttribute('search', $filter);
             $request = $request->withAttribute('text',   $text);

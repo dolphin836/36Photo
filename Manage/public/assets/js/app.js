@@ -1,16 +1,16 @@
 $(document).ready(function() {
     var search_start = $("#search_start"),
-        search_end = $('#search_end'),
-        search = $("#search");
+        search_end   = $('#search_end'),
+        search       = $("#search");
     // DateTimePicker
     if (search_start.length > 0 || search_end.length > 0) {
         $.datetimepicker.setLocale('zh');
     }
     
     var months = [
-        '1 月', '2 月', '3 月', '4 月',
-        '5 月', '6 月', '7 月', '8 月',
-        '9 月', '10 月', '11 月', '12月',
+        '1 月', '2 月',  '3 月',  '4 月',
+        '5 月', '6 月',  '7 月',  '8 月',
+        '9 月', '10 月', '11 月', '12月'
     ];
 
     if (search_start.length > 0) {
@@ -51,6 +51,9 @@ $(document).ready(function() {
         var path   = window.location.pathname;
         var inputs = $("input[name^='search_'],select[name^='search_']");
         var is     = true;
+        var sort   = $("#sort").val();
+        var order  = $("#order").val();
+
 
         inputs.each(function() {
             var name  = $(this).attr("name");
@@ -69,8 +72,18 @@ $(document).ready(function() {
 
                 path += name + "=" + encodeURIComponent(value);
             }
-
         });
+
+        if (sort && order) {
+            if (is) {
+                path += "?";
+            } else {
+                path += "&";
+            }
+    
+            path += "sort=" + sort + "&order=" + order;
+        }
+
 
         window.location.href = path;
     });

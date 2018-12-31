@@ -23,6 +23,15 @@ class Base
         $this->asset_path = getenv('DEBUG') == 'TRUE' ? '/assets' : '/assets/dist';
 
         getenv('DEBUG') == 'TRUE' ? $this->timestamp = time() : $this->timestamp = 0;
+        // 
+        $uri = $this->app->request->getUri();
+        $url = $uri->getBaseUrl() . $uri->getPath();
+
+        if ($uri->getQuery() != '') {
+            $url .=  '?' . $uri->getQuery();
+        }
+        
+        $this->app->flash->addMessage('redirect-url', $url);
     }
 
     protected function respond($html, $data = [])

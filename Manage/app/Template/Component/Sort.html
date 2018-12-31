@@ -1,0 +1,35 @@
+{% if sort_item is defined %}
+<div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="form-group">
+        <label class="form-label"><small>排序方式</small></label>
+        <select class="form-control" name="sort" id="sort">
+            {% for code,name in sort_item %}
+            {% if code == sort %}
+            <option value="{{ code }}" selected>{{ name }}</option>
+            {% else %}
+            <option value="{{ code }}">{{ name }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="form-group">
+        <label class="form-label"><small>排序规则</small></label>
+        <select class="form-control" name="order" id="order">
+            {% if 'DESC' == order %}
+            <option value="DESC" selected>降序</option>
+            {% else %}
+            <option value="DESC">降序</option>
+            {% endif %}
+
+            {% if 'ASC' == order %}
+            <option value="ASC" selected>升序</option>
+            {% else %}
+            <option value="ASC">升序</option>
+            {% endif %}
+        </select>
+    </div>
+</div>
+{% endif %}
