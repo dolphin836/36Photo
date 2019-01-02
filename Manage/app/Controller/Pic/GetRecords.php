@@ -7,6 +7,8 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
+use Dolphin\Ting\Constant\Table;
+use Dolphin\Ting\Constant\Nav;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use Dolphin\Ting\Model\Mark_model;
@@ -22,6 +24,16 @@ class GetRecords extends Pic
         '大小',
         '创建时间'
     ];
+    //
+    private $sort_item = [
+        'gmt_create' => '日期',
+        'size'       => '大小',
+        'width'      => '宽',
+        'height'     => '高',
+        'browse'     => '浏览量',
+        'download'   => '下载量',
+        'collect'    => '收藏量'
+    ];
 
     private $mark_model;
 
@@ -33,6 +45,8 @@ class GetRecords extends Pic
 
         $this->mark_model     = new Mark_model($app);
         $this->category_model = new Category_model($app);
+
+        $this->nav_route = Nav::RECORDS;
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -50,6 +64,15 @@ class GetRecords extends Pic
             $query .= http_build_query($text);
         }
 
+        $sort  = $request->getAttribute('sort');
+        $order = $request->getAttribute('order');
+
+        if ($sort != '') {
+            $search['ORDER'] = [Table::PICTURE . "." . $sort => $order];
+            $query .= '&sort='  . $sort;
+            $query .= '&order=' . $order;
+        }
+
         $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
 
         $records = $this->pic_model->records($search);
@@ -62,7 +85,7 @@ class GetRecords extends Pic
 
                 try {
                     $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $record['path'], $valid, "GET", [
-                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_80,w_80"
+                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_400,w_400"
                     ]);
                 } catch (OssException $e) {
                     $path = getenv('WEB_URL') . '/' . $record['path'];
@@ -88,11 +111,14 @@ class GetRecords extends Pic
         }
 
         $data = [
-             "records" => $images,
-             "columns" => $this->columns,
-                "text" => $search,
-            "category" => $this->category_model->records(),
-                "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
+              "records" => $images,
+              "columns" => $this->columns,
+            "sort_item" => $this->sort_item,
+                 "sort" => $sort,
+                "order" => $order,
+                 "text" => $search,
+             "category" => $this->category_model->records(),
+                 "page" => Page::reder('/pic/records', $this->pic_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Pic/Records', $data);

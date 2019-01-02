@@ -10,11 +10,13 @@ class Page
     {
         $paginator = new Paginator($total, $count, $page, $url . '?page=(:num)');
 
+        $paginator->setMaxPagesToShow(5);
+
         $html = "";
 
         if ($paginator->getNumPages() > 1) {
             $html .= "<nav aria-label='Page navigation'>";
-            $html .= "<ul class='pagination justify-content-end'>";
+            $html .= "<ul class='pagination pagination-seperated justify-content-end'>";
             // 上一页
             $class = '';
 
@@ -22,7 +24,7 @@ class Page
                 $class = 'disabled';
             }
 
-            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getPrevUrl() . $query . "'>上一页</a></li>";
+            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getPrevUrl() . $query . "'>前</a></li>";
             // 中间页
             foreach ($paginator->getPages() as $p) {
                 if ($p['url']) {
@@ -44,7 +46,7 @@ class Page
                 $class = 'disabled';
             }
 
-            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getNextUrl() . $query . "'>下一页</a></li>";
+            $html .= "<li class='page-item " . $class . "'><a class='page-link' href='" . $paginator->getNextUrl() . $query . "'>后</a></li>";
         
             $html .= "</ul></nav>";
         }

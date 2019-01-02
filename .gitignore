@@ -18,6 +18,8 @@
 
 /Manage/public/assets/package-lock.json
 
+/Manage/.idea
+
 /API/.env
 
 /API/composer.lock
@@ -43,6 +45,8 @@
 /Web/public/assets/node_modules
 
 /Web/public/assets/package-lock.json
+
+/Web/.idea
 
 /Photo/vendor
 

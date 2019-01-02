@@ -1,4 +1,4 @@
-{% extends "Template.html" %} 
+{% extends "Template.html" %}
 
 {% block Title %}
 列表 - 图片 - {{ site.web_name }}
@@ -13,32 +13,33 @@
 {% endblock %}
 
 {% block Content %}
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3">
+<div class="content">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="form-group">
-                        <label class="form-label">云存储</label>
+                        <label class="form-label"><small>云存储</small></label>
                         {% set select_value = text.oss is defined ? text.oss : -1 %}
                         <select class="form-control" name="search_oss">
                             <option value="-1">全部</option>
-                                {% if 0 == select_value %}
-                                <option value="0" selected>未上传</option>
-                                {% else %}
-                                <option value="0">未上传</option>
-                                {% endif %}
-                                {% if 1 == select_value %}
-                                <option value="1" selected>已上传</option>
-                                {% else %}
-                                <option value="1">已上传</option>
-                                {% endif %}
+                            {% if 0 == select_value %}
+                            <option value="0" selected>未上传</option>
+                            {% else %}
+                            <option value="0">未上传</option>
+                            {% endif %}
+                            {% if 1 == select_value %}
+                            <option value="1" selected>已上传</option>
+                            {% else %}
+                            <option value="1">已上传</option>
+                            {% endif %}
                         </select>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="form-group">
-                        <label class="form-label">分 类</label>
+                        <label class="form-label"><small>分 类</small></label>
                         {% set select_value = text.category is defined ? text.category : -1 %}
                         <select class="form-control" name="search_category">
                             <option value="-1">全部</option>
@@ -53,82 +54,65 @@
                     </div>
                 </div>
 
-            {% include 'Component/DateTime.html' %}
+                {% include 'Component/DateTime.html' %}
+                {% include 'Component/Sort.html' %}
+            </div>
+            {% include 'Component/Search.html' %}
         </div>
     </div>
-    <div class="card-footer text-right">
-        <div class="d-flex">
-            <a href="/pic/records" class="btn btn-warning btn-link">清 除</a>
-            <button type="button" id="search" class="btn btn-info ml-auto">检 索</button>
-            <a href="/pic/add" class="btn btn-success btn-simple ml-2">批量上传</a>
+
+
+    <div class="card card-default">
+        <div class="card-body">
+            {% if records is defined %}
+                {% for record in records %}
+                    {% if loop.index % 4 == 1 %}
+                    <div class="card-deck mt-4">
+                    {% endif %}
+                        <div class="card">
+                            <a href="{{ site.pc_url }}/photo/{{ record.hash }}" target="_blank">
+                                <img class="card-img-top" src="{{ record.path }}" alt="">
+                            </a>
+                            <div class="card-body pt-4">
+                                <h5 class="card-title">
+                                    <a href="/pic/records?search_category={{ record.category_code }}">{{ record.category_name }}</a>
+                                </h5>
+
+                                <p class="card-text pb-1">
+                                    <small class="text-muted">
+                                        {{ record.width }}<i class="mdi mdi-close mr-1 ml-1"></i>{{ record.height }}<i class="mdi mdi-menu-right mr-1 ml-1"></i>{{ record.size }}
+                                        {% if record.is_oss %}
+                                        <i class="mdi mdi-cloud-check ml-1 text-success" title="已上传至阿里云"></i>
+                                        {% endif %}
+                                    </small>
+                                </p>
+                                <p class="card-text pb-1">
+                                    <small class="text-muted">{{ record.gmt_create }}</small>
+                                </p>
+
+                                {% for mark in record.mark %}
+                                    <a href="/mark/pic?mark={{ mark.id }}" class="mb-2 mr-2 badge badge-dark">{{ mark.name }}</a>
+                                {% endfor %}
+                
+                                <a href="/recommend/add?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-success">
+                                    <i class="mdi mdi-heart-multiple-outline mr-1"></i> 推荐
+                                </a>
+                    
+                                <a href="/pic/delete?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-danger">
+                                    <i class="mdi mdi-close-circle-outline mr-1"></i> 删除
+                                </a>
+                            </div>
+                        </div>
+                    {% if loop.index % 4 == 0 %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+            暂无数据。
+            {% endif %}
         </div>
+
+        {% include 'Component/Page.html' %}
     </div>
 </div>
-
-<div class="card">
-    <div class="card-body">
-        {% if records is defined %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <caption>{{ page.text }}</caption>
-                {% include 'Component/Thead.html' %}
-                <tbody>
-                    {% for record in records %}
-                    <tr>
-                        <td class="text-center">
-                            <a href="{{ record.path }}" target="_blank">
-                                <img src="{{ record.path }}" class="rounded" style="width: 120px;">
-                            </a>
-                            {% if record.is_oss %}
-                            <div><i class="tim-icons icon-cloud-upload-94 text-success" title="已上传至阿里云"></i></div>
-                            {% endif %}
-                        </td>
-                        <td class="text-center">
-                            <a href="/pic/records?search_category={{ record.category_code }}">{{ record.category_name }}</a>
-                        </td>
-                        <td class="text-center">
-                            {% for mark in record.mark %}
-                                <p><a href="/mark/pic?mark={{ mark.id }}">{{ mark.name }}</a></p>
-                            {% endfor %}
-                        </td>
-                        <td class="text-center">
-                            <a href="/pic/records?search_uuid={{ record.uuid }}">{{ record.username }}</a>
-                        </td>
-                        <td class="text-center">
-                            <div>{{ record.size }}</div>
-                        </td>
-                        <td class="text-center">
-                            <div>{{ record.gmt_create }}</div>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ site.pc_url }}/photo/{{ record.hash }}" class="btn btn-primary btn-sm btn-round btn-icon" target="_blank">
-                                <i class="tim-icons icon-link-72"></i>
-                            </a>
-                            <a href="/pic/modify?hash={{ record.hash }}" class="btn btn-info btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-pencil"></i>
-                            </a>
-                            <a href="/recommend/add?hash={{ record.hash }}" class="btn btn-success btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-simple-add"></i>
-                            </a>
-                            <a href="/pic/delete?hash={{ record.hash }}" class="btn btn-danger btn-sm btn-round btn-icon">
-                                <i class="tim-icons icon-simple-remove"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        暂无数据。
-        {% endif %}
-    </div>
-
-    {% if page.link != '' %}
-    <div class="card-footer">
-        {% autoescape false %} {{ page.link }} {% endautoescape %}
-    </div>
-    {% endif %}
-</div>
-
 {% endblock %}

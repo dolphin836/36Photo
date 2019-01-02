@@ -10,9 +10,9 @@ let pump = require('pump');
 
 // 框架 CSS 文件处理：合并 => 压缩 => 添加后缀
 // 这部分 CSS 除非框架升级，不然不会变化，可以长期缓存在客户端来优化页面性能
-// 目前包括：图标、Bootstrap、Black-dashboard
+// 目前包括：Material Design Icons、Sleek(包括了 Bootstarap)
 gulp.task('common-css', function() {
-    gulp.src(['./node_modules/black-dashboard/assets/css/nucleo-icons.css', './node_modules/bootstrap/dist/css/bootstrap.css', './node_modules/black-dashboard/assets/css/black-dashboard.css'])
+    gulp.src(['./node_modules/@mdi/font/css/materialdesignicons.css', './css/sleek.css'])
         .pipe(concat('common.css'))
         .pipe(miniCss())
         .pipe(rev())
@@ -24,13 +24,13 @@ gulp.task('common-css', function() {
 });
 // 字体资源处理：Nucleo Icons 依赖的文件
 gulp.task('font', function() {
-    gulp.src('./node_modules/black-dashboard/assets/fonts/*')
+    gulp.src('./node_modules/@mdi/font/fonts/*')
         .pipe(gulp.dest('./dist/fonts'))
 });
 // 其他 CSS 文件处理：压缩 => 添加后缀
 // 包括：公共 CSS、登陆页 CSS
 gulp.task('css', function() {
-    gulp.src(['./css/*.css', './node_modules/bootstrap/dist/css/bootstrap.css'])
+    gulp.src(['./css/*.css', './node_modules/bootstrap/dist/css/bootstrap.css', '!.css/sleek.css'])
         .pipe(miniCss())
         .pipe(rev())
         .pipe(gulp.dest('./dist/css'))
@@ -43,7 +43,8 @@ gulp.task('css', function() {
 // 这部分 JS 除非框架升级，不然不会变化，可以长期缓存在客户端来优化页面性能
 // 目前包括：jQuery、Popper、Bootstrap、Perfect-scrollbar、Black-dashboard
 gulp.task('common-script', function() {                         
-    gulp.src(['./node_modules/black-dashboard/assets/js/core/jquery.min.js', './node_modules/black-dashboard/assets/js/core/popper.min.js', './node_modules/black-dashboard/assets/js/core/bootstrap.min.js', './node_modules/black-dashboard/assets/js/plugins/perfect-scrollbar.jquery.min.js', './node_modules/black-dashboard/assets/js/black-dashboard.min.js'])
+    gulp.src(['./node_modules/jquery/dist/jquery.js', './node_modules/bootstrap/dist/js/bootstrap.bundle.js', './node_modules/jquery-slimscroll/jquery.slimscroll.js', './js/sleek.js'])
+        .pipe(uglify())
         .pipe(concat('common.js'))
         .pipe(rev())
         .pipe(gulp.dest('./dist/js'))
@@ -55,7 +56,7 @@ gulp.task('common-script', function() {
 // 公共 JS 文件处理：压缩 => 添加后缀
 gulp.task('app-script', function () {
     pump([
-        gulp.src(['./js/*.js']),
+        gulp.src(['./js/*.js', '!.js/sleek.js']),
         uglify(),
         rev(),
         gulp.dest('./dist/js'),
@@ -81,10 +82,9 @@ gulp.task('rev', function() {
     gulp.src(['./dist/rev/*.json', '../../app/Template/**/*.html'])
         .pipe(htmlReplace({
             'common-css': '/assets/dist/css/common.css',
-            'app-css': '/assets/dist/css/app.css',
-            'bootstrap-css': '/assets/dist/css/bootstrap.css',
             'common-script': '/assets/dist/js/common.js',
-            'app-script': '/assets/dist/js/app.js'
+            'app-script': '/assets/dist/js/app.js',
+            'bootstrap-css': '/assets/dist/css/bootstrap.css'
         }))
         .pipe(revCollector())
         .pipe(gulp.dest('../../app/View'))

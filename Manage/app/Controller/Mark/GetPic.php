@@ -32,7 +32,8 @@ class GetPic extends Mark
     {
         parent::__construct($app);
 
-        $this->nav = Nav::PICTURE;
+        $this->nav       = Nav::PICTURE;
+        $this->nav_route = Nav::RECORDS;
 
         $this->pic_model = new Pic_model($app);
         $this->category_model = new Category_model($app);
@@ -53,7 +54,8 @@ class GetPic extends Mark
 
         $search  = [
             'mark_id' => $mark_id,
-              'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
+              'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT],
+              'ORDER' => ['id' => 'DESC']
         ];
 
         $records = $this->mark_model->pic($search);
@@ -70,7 +72,7 @@ class GetPic extends Mark
 
                 try {
                     $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $record['path'], $valid, "GET", [
-                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_80,w_80"
+                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_400,w_400"
                     ]);
                 } catch (OssException $e) {
                     $path = getenv('WEB_URL') . '/' . $record['path'];

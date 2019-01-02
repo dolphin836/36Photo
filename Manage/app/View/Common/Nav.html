@@ -1,56 +1,113 @@
-<div class="sidebar"data-color="blue">
-    <div class="sidebar-wrapper">
-        <div class="logo">
-            <a href="/" class="simple-text logo-mini">
-                EM
-            </a>
-            <a href="/" class="simple-text logo-normal">
-                Emage Center
+<aside class="left-sidebar bg-sidebar">
+    <div id="sidebar" class="sidebar sidebar-with-footer">
+        <div class="app-brand">
+            <a href="/">
+                <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="30"
+                    height="33" viewBox="0 0 30 33">
+                    <g fill="none" fill-rule="evenodd">
+                        <path class="logo-fill-blue" fill="#7DBCFF" d="M0 4v25l8 4V0zM22 4v25l8 4V0z" />
+                        <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
+                    </g>
+                </svg>
+                <span class="brand-name">{{ site.web_name }}</span>
             </a>
         </div>
-        <ul class="nav">
-            <li class="{{ site.nav_item == 'home' ? 'active' : '' }}">
-                <a href="/">
-                    <i class="tim-icons icon-chart-pie-36"></i>
-                    <p>主 页</p>
-                </a>
-            </li>
-            <li class="{{ site.nav_item == 'pic' ? 'active' : '' }}">
-                <a href="/pic/records">
-                    <i class="tim-icons icon-image-02"></i>
-                    <p>图 片</p>
-                </a>
-            </li>
-            <li class="{{ site.nav_item == 'collection' ? 'active' : '' }}">
-                <a href="/collection/records">
-                    <i class="tim-icons icon-wallet-43"></i>
-                    <p>专 题</p>
-                </a>
-            </li>
-            <li class="{{ site.nav_item == 'mark' ? 'active' : '' }}">
-                <a href="/mark/records">
-                    <i class="tim-icons icon-tag"></i>
-                    <p>标 签</p>
-                </a>
-            </li>
-            <li class="{{ site.nav_item == 'category' ? 'active' : '' }}">
-                <a href="/category/records">
-                    <i class="tim-icons icon-align-center"></i>
-                    <p>分 类</p>
-                </a>
-            </li>
-            <li class="{{ site.nav_item == 'recommend' ? 'active' : '' }}">
-                <a href="/recommend/records">
-                    <i class="tim-icons icon-align-center"></i>
-                    <p>推 荐</p>
-                </a>
-            </li>
-            <li class="{{ site.nav_item == 'user' ? 'active' : '' }}">
-                <a href="/user/records">
-                    <i class="tim-icons icon-single-02"></i>
-                    <p>用 户</p>
-                </a>
-            </li>
-        </ul>
+        <div class="sidebar-scrollbar">
+            <ul class="nav sidebar-inner" id="sidebar-menu">
+                <li class="has-sub {{ site.nav_item == 'home' ? 'active' : '' }}">
+                    <a href="/" class="sidenav-item-link">
+                        <i class="mdi mdi-chart-pie"></i>
+                        <span class="nav-text">概 况</span> <b class="caret"></b>
+                    </a>
+                </li>
+
+
+                <li class="has-sub {{ site.nav_item == 'pic' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pic" aria-expanded="{{ site.nav_item == 'pic' ? 'true' : 'false' }}"
+                        aria-controls="pic">
+                        <i class="mdi mdi-image-filter"></i>
+                        <span class="nav-text">图 片</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse {{ site.nav_item == 'pic' ? 'show' : '' }}" id="pic" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/pic/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/pic/add">上 传</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="has-sub {{ site.nav_item == 'collection' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#collection" aria-expanded="{{ site.nav_item == 'collection' ? 'true' : 'false' }}"
+                        aria-controls="collection">
+                        <i class="mdi mdi-library-books"></i>
+                        <span class="nav-text">专 题</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse {{ site.nav_item == 'collection' ? 'show' : '' }}" id="collection" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/collection/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/collection/add">创 建</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="has-sub {{ site.nav_item == 'mark' ? 'active' : '' }}">
+                    <a href="/mark/records" class="sidenav-item-link">
+                        <i class="mdi mdi-tag-multiple"></i>
+                        <span class="nav-text">标 签</span> <b class="caret"></b>
+                    </a>
+                </li>
+
+                <li class="has-sub {{ site.nav_item == 'category' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#category" aria-expanded="{{ site.nav_item == 'category' ? 'true' : 'false' }}"
+                        aria-controls="category">
+                        <i class="mdi mdi-folder-multiple-outline"></i>
+                        <span class="nav-text">分 类</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse {{ site.nav_item == 'category' ? 'show' : '' }}" id="category" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/category/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/category/add">创 建</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="has-sub {{ site.nav_item == 'recommend' ? 'active' : '' }}">
+                    <a href="/recommend/records" class="sidenav-item-link">
+                        <i class="mdi mdi-heart-multiple-outline"></i>
+                        <span class="nav-text">推 荐</span> <b class="caret"></b>
+                    </a>
+                </li>
+
+                <li class="has-sub {{ site.nav_item == 'user' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#user" aria-expanded="{{ site.nav_item == 'user' ? 'true' : 'false' }}"
+                        aria-controls="user">
+                        <i class="mdi mdi-account-box-multiple"></i>
+                        <span class="nav-text">用 户</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse {{ site.nav_item == 'user' ? 'show' : '' }}" id="user" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/user/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/user/add">添 加</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+</aside>

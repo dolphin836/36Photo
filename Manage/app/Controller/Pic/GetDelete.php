@@ -74,6 +74,6 @@ class GetDelete extends Pic
             ]);
         }
 
-        return $response->withRedirect('/pic/records', 302);
+        return $response->withRedirect($this->app->flash->getMessage('redirect-url')[0], 302);
     }
 }
