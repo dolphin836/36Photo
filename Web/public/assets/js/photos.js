@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         var aElement = document.createElement("a");
         aElement.setAttribute("href", '/photo/' + photos[i]['hash']);
-        aElement.setAttribute("target", '_blank');
 
         photoElement.appendChild(aElement);
 
