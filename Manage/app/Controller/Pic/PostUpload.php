@@ -29,6 +29,18 @@ class PostUpload
     //
     private $pic_model;
 
+    private $error = [
+        0 => 'There is no error, the file uploaded with success',
+        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+        3 => 'The uploaded file was only partially uploaded',
+        4 => 'No file was uploaded',
+        6 => 'Missing a temporary folder',
+        7 => 'Failed to write file to disk.',
+        8 => 'A PHP extension stopped the file upload.',
+        9 => 'The photo is already exist.'
+    ];
+
     function __construct(ContainerInterface $app)
     {
         $this->image_opt        = OptimizerChainFactory::create();
@@ -62,7 +74,9 @@ class PostUpload
 
         $upload_file  = $upload_files['photo'];
 
-        if ($upload_file->getError() === UPLOAD_ERR_OK) {
+        $upload_code  = $upload_file->getError();
+
+        if ($upload_code === UPLOAD_ERR_OK) {
             $data = $this->move($upload_file);
 
             if (! empty($data)) { // 本地上传成功
@@ -76,11 +90,15 @@ class PostUpload
                 if ($db->rowCount() && isset($collection_code)) {
                     $this->collection_model->add_picture($collection_code, $data['hash']);
                 }
+            } else {
+                // 已经存在
+                $upload_code = 9;
             }
         }
 
         return $response->withJson([
-            'error' => $upload_file->getError()
+            'code' => $upload_code,
+            'note' => $this->error[$upload_code]
         ]);
     }
 
