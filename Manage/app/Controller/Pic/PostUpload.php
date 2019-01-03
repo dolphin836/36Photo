@@ -10,10 +10,11 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Dolphin\Ting\Model\Collection_model;
+use Dolphin\Ting\Model\Pic_model;
 use ColorThief\ColorThief;
 use Spatie\Color\Rgb;
 
-class PostUpload extends Pic
+class PostUpload
 {
     // 图片优化
     private $image_opt;
@@ -24,21 +25,23 @@ class PostUpload extends Pic
     // 
     private $uuid;
     // 专题
-    protected $collection_model;
+    private $collection_model;
+    //
+    private $pic_model;
 
     function __construct(ContainerInterface $app)
     {
-        parent::__construct($app);
+        $this->image_opt        = OptimizerChainFactory::create();
 
-        $this->image_opt    = OptimizerChainFactory::create();
+        $this->image_hash       = new ImageHash(new DifferenceHash());
 
-        $this->image_hash   = new ImageHash(new DifferenceHash());
+        $this->is_debug         = getenv("DEBUG") === "TRUE" ? true : false;
 
-        $this->is_debug     = getenv("DEBUG") === "TRUE" ? true : false;
-
-        $this->uuid         = $app->session->get('uuid');
+        $this->uuid             = $app->session->get('uuid');
 
         $this->collection_model = new Collection_model($app);
+
+        $this->pic_model        = new Pic_model($app);
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -65,7 +68,7 @@ class PostUpload extends Pic
             if (! empty($data)) { // 本地上传成功
                 // 插入数据库
                 $data['uuid']          = $this->uuid;
-                $data['is_oss']        = 0;
+                $data['is_oss']        = Common::IS_NOT_OSS;
                 $data['category_code'] = isset($category_code) ? $category_code : '';
 
                 $db = $this->pic_model->add($data);
@@ -73,31 +76,17 @@ class PostUpload extends Pic
                 if ($db->rowCount() && isset($collection_code)) {
                     $this->collection_model->add_picture($collection_code, $data['hash']);
                 }
-                // 主要颜色
-                if ($db->rowCount()) {
-                    $color_arr = ColorThief::getPalette($data['path'], Common::COLOR_COUNT, Common::COLOR_QUALITY);
-
-                    foreach ($color_arr as $color) {
-                        $rgb = 'rgb(' . $color[0] . ', ' . $color[1] . ', ' . $color[2] . ')';
-                        $hex = (string) Rgb::fromString($rgb)->toHex();
-                        $hex = substr($hex, 1);
-              
-                        $this->pic_model->add_color($data['hash'], $hex);
-                    }
-                }
             }
         }
 
         return $response->withJson([
-             'name' => $request->getAttribute('next_name'),
-            'value' => $request->getAttribute('next_value')
+            'error' => $upload_file->getError()
         ]);
     }
 
     private function move($file)
     {
         $extension = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
-        // $file_size = $file->getSize();
         $temp_name = md5($file->getClientFilename()) . '.' . $extension;
         $temp_path = Common::PHOTO_DIR . '/' . Common::PHOTO_DIR_TEMP . '/' . $temp_name;
         // 先将文件移入临时目录

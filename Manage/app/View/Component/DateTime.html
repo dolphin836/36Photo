@@ -1,12 +1,12 @@
 <div class="col-sm-6 col-md-4 col-lg-3">
     <div class="form-group">
         <label class="form-label"><small>起始时间</small></label>
-        <input type="text" class="form-control" id="search_start" name="search_start" value="{{ search.search_start is defined ? search.search_start : '' }}" maxlength="32">
+        <input type="text" class="form-control" id="search_start" name="search_start" value="{{ text.start is defined ? text.start : '' }}" maxlength="32">
     </div>
 </div>
 <div class="col-sm-6 col-md-4 col-lg-3">
     <div class="form-group">
         <label class="form-label"><small>结束时间</small></label>
-        <input type="text" class="form-control" id="search_end" name="search_end" value="{{ search.search_end is defined ? search.search_end : '' }}" maxlength="32">
+        <input type="text" class="form-control" id="search_end" name="search_end" value="{{ text.end is defined ? text.end : '' }}" maxlength="32">
     </div>
 </div>

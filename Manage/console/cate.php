@@ -17,8 +17,6 @@ define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 date_default_timezone_set('PRC');
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
-// 载入设置标签类文件
-require BASEPATH . '/categroy.php';
 // 载入配置文件
 $env = new Dotenv\Dotenv(ROOTPATH);
 $env->load();
@@ -52,14 +50,11 @@ var_dump(date("Y-m-d H:i:s") . ':**********Total Record ' . count($records) . '*
 
 foreach ($records as $hash) {
     // 查询标签
-    $marks = $db->select(Table::MARK, [
+    $category_code = $db->get(Table::MARK, [
         "[>]" . Table::PICTURE_MARK => ["id" => "mark_id"],
-    ], 'name', [
+    ], "category_code", [
         Table::PICTURE_MARK . ".picture_hash" => $hash
     ]);
-    var_dump(date("Y-m-d H:i:s") . ':Photo ' . $hash . ' Mark Is ' . implode(',', $marks)); 
-    // 计算分类
-    $category_code = Category::set($marks);
 
     $query = $db->update(Table::PICTURE, [
         'category_code' => $category_code

@@ -43,7 +43,7 @@ CREATE TABLE `picture` (
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_hash` (`hash`),
-    KEY `idx_categroy` (`categroy_code`)
+    KEY `idx_category` (`category_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片信息记录表';
 
 CREATE TABLE `mark` (
@@ -81,7 +81,7 @@ CREATE TABLE `category` (
     UNIQUE KEY `uk_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类信息记录表';
 
-INSERT INTO `categroy` (`code`, `name`) VALUES ('default', '默认分类');
+INSERT INTO `category` (`code`, `name`) VALUES ('default', '默认分类');
 
 CREATE TABLE `collection` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
