@@ -32,7 +32,10 @@ class GetAdd extends Pic
 
         parse_str($uri->getQuery(), $querys);
 
-        $data = [];
+        $data = [
+                  'post_max_size' => ini_get('post_max_size'),
+            'upload_max_filesize' => ini_get('upload_max_filesize')
+        ];
 
         if (isset($querys['category']) && $this->category_model->is_has("code", $querys['category'])) { // 分类
             $record = $this->category_model->record(['code' => $querys['category']]);

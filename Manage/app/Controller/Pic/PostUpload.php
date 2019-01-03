@@ -11,8 +11,6 @@ use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Dolphin\Ting\Model\Collection_model;
 use Dolphin\Ting\Model\Pic_model;
-use ColorThief\ColorThief;
-use Spatie\Color\Rgb;
 
 class PostUpload
 {

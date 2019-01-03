@@ -35,7 +35,7 @@
 
 {% block Content %}
 <div class="content">
-    <div class="card">
+    <div class="card card-default">
         <div class="card-body">
             {% set action = '/pic/upload' %}
             {% if category is defined %}
@@ -49,6 +49,9 @@
             {% endif %}
 
             <form action="{{ action }}" class="dropzone" id="dropzone" method="POST" enctype="multipart/form-data"></form>
+        
+            <h5 class="mt-4"><small>post_max_size : {{ post_max_size }}</small></h5>
+            <h5 class="mt-1"><small>upload_max_filesize : {{ upload_max_filesize }}</small></h5>
         </div>
     </div>
 </div>
