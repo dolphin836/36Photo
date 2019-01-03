@@ -54,6 +54,8 @@ class PostUpload
         $this->pic_model        = new Pic_model($app);
         // 设置临时最大内存
         ini_set('memory_limit', '1024M');
+        // 设置超时时间
+        set_time_limit(0);
     }
 
     public function __invoke(Request $request, Response $response, $args)
