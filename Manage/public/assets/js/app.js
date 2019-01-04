@@ -49,10 +49,11 @@ $(document).ready(function() {
     // 检索
     search.click(function() {
         var path   = window.location.pathname;
+        var search = window.location.search;
         var inputs = $("input[name^='search_'],select[name^='search_']");
-        var is     = true;
         var sort   = $("#sort").val();
         var order  = $("#order").val();
+        var query  = '';
 
 
         inputs.each(function() {
@@ -60,31 +61,41 @@ $(document).ready(function() {
             var value = $(this).val();
 
             if (value != '' && value != -1) {
-                if (path.substr(-1, 1) != '?' && is) {
-                    path += "?";
+                if (query.length !== 0) {
+                    query += "&";
                 }
 
-                if (is) {
-                    is    = false;
-                } else {
-                    path += "&";
-                }
-
-                path += name + "=" + encodeURIComponent(value);
-            }
+                query += name + "=" + encodeURIComponent(value);
+            }            
         });
 
         if (sort && order) {
-            if (is) {
-                path += "?";
-            } else {
-                path += "&";
+            if (query.length !== 0) {
+                query += "&";
             }
-    
-            path += "sort=" + sort + "&order=" + order;
+
+            query += "sort=" + sort + "&order=" + order;
         }
 
+        if (search != '') {
+            search         = search.substring(1);
+            var searchItem = search.split("&");
 
-        window.location.href = path;
+            for (const item of searchItem) {
+                var record = item.split("=", 2);
+
+                if (query.indexOf(record[0]) == -1) {
+                    if (query.length !== 0) {
+                        query += "&";
+                    }
+
+                    query += record[0] + "=" + encodeURIComponent(record[1]);
+                }
+            }
+        }
+
+        if (query.length !== 0) {
+            window.location.href = path + "?" + query;
+        }
     });
 });

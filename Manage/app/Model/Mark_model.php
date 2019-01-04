@@ -119,8 +119,25 @@ class Mark_model extends Common_model
 
     public function pic($data)
     {
+        if (isset($data['mark_id'])) {
+            $data[Table::PICTURE_MARK . ".mark_id"] = $data['mark_id'];
+            unset($data['mark_id']);
+        }
+
+        if (isset($data['category'])) {
+            $data[Table::PICTURE . ".category_code"] = $data['category'];
+            unset($data['category']);
+        }
+
+        if (isset($data['oss'])) {
+            $data[Table::PICTURE . ".is_oss"] = $data['oss'];
+            unset($data['oss']);
+        }
+
         return $this->app->db->select(Table::PICTURE_MARK, [
-            "picture_hash"
+            "[>]" . Table::PICTURE => ["picture_hash" => "hash"]
+        ],[
+            Table::PICTURE_MARK . ".picture_hash"
         ], $data);
     }
 

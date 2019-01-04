@@ -8,10 +8,12 @@ use Slim\Http\Response;
 use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Nav;
+use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Model\Pic_model;
 use Dolphin\Ting\Model\Category_model;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
+use Slim\Exception\NotFoundException;
 
 class GetPic extends Mark
 {
@@ -42,21 +44,30 @@ class GetPic extends Mark
     public function __invoke(Request $request, Response $response, $args)
     {  
         // 分页
-        $page = $request->getAttribute('page');
+        $page   = $request->getAttribute('page');
+        // 检索
+        $search = $request->getAttribute('search');
+        $text   = $request->getAttribute('text');
 
-        $uri  = $request->getUri();
+        $uri    = $request->getUri();
 
         parse_str($uri->getQuery(), $querys);
+
+        if (! isset($querys['mark'])) {
+            throw new NotFoundException($request, $response);
+        }
         // 标签 ID
         $mark_id = $querys['mark'];
 
+        $search['mark_id'] = $mark_id;
+        $search['LIMIT']   = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
+        $search['ORDER']   = [Table::PICTURE_MARK . '.id' => 'DESC'];
+
         $query   = '&mark=' . $mark_id;
 
-        $search  = [
-            'mark_id' => $mark_id,
-              'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT],
-              'ORDER' => ['id' => 'DESC']
-        ];
+        if (! empty($text)) {
+            $query .= http_build_query($text);
+        }
 
         $records = $this->mark_model->pic($search);
 

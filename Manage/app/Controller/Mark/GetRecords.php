@@ -57,10 +57,6 @@ class GetRecords extends Mark
 
         $records = $this->mark_model->records($search);
 
-        // var_dump($search);
-
-        // exit();
-
         $data = [
               "records" => $records,
               "columns" => $this->columns,
