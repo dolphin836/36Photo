@@ -1,4 +1,6 @@
-# Emage Store
+# 36Photo
+
+36photo.cn
 
 ## 后台管理的图片优化功能
 
@@ -16,7 +18,7 @@ $ yum -y install pngquant
 
 - [X] 图片大小修正为压缩后
 - [X] 图片的主色提取
-- [ ] 上传图片优化
+- [X] 上传图片优化
 - [X] 上传图片的分类选择
 - [ ] 页面 TDK 个性化设置
 - [ ] CSS 自动化处理 PostCss 插件
