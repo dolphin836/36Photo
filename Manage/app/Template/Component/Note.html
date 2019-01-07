@@ -1,0 +1,7 @@
+{% if note is defined %}
+<div class="alert alert-{{ note.code }} fade show" role="alert" id="note">
+    <i class="mdi mdi-information-outline mr-1"></i>
+    {{ note.text }}
+    <p class="text-center"><small><span id="second">3</span> 秒后关闭</small></p>
+</div>
+{% endif %}

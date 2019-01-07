@@ -98,4 +98,22 @@ $(document).ready(function() {
             window.location.href = path + "?" + query;
         }
     });
+    // 操作反馈
+    var note = $("#note")
+
+    if (note.length > 0) {
+        var secondHtml = $("#second");
+        var second = 2;
+
+        var clock = setInterval(() => {
+            secondHtml.text(second);
+
+            second--;
+
+            if (second < 0) {
+                note.alert('close');
+                clearTimeout(clock);
+            }
+        }, 1000);
+    }
 });

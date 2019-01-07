@@ -20,12 +20,12 @@ class GetDelete extends Recommend
         if (! $db->rowCount()) { // 删除失败
             $this->app->flash->addMessage('note', [
                 'code' => 'danger',
-                'text' => '删除分类失败'
+                'text' => '删除推荐失败'
             ]);
         } else {
             $this->app->flash->addMessage('note', [
                 'code' => 'success',
-                'text' => '删除分类成功'
+                'text' => '删除推荐成功'
             ]);  
         }
 

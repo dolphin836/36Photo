@@ -110,11 +110,46 @@ class Mark_model extends Common_model
         ]);
     }
 
-    public function pic_total($mark_id)
+    public function pic_total($data)
     {
+        if (isset($data['mark_id'])) {
+            $data[Table::PICTURE_MARK . ".mark_id"] = $data['mark_id'];
+            unset($data['mark_id']);
+        }
+
+        if (isset($data['category'])) {
+            $data[Table::PICTURE . ".category_code"] = $data['category'];
+            unset($data['category']);
+        }
+
+        if (isset($data['oss'])) {
+            $data[Table::PICTURE . ".is_oss"] = $data['oss'];
+            unset($data['oss']);
+        }
+
+        if (isset($data['start'])) {
+            $data[Table::PICTURE . '.gmt_create[>=]'] = $data['start'];
+            unset($data['start']);
+        }
+
+        if (isset($data['end'])) {
+            $data[Table::PICTURE . '.gmt_create[<=]'] = $data['end'];
+            unset($data['end']);
+        }
+
+        if (isset($data['LIMIT'])) {
+            unset($data['LIMIT']);
+        }
+
+        if (isset($data['ORDER'])) {
+            unset($data['ORDER']);
+        }
+
         return $this->app->db->count(Table::PICTURE_MARK, [
-           "mark_id" => $mark_id
-        ]);
+            "[>]" . Table::PICTURE => ["picture_hash" => "hash"]
+        ], [
+            Table::PICTURE_MARK . ".id"
+        ], $data);
     }
 
     public function pic($data)
@@ -132,6 +167,16 @@ class Mark_model extends Common_model
         if (isset($data['oss'])) {
             $data[Table::PICTURE . ".is_oss"] = $data['oss'];
             unset($data['oss']);
+        }
+
+        if (isset($data['start'])) {
+            $data[Table::PICTURE . '.gmt_create[>=]'] = $data['start'];
+            unset($data['start']);
+        }
+
+        if (isset($data['end'])) {
+            $data[Table::PICTURE . '.gmt_create[<=]'] = $data['end'];
+            unset($data['end']);
         }
 
         return $this->app->db->select(Table::PICTURE_MARK, [

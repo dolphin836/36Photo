@@ -54,7 +54,7 @@ class GetAdd extends Pic
                 'name' => $record['name']
             ];
         }
-        
+
         $this->respond('Pic/Add', $data);
     }
 }

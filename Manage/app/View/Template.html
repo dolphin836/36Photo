@@ -7,6 +7,15 @@
     <title>{% block Title %}{% endblock %}</title>
     <link rel="stylesheet" href="/assets/dist/css/common-284c7d72c0.css">
 
+    <style>
+    .alert {
+        position: fixed;
+        margin: auto;
+        right: 10px;
+        top: 80px;
+        padding: .8rem 2rem;
+    }
+    </style>
     {% block css %} {% endblock %}
 </head>
 <body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
@@ -24,9 +33,11 @@
             {{ include('Common/Footer.html') }}
         </div>
     </div>
+    
+    {{ include('Component/Note.html') }}
     <script src="/assets/dist/js/common-46a4b10169.js"></script>
 
-    <script src="/assets/dist/js/app-86534f8f2c.js"></script>
+    <script src="/assets/dist/js/app-5abcb7394c.js"></script>
 
     {% block js %} {% endblock %}
 </body>
