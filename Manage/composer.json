@@ -24,7 +24,6 @@
         "jenssegers/imagehash": "^0.5.0",
         "aliyuncs/oss-sdk-php": "^2.3",
         "spatie/image-optimizer": "^1.1",
-        "dolphin.wang/unsplash-random-download": "^1.1",
         "ksubileau/color-thief-php": "^1.4",
         "spatie/color": "^1.1"
     },
