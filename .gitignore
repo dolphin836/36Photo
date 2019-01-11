@@ -48,10 +48,4 @@
 
 /Web/.idea
 
-/Photo/vendor
-
-/Photo/Pic
-
-/Photo/Ko
-
-/Photo/Bing
+/Deploy/node_modules
