@@ -17,8 +17,9 @@ class PostAdd extends Category
         }
 
         $data = [
-            'code' => trim($body['code']),
-            'name' => trim($body['name']),
+                    'code' => trim($body['code']),
+                    'name' => trim($body['name']),
+            'is_recommend' => $body['is_recommend']
         ];
 
         $db = $this->category_model->add($data);
@@ -47,7 +48,7 @@ class PostAdd extends Category
         if (! isset($body['code']) || $body['code'] === '') {
             $error[] = '别名不得为空.';
         } else {
-            if (! v::stringType()->length(1, 16)->validate($body['name'])) {
+            if (! v::stringType()->length(1, 16)->validate($body['code'])) {
                 $error[] = '别名格式不正确.';
             } else {
                 if (! v::stringType()->callback(function($code) {

@@ -7,6 +7,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Dolphin\Ting\Model\Mark_model;
 use Dolphin\Ting\Model\Collection_model;
+use Dolphin\Ting\Model\Category_model;
 use Dolphin\Ting\Constant\Common;
 use OSS\OssClient;
 use OSS\Core\OssException;
@@ -17,6 +18,8 @@ class GetDelete extends Pic
 
     private $collection_model;
 
+    private $category_model;
+
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
@@ -24,6 +27,8 @@ class GetDelete extends Pic
         $this->mark_model = new Mark_model($app);
 
         $this->collection_model = new Collection_model($app);
+
+        $this->category_model = new Category_model($app);
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -47,6 +52,8 @@ class GetDelete extends Pic
             $this->pic_model->delete_color($hash);
             // 删除专题中的图片记录
             $this->collection_model->delete_pic($hash);
+            // 分类的图片数量减一
+            $this->category_model->count_sub($pic['category_code']);
             // 提交事务
             $this->app->db->pdo->commit();
             // 删除本地文件

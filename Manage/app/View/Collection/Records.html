@@ -20,12 +20,33 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="form-group">
                         <label class="form-label">名 称</label>
-                        <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}"
+                        <input type="text" class="form-control" name="search_name" value="{{ text.name is defined ? text.name : '' }}"
                             maxlength="32">
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label"><small>是否公开</small></label>
+                        {% set select_value = text.public is defined ? text.public : -1 %}
+                        <select class="form-control" name="search_public">
+                            <option value="-1">全部</option>
+                            {% if 0 == select_value %}
+                            <option value="0" selected>否</option>
+                            {% else %}
+                            <option value="0">否</option>
+                            {% endif %}
+                            {% if 1 == select_value %}
+                            <option value="1" selected>是</option>
+                            {% else %}
+                            <option value="1">是</option>
+                            {% endif %}
+                        </select>
                     </div>
                 </div>
                 
                 {% include 'Component/DateTime.html' %}
+                {% include 'Component/Sort.html' %}
             </div>
             {% include 'Component/Search.html' %}
         </div>
@@ -33,7 +54,6 @@
 
     <div class="card card-default">
         <div class="card-body">
-            {% if records is defined %}
             <div class="table-responsive">
                 <table class="table table-hover">
                     {% include 'Component/Thead.html' %}
@@ -50,7 +70,11 @@
                                 <div>{{ record.count }}</div>
                             </td>
                             <td class="text-center">
-                                <div>{{ record.is_public }}</div>
+                                {% if record.is_public %}
+                                <span class="badge badge-success">是</span>
+                                {% else %}
+                                <span class="badge badge-warning">否</span>
+                                {% endif %}
                             </td>
                             <td class="text-center">
                                 <a href="{{ record.link }}" target="_blank">
@@ -62,7 +86,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="">
-                                    <a href="/pic/records?search_collection={{ record.code }}" role="button" class="btn btn-square btn-outline-info">
+                                    <a href="/collection/pic?code={{ record.code }}" role="button" class="btn btn-square btn-outline-info">
                                         <i class="mdi mdi-file-image mr-1"></i> 图片
                                     </a>
                                     <a href="/pic/add?collection={{ record.code }}" role="button" class="btn btn-square btn-outline-success">
@@ -81,9 +105,6 @@
                     </tbody>
                 </table>
             </div>
-            {% else %}
-            暂无数据。
-            {% endif %}
         </div>
 
         {% include 'Component/Page.html' %}

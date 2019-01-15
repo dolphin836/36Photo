@@ -16,6 +16,12 @@ class GetRecords extends Category
         '创建时间'
     ];
 
+    private $sort_item = [
+        'count'        => '数量',
+        'gmt_create'   => '日期',
+        'is_recommend' => '推荐'
+    ];
+
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
@@ -27,12 +33,21 @@ class GetRecords extends Category
     { 
         // 检索
         $search = $request->getAttribute('search');
+        $sort   = $request->getAttribute('sort');
+        $order  = $request->getAttribute('order');
+
+        if ($sort != '') {
+            $search['ORDER'] = [$sort => $order];
+        }
 
         $data = [
-              "total" => $this->category_model->total(),
-            "records" => $this->category_model->records($search),
-               'text' => $request->getAttribute('text'),
-            "columns" => $this->columns
+                "total" => $this->category_model->total(),
+              "records" => $this->category_model->records($search),
+                 'text' => $search,
+            "sort_item" => $this->sort_item,
+                 "sort" => $sort,
+                "order" => $order,
+              "columns" => $this->columns
         ];
 
         $this->respond('Category/Records', $data);

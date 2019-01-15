@@ -64,52 +64,50 @@
 
     <div class="card card-default">
         <div class="card-body">
-            {% if records is defined %}
-                {% for record in records %}
-                    {% if loop.index % 4 == 1 %}
-                    <div class="card-deck mt-4">
-                    {% endif %}
-                        <div class="card">
-                            <a href="{{ site.pc_url }}/photo/{{ record.hash }}" target="_blank">
-                                <img class="card-img-top" src="{{ record.path }}" alt="">
+        {% for item in records|batch(4, 'No item') %}
+            <div class="card-deck mt-4">
+                {% for record in item %}
+                    {% if record.hash is defined %}
+                    <div class="card">
+                        <a href="{{ site.pc_url }}/photo/{{ record.hash }}" target="_blank">
+                            <img class="card-img-top" src="{{ record.path }}" alt="">
+                        </a>
+                        <div class="card-body pt-4">
+                            <h5 class="card-title">
+                                <a href="/pic/records?search_category={{ record.category_code }}">{{ record.category_name }}</a>
+                            </h5>
+
+                            <p class="card-text pb-1">
+                                <small class="text-muted">
+                                    {{ record.width }}<i class="mdi mdi-close mr-1 ml-1"></i>{{ record.height }}<i class="mdi mdi-menu-right mr-1 ml-1"></i>{{ record.size }}
+                                    {% if record.is_oss %}
+                                    <i class="mdi mdi-cloud-check ml-1 text-success" title="已上传至阿里云"></i>
+                                    {% endif %}
+                                </small>
+                            </p>
+                            <p class="card-text pb-1">
+                                <small class="text-muted">{{ record.gmt_create }}</small>
+                            </p>
+
+                            {% for mark in record.mark %}
+                                <a href="/mark/pic?mark={{ mark.id }}" class="mb-2 mr-2 badge badge-dark">{{ mark.name }}</a>
+                            {% endfor %}
+            
+                            <a href="/recommend/add?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-success">
+                                <i class="mdi mdi-heart-multiple-outline mr-1"></i> 推荐
                             </a>
-                            <div class="card-body pt-4">
-                                <h5 class="card-title">
-                                    <a href="/pic/records?search_category={{ record.category_code }}">{{ record.category_name }}</a>
-                                </h5>
-
-                                <p class="card-text pb-1">
-                                    <small class="text-muted">
-                                        {{ record.width }}<i class="mdi mdi-close mr-1 ml-1"></i>{{ record.height }}<i class="mdi mdi-menu-right mr-1 ml-1"></i>{{ record.size }}
-                                        {% if record.is_oss %}
-                                        <i class="mdi mdi-cloud-check ml-1 text-success" title="已上传至阿里云"></i>
-                                        {% endif %}
-                                    </small>
-                                </p>
-                                <p class="card-text pb-1">
-                                    <small class="text-muted">{{ record.gmt_create }}</small>
-                                </p>
-
-                                {% for mark in record.mark %}
-                                    <a href="/mark/pic?mark={{ mark.id }}" class="mb-2 mr-2 badge badge-dark">{{ mark.name }}</a>
-                                {% endfor %}
                 
-                                <a href="/recommend/add?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-success">
-                                    <i class="mdi mdi-heart-multiple-outline mr-1"></i> 推荐
-                                </a>
-                    
-                                <a href="/pic/delete?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-danger">
-                                    <i class="mdi mdi-close-circle-outline mr-1"></i> 删除
-                                </a>
-                            </div>
+                            <a href="/pic/delete?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-danger">
+                                <i class="mdi mdi-close-circle-outline mr-1"></i> 删除
+                            </a>
                         </div>
-                    {% if loop.index % 4 == 0 %}
                     </div>
+                    {% else %}
+                    <div class="card"></div>
                     {% endif %}
                 {% endfor %}
-            {% else %}
-            暂无数据。
-            {% endif %}
+            </div>
+        {% endfor %}           
         </div>
 
         {% include 'Component/Page.html' %}

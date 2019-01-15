@@ -41,9 +41,10 @@ class GetRecords extends Mark
         $order  = $request->getAttribute('order');
         $text   = $request->getAttribute('text');
 
-        $query  = '&';
+        $query  = '';
 
         if (! empty($text)) {
+            $query .= '&';
             $query .= http_build_query($text);
         }
 

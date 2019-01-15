@@ -11,6 +11,7 @@ use Jenssegers\ImageHash\ImageHash;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Dolphin\Ting\Model\Collection_model;
 use Dolphin\Ting\Model\Pic_model;
+use Dolphin\Ting\Model\Category_model;
 
 class PostUpload
 {
@@ -26,6 +27,8 @@ class PostUpload
     private $collection_model;
     //
     private $pic_model;
+
+    private $category_model;
 
     private $error = [
         0 => 'There is no error, the file uploaded with success',
@@ -52,6 +55,8 @@ class PostUpload
         $this->collection_model = new Collection_model($app);
 
         $this->pic_model        = new Pic_model($app);
+
+        $this->category_model   = new Category_model($app);
         // 设置临时最大内存
         ini_set('memory_limit', '1024M');
         // 设置超时时间
@@ -88,9 +93,14 @@ class PostUpload
                 $data['category_code'] = isset($category_code) ? $category_code : '';
 
                 $db = $this->pic_model->add($data);
+                // 分类
+                if ($db->rowCount() && isset($category_code)) {
+                    $this->category_model->count_plus($category_code);
+                }
                 // 专题
                 if ($db->rowCount() && isset($collection_code)) {
                     $this->collection_model->add_picture($collection_code, $data['hash']);
+                    $this->collection_model->count_plus($collection_code);
                 }
             } else {
                 // 已经存在

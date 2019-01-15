@@ -12,8 +12,7 @@ class Common_model
 
     function __construct(ContainerInterface $app)
     {
-        $this->app        = $app;
-        // $this->table_name = $table_name;
+        $this->app = $app;
     }
 
     /**

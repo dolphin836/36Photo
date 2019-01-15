@@ -4,41 +4,58 @@
 列表 - 推荐 - {{ site.web_name }}
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ site.asset_path }}/css/jquery-90d09daacf.datetimepicker.min.css">
+{% endblock %}
+
+{% block js %}
+<script src="{{ site.asset_path }}/js/jquery.datetimepicker-024dfa4e0b.full.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#day').datetimepicker({
+            timepicker: false,
+            format: 'Y-m-d'
+        });
+    });
+</script>
+{% endblock %}
+
 {% block Content %}
 <div class="content">
     <div class="card card-default">
         <div class="card-body">
-            {% if records is defined %}
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    {% include 'Component/Thead.html' %}
-                    <tbody>
-                        {% for record in records %}
-                        <tr>
-                            <td class="text-center">
-                                <a href="{{ record.path }}" target="_blank">
-                                    <img src="{{ record.path }}" class="rounded" style="width: 120px;">
-                                </a>
-                                {% if record.is_oss %}
-                                <div><i class="tim-icons icon-cloud-upload-94 text-success" title="已上传至阿里云"></i></div>
-                                {% endif %}
-                            </td>
-                            <td class="text-center">
-                                <div>{{ record.gmt_create }}</div>
-                            </td>
-                            <td class="text-center">
-                                <a href="/recommend/delete?hash={{ record.hash }}" role="button" class="btn btn-sm btn-square btn-outline-danger">
-                                    <i class="mdi mdi-close-circle-outline"></i> 删除
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="row">
+                {% include 'Component/Date.html' %}
             </div>
-            {% else %}
-            暂无数据。
-            {% endif %}
+            {% include 'Component/Search.html' %}
+        </div>
+    </div>
+
+    <div class="card card-default">
+        <div class="card-body">
+            {% for item in records|batch(4, 'No item') %}
+            <div class="card-deck mt-4">
+                {% for record in item %}
+                    {% if record.hash is defined %}
+                    <div class="card">
+                        <a href="{{ site.pc_url }}/photo/{{ record.hash }}" target="_blank">
+                            <img class="card-img-top" src="{{ record.path }}" alt="">
+                        </a>
+                        <div class="card-body pt-4">
+                            <p class="card-text pb-1">
+                                <small class="text-muted">推荐时间：{{ record.gmt_create }}</small>
+                            </p>
+                            <a href="/recommend/delete?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-danger">
+                                <i class="mdi mdi-close-circle-outline mr-1"></i> 取消推荐
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endfor %}
         </div>
 
         {% include 'Component/Page.html' %}

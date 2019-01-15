@@ -54,11 +54,14 @@ $(document).ready(function() {
         var sort   = $("#sort").val();
         var order  = $("#order").val();
         var query  = '';
+        var inputName = new Array();
 
 
         inputs.each(function() {
             var name  = $(this).attr("name");
             var value = $(this).val();
+
+            inputName.push(name);
 
             if (value != '' && value != -1) {
                 if (query.length !== 0) {
@@ -84,12 +87,14 @@ $(document).ready(function() {
             for (const item of searchItem) {
                 var record = item.split("=", 2);
 
-                if (query.indexOf(record[0]) == -1) {
-                    if (query.length !== 0) {
-                        query += "&";
+                if (inputName.indexOf(record[0]) == -1) {
+                    if (query.indexOf(record[0]) == -1) {
+                        if (query.length !== 0) {
+                            query += "&";
+                        }
+    
+                        query += record[0] + "=" + encodeURIComponent(record[1]);
                     }
-
-                    query += record[0] + "=" + encodeURIComponent(record[1]);
                 }
             }
         }

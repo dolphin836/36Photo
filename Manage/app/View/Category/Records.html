@@ -12,15 +12,17 @@
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="form-group">
                         <label class="form-label">名 称</label>
-                        <input type="text" class="form-control" name="search_name_~" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
+                        <input type="text" class="form-control" name="search_name" value="{{ text.name is defined ? text.name : '' }}" maxlength="32">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="form-group">
                         <label class="form-label">别 名</label>
-                        <input type="text" class="form-control" name="search_code_~" value="{{ text.code is defined ? text.code : '' }}" maxlength="16">
+                        <input type="text" class="form-control" name="search_code" value="{{ text.code is defined ? text.code : '' }}" maxlength="16">
                     </div>
                 </div>
+
+                {% include 'Component/Sort.html' %}
             </div>
             {% include 'Component/Search.html' %}
         </div>
@@ -38,7 +40,10 @@
                                 <div>{{ record.code }}</div>
                             </td>
                             <td class="text-center">
-                                <div>{{ record.name }}</div>
+                                {{ record.name }}
+                                {% if record.is_recommend %}
+                                <i class="mdi mdi-ribbon ml-1 text-success" title="推荐"></i>
+                                {% endif %}
                             </td>
                             <td class="text-center">
                                 <div>{{ record.count }}</div>
@@ -52,9 +57,9 @@
                                         <i class="mdi mdi-file-image mr-1"></i> 图片
                                     </a>
                                     <a href="/pic/add?category={{ record.code }}" role="button" class="btn btn-square btn-outline-success">
-                                            <i class="mdi mdi-file-upload-outline mr-1"></i> 上传
-                                        </a>
-                                    <a href="/category/modify?code={{ record.code }}" role="button" class="btn btn-square btn-outline-primary">
+                                        <i class="mdi mdi-file-upload-outline mr-1"></i> 上传
+                                    </a>
+                                    <a href="/category/modify?id={{ record.id }}" role="button" class="btn btn-square btn-outline-primary">
                                         <i class="mdi mdi-square-edit-outline mr-1"></i> 编辑
                                     </a>
                                     <a href="/category/delete?id={{ record.id }}" role="button" class="btn btn-square btn-outline-danger">

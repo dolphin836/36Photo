@@ -2,10 +2,8 @@
 
 namespace Dolphin\Ting\Controller\Mark;
 
-use Psr\Container\ContainerInterface as ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Dolphin\Ting\Constant\Table;
 
 class PostModify extends Mark
 {

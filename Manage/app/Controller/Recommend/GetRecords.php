@@ -33,11 +33,18 @@ class GetRecords extends Recommend
     public function __invoke(Request $request, Response $response, $args)
     {  
         // 分页
-        $page = $request->getAttribute('page');
+        $page   = $request->getAttribute('page');
+        $search = $request->getAttribute('search');
+        $text   = $request->getAttribute('text');
 
-        $search  = [
-            'LIMIT' => [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT]
-        ];
+        $query  = '';
+
+        if (! empty($text)) {
+            $query .= '&';
+            $query .= http_build_query($text);
+        }
+
+        $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
 
         $records = $this->recommend_model->records($search);
 
@@ -51,7 +58,7 @@ class GetRecords extends Recommend
 
                 try {
                     $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $photo['path'], $valid, "GET", [
-                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_160,w_160"
+                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_400,w_400"
                     ]);
                 } catch (OssException $e) {
                     $path = getenv('WEB_URL') . '/' . $photo['path'];
@@ -71,7 +78,8 @@ class GetRecords extends Recommend
         $data = [
              "records" => $images,
              "columns" => $this->columns,
-                "page" => Page::reder('/recommend/records', $this->recommend_model->total([]), $page, Common::PAGE_COUNT, '')
+                "text" => $search,
+                "page" => Page::reder('/recommend/records', $this->recommend_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Recommend/Records', $data);

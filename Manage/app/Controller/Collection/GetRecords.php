@@ -20,6 +20,14 @@ class GetRecords extends Collection
         '创建时间'
     ];
 
+    private $sort_item = [
+        'gmt_create' => '日期',
+        'count'      => '数量',
+        'name'       => '标题',
+        'browse'     => '热度',
+        'collect'    => '收藏'
+    ];
+
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
@@ -34,29 +42,35 @@ class GetRecords extends Collection
         // 检索
         $search = $request->getAttribute('search');
         // 排序
+        $sort   = $request->getAttribute('sort');
         $order  = $request->getAttribute('order');
+        $text   = $request->getAttribute('text');
+
+        $query  = '';
     
-        $query = '&';
-    
-        if (! empty($search)) {
-          $query .= http_build_query($search);
+        if (! empty($text)) {
+            $query .= '&';
+            $query .= http_build_query($text);
         }
-    
-        if ($order != '') {
-          $query .= '&order=' . $order;
+
+        if ($sort != '') {
+            $search['ORDER'] = [$sort => $order];
+            $query .= '&sort='  . $sort;
+            $query .= '&order=' . $order;
         }
     
         $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
     
-        $search['ORDER'] = ["gmt_create" => $order];
-    
         $records = $this->collection_model->records($search);
 
         $data = [
-            "records" => $records,
-            "columns" => $this->columns,
-               'text' => $request->getAttribute('text'),
-               "page" => Page::reder('/collection/records', $this->collection_model->total($search), $page, Common::PAGE_COUNT, $query)
+              "records" => $records,
+              "columns" => $this->columns,
+            "sort_item" => $this->sort_item,
+                 "sort" => $sort,
+                "order" => $order,
+                 "text" => $search,
+                 "page" => Page::reder('/collection/records', $this->collection_model->total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Collection/Records', $data);

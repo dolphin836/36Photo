@@ -35,9 +35,10 @@ class GetRecords extends User
     // 排序
     $order  = $request->getAttribute('order');
 
-    $query = '&';
+    $query  = '';
 
     if (! empty($search)) {
+      $query .= '&';
       $query .= http_build_query($search);
     }
 

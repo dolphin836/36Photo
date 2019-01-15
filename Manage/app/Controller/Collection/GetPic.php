@@ -1,6 +1,6 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Mark;
+namespace Dolphin\Ting\Controller\Collection;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
 use Slim\Http\Request;
@@ -11,11 +11,12 @@ use Dolphin\Ting\Constant\Nav;
 use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Model\Pic_model;
 use Dolphin\Ting\Model\Category_model;
+use Dolphin\Ting\Model\Mark_model;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Slim\Exception\NotFoundException;
 
-class GetPic extends Mark
+class GetPic extends Collection
 {
     private $columns = [
         '缩略图',
@@ -41,6 +42,10 @@ class GetPic extends Mark
 
     private $pic_model;
 
+    private $mark_model;
+
+    private $oss_client;
+
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
@@ -50,6 +55,19 @@ class GetPic extends Mark
 
         $this->pic_model      = new Pic_model($app);
         $this->category_model = new Category_model($app);
+        $this->mark_model     = new Mark_model($app);
+
+        try {
+            $this->oss_client = new OssClient(
+              getenv('OSS_ACCESS_KEY_ID'),
+              getenv('OSS_ACCESS_SECRET'),
+              getenv('OSS_END_POINT')
+            );
+        } catch (OssException $e) {
+            printf(__FUNCTION__ . "阿里云 OSS 初始化失败。\n");
+            printf($e->getMessage() . "\n");
+            exit();
+        }
     }
 
     public function __invoke(Request $request, Response $response, $args)
@@ -67,17 +85,17 @@ class GetPic extends Mark
 
         parse_str($uri->getQuery(), $querys);
 
-        if (! isset($querys['mark'])) {
+        if (! isset($querys['code'])) {
             throw new NotFoundException($request, $response);
         }
-        // 标签 ID
-        $mark_id = $querys['mark'];
+        // 专辑编码
+        $collection_code = $querys['code'];
 
-        $search['mark_id'] = $mark_id;
-        $search['LIMIT']   = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
-        $search['ORDER']   = [Table::PICTURE_MARK . '.id' => 'DESC'];
+        $search['code']  = $collection_code;
+        $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
+        $search['ORDER'] = [Table::PICTURE_COLLECTION . '.id' => 'DESC'];
 
-        $query = '&mark=' . $mark_id;
+        $query = '&code=' . $collection_code;
 
         if (! empty($text)) {
             $query .= '&' . http_build_query($text);
@@ -89,7 +107,7 @@ class GetPic extends Mark
             $query .= '&order=' . $order;
         }
 
-        $records = $this->mark_model->pic($search);
+        $records = $this->collection_model->pic($search);
 
         $hashs   = array_column($records, 'picture_hash');
 
@@ -136,7 +154,7 @@ class GetPic extends Mark
                  "sort" => $sort,
                 "order" => $order,
                  "text" => $search,
-                 "page" => Page::reder('/mark/pic', $this->mark_model->pic_total($search), $page, Common::PAGE_COUNT, $query)
+                 "page" => Page::reder('/collection/pic', $this->collection_model->pic_total($search), $page, Common::PAGE_COUNT, $query)
         ];
 
         $this->respond('Pic/Records', $data);
