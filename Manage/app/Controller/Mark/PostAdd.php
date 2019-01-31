@@ -1,69 +1,46 @@
 <?php
 
-namespace Dolphin\Ting\Controller\Category;
+namespace Dolphin\Ting\Controller\Mark;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as v;
 
-class PostAdd extends Category
+class PostAdd extends Mark
 {
     public function __invoke(Request $request, Response $response, $args)
-    {   
+    {  
         $body = $request->getParsedBody();
 
         if (! $this->validate($body)) {
-            return $response->withRedirect('/category/add', 302);
+            return $response->withRedirect('/mark/add', 302);
         }
 
         $data = [
-                    'code' => trim($body['code']),
-                    'name' => trim($body['name']),
-            'is_recommend' => $body['is_recommend']
+            'name'          => trim($body['name']),
+            'category_code' => trim($body['category_code'])
         ];
 
-        $db = $this->category_model->add($data);
+        $db = $this->mark_model->add($data);
 
         if (! $db->rowCount()) { // 插入失败
             $this->app->flash->addMessage('note', [
                 'code' => 'danger',
-                'text' => '添加分类失败'
+                'text' => '新增标签失败'
             ]);
         } else {
             $this->app->flash->addMessage('note', [
                 'code' => 'success',
-                'text' => '添加分类成功'
+                'text' => '新增标签成功'
             ]);  
         }
 
-        return $response->withRedirect('/category/records', 302);
+        return $response->withRedirect('/mark/records', 302);
     }
 
     private function validate($body)
     {
         $form_v_error = [];
-        // 验证别名
-        $error = [];
-
-        if (! isset($body['code']) || $body['code'] === '') {
-            $error[] = '别名不得为空.';
-        } else {
-            if (! v::stringType()->length(1, 16)->validate($body['code'])) {
-                $error[] = '别名格式不正确.';
-            } else {
-                if (! v::stringType()->callback(function($code) {
-                    // 别名是否已经存在
-                    return ! $this->category_model->is_has('code', $code);
-                })->validate($body['code'])) {
-                    $error[] = '别名已存在.';
-                } 
-            }
-        }
-
-        if (! empty($error)) {
-            $form_v_error['code'] = $error;
-        }
-
         // 验证名称
         $error = [];
 
@@ -75,10 +52,10 @@ class PostAdd extends Category
             } else {
                 if (v::stringType()->callback(function($name) {
                     // 名称是否已经存在
-                    return $this->category_model->is_has('name', $name);
+                    return $this->mark_model->is_has('name', $name);
                 })->validate($body['name'])) {
                     $error[] = '名称已存在.';
-                } 
+                }
             }
         }
 

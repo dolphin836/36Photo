@@ -9,6 +9,7 @@ use Dolphin\Ting\Librarie\Page;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Model\Category_model;
+use Dolphin\Ting\Constant\Nav;
 
 class GetRecords extends Mark
 {
@@ -29,6 +30,8 @@ class GetRecords extends Mark
     function __construct(ContainerInterface $app)
     {
         parent::__construct($app);
+
+        $this->nav_route = Nav::RECORDS;
 
         $this->category_model = new Category_model($app);
     }

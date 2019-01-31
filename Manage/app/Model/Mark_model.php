@@ -195,6 +195,16 @@ class Mark_model extends Common_model
             "picture_hash" => $hash
         ]);
     }
+
+    /**
+     * 删除某标签所有的图片关联记录
+     */
+    public function delete_mark_pic($mark_id)
+    {
+        return $this->app->db->delete(Table::PICTURE_MARK, [
+            "mark_id" => $mark_id
+        ]);
+    }
 }
 
 

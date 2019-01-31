@@ -1,0 +1,41 @@
+{% extends "Template.html" %}
+
+{% block Title %}
+新增标签 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<div class="content">
+    <form action="" method="POST" class="card card-default" id="form">
+        {% include 'Component/Csrf.html' %}
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label" for="input_name">名 称</label>
+                        <input type="text" class="form-control {{ form_v_error.name is defined ? 'is-invalid' : '' }}" name="name" id="input_name" value="{{ form_data.name is defined ? form_data.name : '' }}" required maxlength="32" autocomplete="off">
+                        {% if form_v_error.name is defined %}
+                        <div class="invalid-feedback">
+                            {% for err in form_v_error.name %}
+                                <p>{{ err }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="input_category_code">分 类</label>
+                        <select class="form-control" name="category_code" id="input_category_code">
+                            {% for cate in category %}
+                            <option value="{{ cate.code }}">{{ cate.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            {% include 'Component/FormSave.html' %}
+        </div>
+    </form>
+</div>
+{% endblock %}

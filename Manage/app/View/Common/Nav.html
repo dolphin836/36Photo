@@ -58,11 +58,22 @@
                     </ul>
                 </li>
 
-                <li class="has-sub {{ site.nav_item == 'mark' ? 'active' : '' }}">
-                    <a href="/mark/records" class="sidenav-item-link">
+                <li class="has-sub {{ site.nav_item == 'mark' ? 'active expand' : '' }}">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#mark" aria-expanded="{{ site.nav_item == 'mark' ? 'true' : 'false' }}"
+                       aria-controls="mark">
                         <i class="mdi mdi-tag-multiple"></i>
                         <span class="nav-text">标 签</span> <b class="caret"></b>
                     </a>
+                    <ul class="collapse {{ site.nav_item == 'mark' ? 'show' : '' }}" id="mark" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li class="{{ site.nav_route == 'records' ? 'active' : '' }}">
+                                <a href="/mark/records">浏 览</a>
+                            </li>
+                            <li class="{{ site.nav_route == 'add' ? 'active' : '' }}">
+                                <a href="/mark/add">创 建</a>
+                            </li>
+                        </div>
+                    </ul>
                 </li>
 
                 <li class="has-sub {{ site.nav_item == 'category' ? 'active expand' : '' }}">

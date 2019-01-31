@@ -6,9 +6,9 @@ $method = $container->request->getMethod();
 
 $method = strtolower($method);
 
-$class = "Dolphin\Ting\Controller" . "\\";
+$class  = "Dolphin\Ting\Controller" . "\\";
 
-$path = explode('/', $params);
+$path   = explode('/', $params);
 // 设置默认路由为 Home
 $c = isset($path[1]) && $path[1] != '' ? $path[1] : 'Home';
 
