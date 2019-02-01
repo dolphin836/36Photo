@@ -24,6 +24,14 @@ class Common_model
     }
 
     /**
+     * 记录是否存在
+     */
+    public function is_has_by_data($data = [])
+    {
+        return $this->app->db->has($this->table_name, $data);
+    }
+
+    /**
      * 记录总数
      */
     public function total($data = [])

@@ -49,7 +49,7 @@ class PostModify extends Category
             return $response->withRedirect('/category/modify?id=' . $category_id, 302);
         }
         // 校验名称
-        if ($category_name != $category['name'] && ! $this->validate_code($category_name)) {
+        if ($category_name != $category['name'] && ! $this->validate_name($category_name)) {
             return $response->withRedirect('/category/modify?id=' . $category_id, 302);
         }
         // 开始事务

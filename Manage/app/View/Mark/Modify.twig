@@ -1,0 +1,43 @@
+{% extends "Template.twig" %} 
+
+{% block Title %}
+编辑 - 标签 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<div class="content">
+    <form action="" method="POST" class="card card-default" id="form">
+        {% include 'Component/Csrf.twig' %}
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">名 称</label>
+                        <input type="text" class="form-control" name="name" value="{{ mark.name }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">数 量</label>
+                        <input type="text" class="form-control" name="count" value="{{ mark.count }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">分 类</label>
+                        <select clas="form-control" name="category_code">
+                            {% for cate in category %}
+                            {% if cate.code == mark.category_code %}
+                            <option value="{{ cate.code }}" selected>{{ cate.name }}</option>
+                            {% else %}
+                            <option value="{{ cate.code }}">{{ cate.name }}</option>
+                            {% endif %}
+                            {% endfsor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            {% include 'Component/FormSave.twig' %}
+        </div>
+    </form>
+</div>
+
+{% endblock %}

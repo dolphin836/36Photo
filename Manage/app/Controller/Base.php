@@ -71,7 +71,7 @@ class Base
 
         // var_dump($data);
 
-        echo $this->app->template->render($html . '.html', $data);
+        echo $this->app->template->render($html . '.twig', $data);
     }
 
     /**

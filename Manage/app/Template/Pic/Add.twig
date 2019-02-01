@@ -1,0 +1,59 @@
+{% extends "Template.twig" %} 
+
+{% block Title %}
+上传图片 - {{ site.web_name }}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ site.asset_path }}/css/dropzone.min.css">
+<style>
+.dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 0.2857rem;
+    background: white;
+}
+.dropzone .dz-message {
+    font-size: 2em;
+    font-weight: 400;
+    margin: 2em 0;
+    color: #646C7F;
+    text-rendering: optimizeLegibility;
+}
+</style>
+{% endblock %}
+
+{% block js %}
+<script src="{{ site.asset_path }}/js/dropzone.min.js"></script>
+<script>
+    Dropzone.options.dropzone = {
+        paramName: "photo",
+        parallelUploads: 1,
+        acceptedFiles: "image/*"
+    };
+</script>
+{% endblock %}
+
+{% block Content %}
+<div class="content">
+    <div class="card card-default">
+        <div class="card-body">
+            {% set action = '/pic/upload' %}
+            {% if category is defined %}
+            <h4 class="card-title">分类：{{ category.name }}</h4>
+            {% set action = '/pic/upload?category=' ~ category.code %}
+            {% endif %}
+
+            {% if collection is defined %}
+            <h4 class="card-title">专题：{{ collection.name }}</h4>
+            {% set action = '/pic/upload?collection=' ~ collection.code %}
+            {% endif %}
+
+            <form action="{{ action }}" class="dropzone" id="dropzone" method="POST" enctype="multipart/form-data"></form>
+        
+            <h5 class="mt-4"><small>post_max_size : {{ post_max_size }}</small></h5>
+            <h5 class="mt-1"><small>upload_max_filesize : {{ upload_max_filesize }}</small></h5>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

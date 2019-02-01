@@ -1,0 +1,116 @@
+{% extends "Template.twig" %}
+
+{% block Title %}
+列表 - 图片 - {{ site.web_name }}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ site.asset_path }}/css/jquery.datetimepicker.min.css">
+{% endblock %}
+
+{% block js %}
+<script src="{{ site.asset_path }}/js/jquery.datetimepicker.full.min.js"></script>
+{% endblock %}
+
+{% block Content %}
+<div class="content">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label"><small>云存储</small></label>
+                        {% set select_value = text.oss is defined ? text.oss : -1 %}
+                        <select class="form-control" name="search_oss">
+                            <option value="-1">全部</option>
+                            {% if 0 == select_value %}
+                            <option value="0" selected>未上传</option>
+                            {% else %}
+                            <option value="0">未上传</option>
+                            {% endif %}
+                            {% if 1 == select_value %}
+                            <option value="1" selected>已上传</option>
+                            {% else %}
+                            <option value="1">已上传</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label class="form-label"><small>分 类</small></label>
+                        {% set select_value = text.category is defined ? text.category : -1 %}
+                        <select class="form-control" name="search_category">
+                            <option value="-1">全部</option>
+                            {% for cate in category %}
+                            {% if cate.code == select_value %}
+                            <option value="{{ cate.code }}" selected>{{ cate.name }}</option>
+                            {% else %}
+                            <option value="{{ cate.code }}">{{ cate.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                {% include 'Component/DateTime.twig' %}
+                {% include 'Component/Sort.twig' %}
+            </div>
+            {% include 'Component/Search.twig' %}
+        </div>
+    </div>
+
+
+    <div class="card card-default">
+        <div class="card-body">
+        {% for item in records|batch(4, 'No item') %}
+            <div class="card-deck mt-4">
+                {% for record in item %}
+                    {% if record.hash is defined %}
+                    <div class="card">
+                        <a href="{{ site.pc_url }}/photo/{{ record.hash }}" target="_blank">
+                            <img class="card-img-top" src="{{ record.path }}" alt="">
+                        </a>
+                        <div class="card-body pt-4">
+                            <h5 class="card-title">
+                                <a href="/pic/records?search_category={{ record.category_code }}">{{ record.category_name }}</a>
+                            </h5>
+
+                            <p class="card-text pb-1">
+                                <small class="text-muted">
+                                    {{ record.width }}<i class="mdi mdi-close mr-1 ml-1"></i>{{ record.height }}<i class="mdi mdi-menu-right mr-1 ml-1"></i>{{ record.size }}
+                                    {% if record.is_oss %}
+                                    <i class="mdi mdi-cloud-check ml-1 text-success" title="已上传至阿里云"></i>
+                                    {% endif %}
+                                </small>
+                            </p>
+                            <p class="card-text pb-1">
+                                <small class="text-muted">{{ record.gmt_create }}</small>
+                            </p>
+
+                            {% for mark in record.mark %}
+                                <a href="/mark/pic?mark={{ mark.id }}" class="mb-2 mr-2 badge badge-dark">{{ mark.name }}</a>
+                            {% endfor %}
+            
+                            <a href="/recommend/add?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-success">
+                                <i class="mdi mdi-heart-multiple-outline mr-1"></i> 推荐
+                            </a>
+                
+                            <a href="/pic/delete?hash={{ record.hash }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-danger">
+                                <i class="mdi mdi-close-circle-outline mr-1"></i> 删除
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}           
+        </div>
+
+        {% include 'Component/Page.twig' %}
+    </div>
+</div>
+{% endblock %}

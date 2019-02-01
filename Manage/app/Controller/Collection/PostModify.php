@@ -5,20 +5,43 @@ namespace Dolphin\Ting\Controller\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Respect\Validation\Validator as v;
+use Slim\Exception\NotFoundException;
 
-class PostAdd extends Collection
+class PostModify extends Collection
 {
+    /**
+     * 修改专题
+     *
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
+     *
+     * @throws NotFoundException
+     *
+     * @return Response
+     *
+     * @author 王海兵
+     * @create 2019-02-01 14:03:24
+     */
     public function __invoke(Request $request, Response $response, $args)
-    {   
+    {
+        $uri = $request->getUri();
+
+        parse_str($uri->getQuery(), $querys);
+
+        if (! isset($querys['code'])) {
+            throw new NotFoundException($request, $response);
+        }
+
+        $collection_code = $querys['code'];
+
         $body = $request->getParsedBody();
 
-        if (! $this->validate($body)) {
-            return $response->withRedirect('/collection/add', 302);
+        if (! $this->validate($body, $collection_code)) {
+            return $response->withRedirect('/collection/modify?code=' . $collection_code, 302);
         }
 
         $data = [
-                 'code' => $this->random_code(),
-                 'uuid' => $this->app->session->get('uuid'),
                  'name' => trim($body['name']),
               'content' => trim($body['content']),
             'is_public' => (int) $body['is_public'],
@@ -26,24 +49,26 @@ class PostAdd extends Collection
                  'link' => trim($body['link'])
         ];
 
-        $db = $this->collection_model->add($data);
+        $db = $this->collection_model->modify($data, [
+            'code' => $collection_code
+        ]);
 
         if (! $db->rowCount()) { // 插入失败
             $this->app->flash->addMessage('note', [
                 'code' => 'danger',
-                'text' => '添加专题失败'
+                'text' => '修改专题失败'
             ]);
         } else {
             $this->app->flash->addMessage('note', [
                 'code' => 'success',
-                'text' => '添加专题成功'
+                'text' => '修改专题成功'
             ]);  
         }
 
-        return $response->withRedirect('/collection/records', 302);
+        return $response->withRedirect('/collection/modify?code=' . $collection_code, 302);
     }
 
-    private function validate($body)
+    private function validate($body, $collection_code)
     {
         $form_v_error = [];
         // 验证名称
@@ -55,9 +80,12 @@ class PostAdd extends Collection
             if (! v::stringType()->length(2, 64)->validate($body['name'])) {
                 $error[] = '请输入 2 ~ 64 个字符的名称.';
             } else {
-                if (v::stringType()->callback(function($name) {
+                if (v::stringType()->callback(function($name) use ($collection_code) {
                     // 名称是否已经存在
-                    return $this->collection_model->is_has('name', $name);
+                    return $this->collection_model->is_has_by_data([
+                        'name'    => $name,
+                        'code[!]' => $collection_code
+                    ]);
                 })->validate($body['name'])) {
                     $error[] = '名称已存在.';
                 }
