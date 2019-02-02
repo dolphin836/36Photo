@@ -21,7 +21,7 @@ define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 // 设置时区
 date_default_timezone_set('PRC');
 // 设置临时最大内存
-ini_set('memory_limit', '2048M');
+ini_set('memory_limit', '512M');
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 // 载入配置文件
@@ -65,7 +65,6 @@ $records = $db->select(Table::PICTURE, [
 var_dump('Photo Total Count:' . count($records));
 
 foreach ($records as $record) {
-    var_dump($record['id'] . '====>' . $record['hash'] . '=====>' . round(memory_get_usage() / 1024 / 1024, 2) . 'mb');
     // 已经存在
     if($db->has(PICTURE_COLOR, [
         'picture_hash' => $record['hash']
@@ -111,6 +110,8 @@ foreach ($records as $record) {
     }
     // 删除本地文件
     unlink($photo);
+
+    var_dump(date("Y-m-d H:i:s") . '====>' . $record['id'] . '====>' . $record['hash'] . '=====>' . round(memory_get_usage() / 1024 / 1024, 2) . ' mb');
 }
 
 
