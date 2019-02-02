@@ -36,12 +36,16 @@ class GetRecords extends Category
         $sort   = $request->getAttribute('sort');
         $order  = $request->getAttribute('order');
 
+        if (isset($search['recommend']) && (int) $search['recommend'] === 1) {
+            $this->nav_route = Nav::RECOMMEND;
+        }
+
         if ($sort != '') {
             $search['ORDER'] = [$sort => $order];
         }
 
         $data = [
-                "total" => $this->category_model->total(),
+                "total" => $this->category_model->total($search),
               "records" => $this->category_model->records($search),
                  'text' => $search,
             "sort_item" => $this->sort_item,

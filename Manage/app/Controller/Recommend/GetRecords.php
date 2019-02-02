@@ -19,8 +19,6 @@ class GetRecords extends Recommend
         '推荐时间'
     ];
 
-    private $category_model;
-
     private $pic_model;
 
     function __construct(ContainerInterface $app)
@@ -28,6 +26,8 @@ class GetRecords extends Recommend
         parent::__construct($app);
 
         $this->pic_model = new Pic_model($app);
+
+        $this->nav_route = Nav::RECOMMEND;
     }
 
     public function __invoke(Request $request, Response $response, $args)

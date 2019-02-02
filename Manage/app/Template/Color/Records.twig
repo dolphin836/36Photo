@@ -1,0 +1,37 @@
+{% extends "Template.twig" %} 
+
+{% block Title %}
+列表 - 颜色 - {{ site.web_name }}
+{% endblock %}
+
+{% block Content %}
+<div class="content">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                {% for record in records %}
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4">
+                    <div class="card widget-block mb-1" style="background-color: #{{ record.color }};">
+                        <div class="card-block text-center">
+                            <a href="/color/pic?color={{ record.color }}" style="color: {{ record.fontcolor }};">#{{ record.color }} - {{ record.count }}</a>
+                        </div>
+                    </div>
+                    {% if record.is_recommend %}
+                        <a href="/color/unrecommend?color={{ record.color }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-danger">
+                            <i class="mdi mdi-heart-pulse mr-1"></i> 取消推荐
+                        </a>
+                    {% else %}
+                        <a href="/color/recommend?color={{ record.color }}" role="button" class="btn btn-sm btn-block btn-square btn-outline-success">
+                            <i class="mdi mdi-heart mr-1"></i> 推荐
+                        </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% include 'Component/Page.twig' %}
+    </div>
+</div>
+
+{% endblock %}

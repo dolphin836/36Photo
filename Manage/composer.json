@@ -25,7 +25,9 @@
         "aliyuncs/oss-sdk-php": "^2.3",
         "spatie/image-optimizer": "^1.1",
         "ksubileau/color-thief-php": "^1.4",
-        "spatie/color": "^1.1"
+        "spatie/color": "^1.1",
+        "league/color-extractor": "0.3.*",
+        "villfa/invert-color": "^0.4.2"
     },
     "autoload": {
         "psr-4": {

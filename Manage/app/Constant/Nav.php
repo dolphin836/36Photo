@@ -26,4 +26,6 @@ class Nav
     const RECORDS = 'records';
     // 
     const ADD = 'add';
+    // 推荐
+    const COLOR = 'color';
 }

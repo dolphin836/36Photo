@@ -30,7 +30,40 @@ class Category_model extends Common_model
             unset($data['code']);
         }
 
+        if (isset($data['recommend'])) {
+            $data['is_recommend'] = $data['recommend'];
+            unset($data['recommend']);
+        }
+
         return $this->app->db->select($this->table_name, "*", $data);
+    }
+
+    public function total($data = [])
+    {
+        if (isset($data['LIMIT'])) {
+            unset($data['LIMIT']);
+        }
+
+        if (isset($data['ORDER'])) {
+            unset($data['ORDER']);
+        }
+
+        if (isset($data['name'])) {
+            $data['name[~]'] = $data['name'];
+            unset($data['name']);
+        }
+
+        if (isset($data['code'])) {
+            $data['code[~]'] = $data['code'];
+            unset($data['code']);
+        }
+
+        if (isset($data['recommend'])) {
+            $data['is_recommend'] = $data['recommend'];
+            unset($data['recommend']);
+        }
+
+        return $this->app->db->count($this->table_name, $data);
     }
 
     public function is_real_has($code)

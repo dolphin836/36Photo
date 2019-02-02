@@ -140,3 +140,14 @@ CREATE TABLE `picture_compare` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_picture_hash` (`picture_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 相似关系映射记录表';
+
+CREATE TABLE `color` (
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `color` CHAR(6) NOT NULL DEFAULT '' COMMENT '颜色 HEX 值',
+    `count` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '图片数量',
+    `is_recommend` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否推荐：0 - 否、1 - 是',
+    `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
+    `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_color` (`color`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='颜色记录表';

@@ -3,7 +3,6 @@
 namespace Dolphin\Ting\Controller\Mark;
 
 use Psr\Container\ContainerInterface as ContainerInterface;
-use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Constant\Nav;
 use Dolphin\Ting\Model\Mark_model;
 use OSS\OssClient as OssClient;

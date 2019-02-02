@@ -28,4 +28,6 @@ class Table
     const PICTURE_RECOMMEND = 'picture_recommend';
     // 图片 - 相似
     const PICTURE_COMPARE = 'picture_compare';
+    // 颜色
+    const COLOR = 'color';
 }
