@@ -12,15 +12,7 @@ class Color_model extends Common_model
     {
         parent::__construct($app);
 
-        $this->table_name = Table::PICTURE_COLOR;
-    }
-
-    public function records($data = [])
-    {
-        // 原始语句
-        $sql = "SELECT `color` FROM `" . $this->table_name . "` GROUP BY `color` ORDER BY COUNT(`color`) DESC LIMIT " . Common::COLOR_MAX_COUNT;
-
-        return $this->app->db->query($sql)->fetchAll();
+        $this->table_name = Table::COLOR;
     }
 }
 

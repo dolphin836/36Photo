@@ -1,9 +1,7 @@
-{% extends "Template.html" %}
+{% extends "Template.twig" %}
 
 {% block Js %}
-<!-- build:zooming-script -->
-<script src="/assets/node_modules/zooming/build/zooming.js"></script>
-<!-- endbuild -->
+<script src="/assets/dist/js/zooming-4f973d8ee8.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     new Zooming().listen('.img-zoomable');

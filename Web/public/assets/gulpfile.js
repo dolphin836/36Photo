@@ -64,7 +64,7 @@ gulp.task('app-script', function () {
 // Html 资源处理：先将 Html 中预定义的块替换成对应的内容，再通过 manifest.json 文件替换文件名
 // 包括：Html 中的图片、CSS、JS
 gulp.task('rev', function() {
-    gulp.src(['./dist/rev/*.json', '../../app/Template/**/*.html'])
+    gulp.src(['./dist/rev/*.json', '../../app/Template/**/*.twig'])
         .pipe(htmlReplace({
             'common-css': '/assets/dist/css/common.min.css',
             'app-css': '/assets/dist/css/app.css',

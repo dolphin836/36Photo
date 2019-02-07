@@ -1,17 +1,17 @@
-{% extends "Template.html" %}
+{% extends "Template.twig" %}
 
 {% block Title %}
-流行颜色
+热门标签
 {% endblock %}
 
 {% block Content %}
 <div class="container">
-    {% for color in colors %}
+    {% for mark in marks %}
         {% if loop.index0 % 4 == 0 %}
         <div class="row">
         {% endif %}
-            <div class="column text-center">
-                <a href="/color/{{ color }}" class="color animated fadeIn" style="background-color: #{{ color }};"></a>
+            <div class="column" style="padding-left: 6rem;">
+                <a href="/mark/{{ mark.name }}" class="mark animated fadeIn">{{ mark.name }}</a>
             </div>
         {% if loop.index0 % 4 == 3 %}
         </div>

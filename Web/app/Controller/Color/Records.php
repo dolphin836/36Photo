@@ -18,7 +18,9 @@ class Records extends Color
      */
     public function __invoke(Request $request, Response $response, $args)
     { 
-        $colors = $this->color_model->records([]);
+        $colors = $this->color_model->records([
+            'is_recommend' => 1
+        ]);
 
         $data = [
             'colors' => array_column($colors, 'color'),
