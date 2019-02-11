@@ -21,7 +21,7 @@ define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 // 设置时区
 date_default_timezone_set('PRC');
 // 设置临时最大内存
-ini_set('memory_limit', '512M');
+ini_set('memory_limit', '1024M');
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 // 载入配置文件
@@ -57,7 +57,8 @@ $records = $db->select(Table::PICTURE, [
     'hash',
     'path'
 ], [
-    'ORDER' => ['id' => 'ASC']
+    'ORDER' => ['id' => 'ASC'],
+    'id[>]' => 4018
 ]);
 
 var_dump('Photo Total Count:' . count($records));
@@ -67,6 +68,7 @@ foreach ($records as $record) {
     if($db->has(Table::PICTURE_COLOR, [
         'picture_hash' => $record['hash']
     ])) {
+        var_dump(date("Y-m-d H:i:s") . '====>' . $record['id'] . '====>' . $record['hash'] . 'already exists.');
         continue;
     }
     // 本地存储路径
