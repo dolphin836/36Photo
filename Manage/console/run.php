@@ -15,7 +15,6 @@ use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Table;
-//use GuzzleHttp\Client;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
@@ -62,8 +61,6 @@ try {
 }
 // 标签
 $mark = new Mark(getenv('OSS_ACCESS_KEY_ID'), getenv('OSS_ACCESS_SECRET'));
-//// HTTP Client
-//$guzzle = new Client();
 
 var_dump(date("Y-m-d H:i:s") . ':**********Start Run**********');
 // 获取超级管理员的 UUID

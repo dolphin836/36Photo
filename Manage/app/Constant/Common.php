@@ -22,4 +22,6 @@ class Common
     const IS_OSS = '1';
     // 未上传阿里云 OSS
     const IS_NOT_OSS = '0';
+    // 图片列表的略缩图宽度
+    const PHOTO_LIST_THUMB = 400;
 }
