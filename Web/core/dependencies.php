@@ -41,9 +41,9 @@ unset($container['notFoundHandler']);
 $container['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
         if (getenv('DEBUG') == 'TRUE') {
-            $not_found_template = '../app/Template/NotFound.html';
+            $not_found_template = '../app/Template/NotFound.twig';
         } else {
-            $not_found_template = '../app/View/NotFound.html';
+            $not_found_template = '../app/View/NotFound.twig';
         }
 
         $stream   = new Psr7\LazyOpenStream($not_found_template, 'r');

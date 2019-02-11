@@ -17,7 +17,7 @@ class Record extends Pic
 
         $record = $this->pic_model->record(["hash" => $hash]);
         // 生产环境
-        if (is_null($record) || (getenv('DEBUG') === 'FALSE' && $record['is_oss'] === Common::IS_NOT_OSS)) {
+        if (is_null($record)) {
             throw new NotFoundException($request, $response);
         }
 

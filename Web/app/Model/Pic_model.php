@@ -31,11 +31,6 @@ class Pic_model extends Common_model
             unset($data['uuid']);
         }
 
-        // 生产环境只展示已上传阿里云的记录
-        if (getenv('DEBUG') === 'FALSE') {
-            $data[Table::PICTURE . '.is_oss'] = Common::IS_OSS;
-        }
-
         return $this->app->db->select(Table::PICTURE, [
             "[>]" . Table::CATEGORY => ["category_code" => "code"],
             "[>]" . Table::USER     => ["uuid" => "uuid"],
@@ -61,11 +56,6 @@ class Pic_model extends Common_model
 
     public function random($data = [])
     {
-        // 生产环境只展示已上传阿里云的记录
-        if (getenv('DEBUG') === 'FALSE') {
-            $data[Table::PICTURE . '.is_oss'] = Common::IS_OSS;
-        }
-
         return $this->app->db->rand(Table::PICTURE, [
             "[>]" . Table::CATEGORY => ["category_code" => "code"],
             "[>]" . Table::USER     => ["uuid" => "uuid"],
@@ -122,11 +112,6 @@ class Pic_model extends Common_model
 
         if (isset($data['ORDER'])) {
             unset($data['ORDER']);
-        }
-
-        // 生产环境只展示已上传阿里云的记录
-        if (getenv('DEBUG') === 'FALSE') {
-            $data['is_oss'] = Common::IS_OSS;
         }
 
         return $this->app->db->count($this->table_name, $data);

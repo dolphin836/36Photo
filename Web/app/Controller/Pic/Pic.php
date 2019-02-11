@@ -9,6 +9,7 @@ use Dolphin\Ting\Constant\Table;
 use Dolphin\Ting\Model\Pic_model;
 use Dolphin\Ting\Constant\Common;
 use Dolphin\Ting\Constant\Nav;
+use Dolphin\Ting\Librarie\Photo;
 
 class Pic extends \Dolphin\Ting\Controller\Base
 {
@@ -61,19 +62,32 @@ class Pic extends \Dolphin\Ting\Controller\Base
         $photos = [];
 
         $sma   = $lar = Common::OSS_PROCESS;
+        // 本地图片的处理模式
+        $photo_mode = Common::PHOTO_LOCAL_MODE;
+        $photo_sma  = Common::PHOTO_LOCAL_SMA;
+        $photo_lar  = Common::PHOTO_LOCAL_LAR;
 
         switch ($resize_name) {
             case 'PHOTO': // 图片列表页
                 $sma .= Common::PHOTO_RESIZE_SMA;
                 $lar .= Common::PHOTO_RESIZE_LAR;
+                $photo_mode = Common::PHOTO_LOCAL_MODE;
+                $photo_sma  = Common::PHOTO_LOCAL_SMA;
+                $photo_lar  = Common::PHOTO_LOCAL_LAR;
                 break;
             case 'RECOMMEND': // 推荐页
                 $sma .= Common::RECOMMEND_RESIZE_SMA;
                 $lar .= Common::RECOMMEND_RESIZE_LAR;
+                $photo_mode = Common::RECOMMEND_LOCAL_MODE;
+                $photo_sma  = Common::RECOMMEND_LOCAL_SMA;
+                $photo_lar  = Common::RECOMMEND_LOCAL_LAR;
                 break;    
             default:
                 $sma .= Common::PHOTO_RESIZE_SMA;
                 $lar .= Common::PHOTO_RESIZE_LAR;
+                $photo_mode = Common::PHOTO_LOCAL_MODE;
+                $photo_sma  = Common::PHOTO_LOCAL_SMA;
+                $photo_lar  = Common::PHOTO_LOCAL_LAR;
                 break;
         }
 
@@ -107,10 +121,12 @@ class Pic extends \Dolphin\Ting\Controller\Base
                         ]
                     );
                 } catch (OssException $e) {
-                    $large = $small = getenv('WEB_URL') . '/' . $record['path'];
+                    $small = Photo::$photo_mode($record['path'], $photo_sma);
+                    $large = Photo::$photo_mode($record['path'], $photo_lar);
                 }
             } else {
-                $large = $small = getenv('WEB_URL') . '/' .$record['path'];
+                $small = Photo::$photo_mode($record['path'], $photo_sma);
+                $large = Photo::$photo_mode($record['path'], $photo_lar);
             }
 
             $photos[] = [

@@ -11,6 +11,7 @@ use Dolphin\Ting\Constant\Nav;
 use Dolphin\Ting\Model\Pic_model;
 use OSS\OssClient as OssClient;
 use OSS\Core\OssException as OssException;
+use Dolphin\Ting\Librarie\Photo;
 
 class GetRecords extends Recommend
 {
@@ -58,13 +59,13 @@ class GetRecords extends Recommend
 
                 try {
                     $path = $this->oss_client->signUrl(getenv('OSS_BUCKET_NAME'), $photo['path'], $valid, "GET", [
-                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_400,w_400"
+                        OssClient::OSS_PROCESS => "image/resize,m_fill,h_" . Common::PHOTO_LIST_THUMB . ",w_" . Common::PHOTO_LIST_THUMB
                     ]);
                 } catch (OssException $e) {
-                    $path = getenv('WEB_URL') . '/' . $photo['path'];
+                    $path = Photo::thumb($photo['path']);
                 }
             } else {
-                $path = getenv('WEB_URL') . '/' .$photo['path'];
+                $path = Photo::thumb($photo['path']);
             }
 
             $images[] = [

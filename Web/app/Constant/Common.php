@@ -40,4 +40,16 @@ class Common
     const RECOMMEND_DAY_MAX = 10;
     // 最新推荐显示的最大图片数量
     const RECOMMEND_NEW_MAX = 10;
+    // 列表页本地图片的处理模式
+    const PHOTO_LOCAL_MODE = 'resize';
+    // 列表页本地图片的小图宽度
+    const PHOTO_LOCAL_SMA  = 560;
+    // 列表页本地图片的大图宽度
+    const PHOTO_LOCAL_LAR  = 560;
+    // 推荐页本地图片的处理模式
+    const RECOMMEND_LOCAL_MODE = 'fit';
+    // 推荐页本地图片的小图宽度
+    const RECOMMEND_LOCAL_SMA  = 280;
+    // 推荐页本地图片的大图宽度
+    const RECOMMEND_LOCAL_LAR  = 280;
 }
