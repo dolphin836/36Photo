@@ -23,7 +23,7 @@ class Table
     // 专题 - 图片
     const PICTURE_COLLECTION = 'picture_collection';
     // 图片 - 颜色
-    const PICTURE_COLOR = 'picture_color';
+    const PICTURE_COLOR = 'picture_color_2019';
     // 图片 - 推荐
     const PICTURE_RECOMMEND = 'picture_recommend';
     // 图片 - 相似

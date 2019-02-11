@@ -49,8 +49,6 @@ try {
     exit();
 }
 
-const PICTURE_COLOR = 'picture_color_2019';
-
 var_dump(date("Y-m-d H:i:s") . ':**********Start Run**********');
 
 // 所有图片
@@ -66,7 +64,7 @@ var_dump('Photo Total Count:' . count($records));
 
 foreach ($records as $record) {
     // 已经存在
-    if($db->has(PICTURE_COLOR, [
+    if($db->has(Table::PICTURE_COLOR, [
         'picture_hash' => $record['hash']
     ])) {
         continue;
@@ -103,7 +101,7 @@ foreach ($records as $record) {
         $hex = Color::fromIntToHex($color);
         $hex = substr($hex, 1);
 
-        $db->insert(PICTURE_COLOR, [
+        $db->insert(Table::PICTURE_COLOR, [
             'picture_hash' => $record['hash'],
             'color'        => $hex
         ]);
