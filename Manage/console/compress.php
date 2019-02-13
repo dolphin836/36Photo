@@ -15,19 +15,36 @@ define('ROOTPATH', BASEPATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 // 载入自动加载文件
 require ROOTPATH . '/vendor/autoload.php';
 
-$origin_photo      = ROOTPATH . '/1.jpg';
-$compress_photo    = ROOTPATH . '/2.jpg';
-// 获取原始文件大小
-$origin_photo_size = filesize($origin_photo);
+$dir = ROOTPATH . 'public/picture';
 
-var_dump($origin_photo_size);
+$results = new \FilesystemIterator($dir);
 
-// 图片优化
-$image_opt = OptimizerChainFactory::create();
+$i = 1;
 
-$image_opt->optimize($origin_photo, $compress_photo);
+foreach ($results as $result) {
+    // 过滤
+    if (! $result->isFile()) continue;
 
-// 获取压缩后文件大小
-$compress_photo_size = filesize($compress_photo);
+    $origin_photo = $result->getPathname();
 
-var_dump($compress_photo_size);
+    var_dump($origin_photo);
+    // 获取原始文件大小
+    $origin_photo_size = filesize($origin_photo);
+
+    var_dump($origin_photo_size);
+
+    // 图片优化
+    $compress_photo = $dir . '/temp/' . $i . '.jpg';
+
+    $image_opt = OptimizerChainFactory::create();
+
+    $image_opt->optimize($origin_photo, $compress_photo);
+
+    // 获取压缩后文件大小
+    $compress_photo_size = filesize($compress_photo);
+
+    var_dump($compress_photo_size);
+
+    $i++;
+}
+
