@@ -48,6 +48,8 @@ class GetRecords extends Pic
         $this->category_model = new Category_model($app);
 
         $this->nav_route = Nav::RECORDS;
+        // 设置临时最大内存
+        ini_set('memory_limit', '512M');
     }
 
     public function __invoke(Request $request, Response $response, $args)

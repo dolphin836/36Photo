@@ -9,7 +9,8 @@ class Photo
 {
     // 图片存储的相对路径
     const PHOTO_SAVE_PATH = '../../Manage/public/';
-    // 获取略缩图
+
+    // 保持宽高比缩放
     public static function resize ($path, $width)
     {
         $path  = self::PHOTO_SAVE_PATH . $path;
@@ -31,7 +32,7 @@ class Photo
         return getenv('WEB_URL') . '/' . str_replace(self::PHOTO_SAVE_PATH, '', $thumb);
     }
 
-    // 获取略缩图
+    // 等比例缩放 + 裁剪
     public static function fit ($path, $width)
     {
         $path  = self::PHOTO_SAVE_PATH . $path;
