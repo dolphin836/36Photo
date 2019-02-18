@@ -62,10 +62,10 @@ class GetRecords extends Recommend
                         OssClient::OSS_PROCESS => "image/resize,m_fill,h_" . Common::PHOTO_LIST_THUMB . ",w_" . Common::PHOTO_LIST_THUMB
                     ]);
                 } catch (OssException $e) {
-                    $path = Photo::thumb($photo['path']);
+                    $path = Photo::get_thumb_path($photo['path']);
                 }
             } else {
-                $path = Photo::thumb($photo['path']);
+                $path = Photo::get_thumb_path($photo['path']);
             }
 
             $images[] = [

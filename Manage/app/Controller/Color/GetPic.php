@@ -111,10 +111,10 @@ class GetPic extends Color
                         OssClient::OSS_PROCESS => "image/resize,m_fill,h_" . Common::PHOTO_LIST_THUMB . ",w_" . Common::PHOTO_LIST_THUMB
                     ]);
                 } catch (OssException $e) {
-                    $path = Photo::thumb($record['path']);
+                    $path = Photo::get_thumb_path($record['path']);
                 }
             } else {
-                $path = Photo::thumb($record['path']);
+                $path = Photo::get_thumb_path($record['path']);
             }
 
             $images[] = [

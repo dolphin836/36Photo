@@ -63,31 +63,23 @@ class Pic extends \Dolphin\Ting\Controller\Base
 
         $sma   = $lar = Common::OSS_PROCESS;
         // 本地图片的处理模式
-        $photo_mode = Common::PHOTO_LOCAL_MODE;
-        $photo_sma  = Common::PHOTO_LOCAL_SMA;
-        $photo_lar  = Common::PHOTO_LOCAL_LAR;
+        $thumb_width  = Common::PHOTO_LOCAL_WIDTH;
 
         switch ($resize_name) {
             case 'PHOTO': // 图片列表页
                 $sma .= Common::PHOTO_RESIZE_SMA;
                 $lar .= Common::PHOTO_RESIZE_LAR;
-                $photo_mode = Common::PHOTO_LOCAL_MODE;
-                $photo_sma  = Common::PHOTO_LOCAL_SMA;
-                $photo_lar  = Common::PHOTO_LOCAL_LAR;
+                $thumb_width = Common::PHOTO_LOCAL_WIDTH;
                 break;
             case 'RECOMMEND': // 推荐页
                 $sma .= Common::RECOMMEND_RESIZE_SMA;
                 $lar .= Common::RECOMMEND_RESIZE_LAR;
-                $photo_mode = Common::RECOMMEND_LOCAL_MODE;
-                $photo_sma  = Common::RECOMMEND_LOCAL_SMA;
-                $photo_lar  = Common::RECOMMEND_LOCAL_LAR;
+                $thumb_width = Common::RECOMMEND_LOCAL_WIDTH;
                 break;    
             default:
                 $sma .= Common::PHOTO_RESIZE_SMA;
                 $lar .= Common::PHOTO_RESIZE_LAR;
-                $photo_mode = Common::PHOTO_LOCAL_MODE;
-                $photo_sma  = Common::PHOTO_LOCAL_SMA;
-                $photo_lar  = Common::PHOTO_LOCAL_LAR;
+                $thumb_width = Common::PHOTO_LOCAL_WIDTH;
                 break;
         }
 
@@ -121,12 +113,10 @@ class Pic extends \Dolphin\Ting\Controller\Base
                         ]
                     );
                 } catch (OssException $e) {
-                    $small = Photo::$photo_mode($record['path'], $photo_sma);
-                    $large = Photo::$photo_mode($record['path'], $photo_lar);
+                    $small = $large = Photo::get_thumb_path($record['path'], $thumb_width);
                 }
             } else {
-                $small = Photo::$photo_mode($record['path'], $photo_sma);
-                $large = Photo::$photo_mode($record['path'], $photo_lar);
+                $small = $large = Photo::get_thumb_path($record['path'], $thumb_width);
             }
 
             $photos[] = [
