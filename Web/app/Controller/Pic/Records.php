@@ -6,16 +6,9 @@ use Dolphin\Ting\Constant\Common;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Psr\Container\ContainerInterface as ContainerInterface;
 
 class Records extends Pic
 {
-    function __construct(ContainerInterface $app)
-    {
-        parent::__construct($app);
-        // 设置临时最大内存
-        ini_set('memory_limit', '1024M');
-    }
     /**
      * 最新图片
      *
