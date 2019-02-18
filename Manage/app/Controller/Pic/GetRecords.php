@@ -49,7 +49,7 @@ class GetRecords extends Pic
 
         $this->nav_route = Nav::RECORDS;
         // 设置临时最大内存
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '1024M');
     }
 
     public function __invoke(Request $request, Response $response, $args)
