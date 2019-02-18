@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("navbar-burger"),t=document.getElementById("navbarPhoto");e.addEventListener("click",()=>{e.classList.toggle("is-active"),t.classList.toggle("is-active")})});

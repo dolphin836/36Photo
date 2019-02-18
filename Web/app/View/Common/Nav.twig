@@ -1,0 +1,34 @@
+<div class="container nav">
+    <div class="row">
+        <div class="column">
+            <ul>
+                <li><a href="/" class="button {{ site.nav == 'discover' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_discover }}</a></li>
+                <li><a href="/recommend" class="button {{ site.nav == 'recommend' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_recommend }}</a></li>
+                <li><a href="/photos" class="button {{ site.nav == 'photos' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_photos }}</a></li>
+                <!-- <li><a href="/collection" class="button {{ site.nav == 'collection' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_collection }}</a></li> -->
+                <li><a href="/category" class="button {{ site.nav == 'category' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_category }}</a></li>
+                <li><a href="/mark" class="button {{ site.nav == 'mark' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_mark }}</a></li>
+                <li><a href="/color" class="button {{ site.nav == 'color' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_color }}</a></li>
+                <li><a href="/random" class="button {{ site.nav == 'random' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_random }}</a></li>
+            </ul>
+        </div>
+        <div class="column right">
+            <ul>
+                <li><a href="/signup" class="button {{ site.nav == 'signup' ? 'button-black' : '' }} button-outline button-middle">{{ lang.common.nav_signup }}</a></li>
+                <li><a href="/signin" class="button {{ site.nav == 'signin' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_signin }}</a></li>
+                <li><a href="/sub" class="button {{ site.nav == 'sub' ? 'button-black' : '' }} button-clear button-middle">{{ lang.common.nav_sub }}</a></li>
+                <li>
+                    <select id="lang">
+                        {% for lang_value, lang_name in lang.langs %}
+                            {% if lang_value == lang.lang_code %}
+                            <option value="{{ lang_value }}" selected>{{ lang_name }}</option>
+                            {% else %}
+                            <option value="{{ lang_value }}">{{ lang_name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{% extends "Template.twig" %}
+
+{% block Title %}
+热门标签
+{% endblock %}
+
+{% block Content %}
+<div class="container">
+    {% for item in category %}
+        {% if loop.index0 % 4 == 0 %}
+        <div class="row">
+        {% endif %}
+            <div class="column text-center">
+                <a href="/category/{{ item.code }}">{{ item.name }}</a>
+            </div>
+        {% if loop.index0 % 4 == 3 %}
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
