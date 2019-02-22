@@ -20,6 +20,8 @@
 
 /Manage/.idea
 
+/Manage/public/x.php
+
 /API/.env
 
 /API/composer.lock

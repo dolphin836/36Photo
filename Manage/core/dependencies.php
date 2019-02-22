@@ -39,17 +39,14 @@ $container['template'] = function ($c) {
         'strict_variables' => $debug
     ));
 };
+
 // CSRF
 $container['csrf'] = function ($c) {
     $guard = new \Slim\Csrf\Guard('next');
-    // 检查失败的回调
-    // $guard->setFailureCallable(function ($request, $response, $next) {
-    //     // $request = $request->withAttribute("csrf_status", false);
-    //     return $next($request, $response);
-    // });
 
     return $guard;
 };
+
 // Flash Message
 $container['flash'] = function () {
     return new \Slim\Flash\Messages();

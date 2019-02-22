@@ -9,7 +9,7 @@ $app->add(new Dolphin\Ting\Middleware\Query($container));
 $app->add(new Dolphin\Ting\Middleware\Login($container));
 
 $app->add(new \Slim\Middleware\Session([
-           'name' => 'Emage_Session',
+           'name' => '36photo',
     'autorefresh' => true,
        'lifetime' => '7 day'
 ]));
