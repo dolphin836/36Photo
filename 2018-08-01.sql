@@ -130,7 +130,7 @@ CREATE TABLE `color` (
     UNIQUE KEY `uk_color` (`color`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='颜色记录表';
 
-CREATE TABLE `picture_color_2019` (
+CREATE TABLE `picture_color` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `picture_hash` CHAR(16) NOT NULL DEFAULT '' COMMENT '图片 Hash',
     `color` CHAR(6) NOT NULL DEFAULT '' COMMENT '颜色 HEX 值',
