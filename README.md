@@ -14,8 +14,6 @@ $ yum -y install optipng
 $ yum -y install pngquant
 ```
 
-Test
-
 ## TODO
 
 - [X] 图片大小修正为压缩后
