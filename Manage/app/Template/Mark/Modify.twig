@@ -22,15 +22,32 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">分 类</label>
-                        <select clas="form-control" name="category_code">
+                        <select class="form-control" name="category_code">
                             {% for cate in category %}
                             {% if cate.code == mark.category_code %}
                             <option value="{{ cate.code }}" selected>{{ cate.name }}</option>
                             {% else %}
                             <option value="{{ cate.code }}">{{ cate.name }}</option>
                             {% endif %}
-                            {% endfsor %}
+                            {% endfor %}
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">推 荐</label>
+                        <ul class="list-unstyled list-inline">
+                            <li class="d-inline-block mr-3">
+                                <label class="control control-radio">否
+                                    <input type="radio" name="is_recommend" value="0" {{ mark.is_recommend ? "" : "checked" }}>
+                                    <div class="control-indicator"></div>
+                                </label>
+                            </li>
+                            <li class="d-inline-block mr-3">
+                                <label class="control control-radio">是
+                                    <input type="radio" name="is_recommend" value="1" {{ mark.is_recommend ? "checked" : "" }}>
+                                    <div class="control-indicator"></div>
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

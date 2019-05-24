@@ -12,7 +12,8 @@ class PostModify extends Mark
         $body = $request->getParsedBody();
 
         $data = [
-            'category_code' => trim($body['category_code'])
+            'category_code' => trim($body['category_code']),
+            'is_recommend'  => $body['is_recommend']
         ];
 
         $uri = $request->getUri();

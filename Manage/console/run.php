@@ -140,6 +140,7 @@ function found ($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debu
                 $is_oss = Common::IS_OSS;
             } catch (OssException $e) {
                 var_dump(date("Y-m-d H:i:s") . ':OSS Upload Failed.');
+                var_dump($e->getMessage());
             }
 
             var_dump(date("Y-m-d H:i:s") . ':OSS Upload Over.');
@@ -267,6 +268,8 @@ function found ($dir, $image_hash, $db, $oss_client, $mark, $image_opt, $is_debu
             }
 
             var_dump('memory used ' . round(memory_get_usage() / 1024 / 1024, 2) . ' mb');
+            // 删除文件
+            unlink($path);
         }
     }
 }
@@ -296,7 +299,7 @@ function upload ($path, $extension, $image_opt)
 
     $image_opt->optimize($path, ROOTPATH . '/public/' . $file_path);
 
-    unlink($path);
+    // unlink($path);
 
     return $file_path;
 }

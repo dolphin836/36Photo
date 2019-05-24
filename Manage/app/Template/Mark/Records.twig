@@ -57,7 +57,10 @@
                         {% for record in records %}
                         <tr>
                             <td class="text-center">
-                                <div>{{ record.name }}</div>
+                                {{ record.name }}
+                                {% if record.is_recommend %}
+                                <i class="mdi mdi-ribbon ml-1 text-success" title="推荐"></i>
+                                {% endif %}
                             </td>
                             <td class="text-center">
                                 <div>{{ record.count }}</div>

@@ -44,6 +44,10 @@ class GetRecords extends Mark
         $order  = $request->getAttribute('order');
         $text   = $request->getAttribute('text');
 
+        if (isset($search['recommend']) && (int) $search['recommend'] === 1) {
+            $this->nav_route = Nav::RECOMMEND;
+        }
+
         $query  = '';
 
         if (! empty($text)) {
@@ -60,6 +64,10 @@ class GetRecords extends Mark
         $search['LIMIT'] = [Common::PAGE_COUNT * ($page - 1), Common::PAGE_COUNT];
 
         $records = $this->mark_model->records($search);
+
+        // var_dump($records);
+
+        // exit();
 
         $data = [
               "records" => $records,

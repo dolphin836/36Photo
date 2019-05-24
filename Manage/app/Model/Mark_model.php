@@ -30,6 +30,11 @@ class Mark_model extends Common_model
             unset($data['category']);
         }
 
+        if (isset($data['recommend'])) {
+            $data[Table::MARK . '.is_recommend'] = $data['recommend'];
+            unset($data['recommend']);
+        }
+
         if (isset($data['start'])) {
             $data[Table::MARK . '.gmt_create[>=]'] = $data['start'];
             unset($data['start']);
@@ -49,7 +54,8 @@ class Mark_model extends Common_model
             Table::MARK . ".name",
             Table::MARK . ".count",
             Table::MARK . ".category_code",
-            Table::MARK . ".gmt_create"
+            Table::MARK . ".gmt_create",
+            Table::MARK . ".is_recommend"
         ], $data);
     }
 
@@ -73,6 +79,11 @@ class Mark_model extends Common_model
             unset($data['category']);
         }
 
+        if (isset($data['recommend'])) {
+            $data[Table::MARK . '.is_recommend'] = $data['recommend'];
+            unset($data['recommend']);
+        }
+
         if (isset($data['start'])) {
             $data[Table::MARK . '.gmt_create[>=]'] = $data['start'];
             unset($data['start']);
@@ -94,7 +105,8 @@ class Mark_model extends Common_model
             Table::CATEGORY . ".name(category_name)",
             Table::MARK . ".name",
             Table::MARK . ".count",
-            Table::MARK . ".category_code"
+            Table::MARK . ".category_code",
+            Table::MARK . ".is_recommend"
         ], $data);
     }
 

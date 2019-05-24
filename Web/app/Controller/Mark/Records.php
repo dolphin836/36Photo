@@ -20,6 +20,7 @@ class Records extends Mark
     public function __invoke(Request $request, Response $response, $args)
     { 
         $fifter = [
+            "is_recommend" => 1,
             "ORDER" => ["count" => "DESC"],
             "LIMIT" => [0, Common::MARK_MAX_COUNT]
         ];

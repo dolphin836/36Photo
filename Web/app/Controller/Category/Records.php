@@ -20,7 +20,7 @@ class Records extends Category
     public function __invoke(Request $request, Response $response, $args)
     { 
         $fifter = [
-            "count[>=]" => 20,
+            "count[>=]" => 0,
             "ORDER" => ["count" => "DESC"]
         ];
 
