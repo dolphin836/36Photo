@@ -2,8 +2,6 @@
 
 /.vscode
 
-/Manage/.env
-
 /Manage/composer.lock
 
 /Manage/cache
@@ -21,26 +19,6 @@
 /Manage/.idea
 
 /Manage/public/x.php
-
-/API/.env
-
-/API/composer.lock
-
-/API/vendor
-
-/M/node_modules
-
-/M/package.json
-
-/M/package-lock.json
-
-/M/.babelrc
-
-/M/webpack.config.js
-
-/M/.idea
-
-/Web/.env
 
 /Web/vendor
 
