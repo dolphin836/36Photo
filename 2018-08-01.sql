@@ -22,7 +22,7 @@ CREATE TABLE `user` (
     UNIQUE KEY `uk_uuid` (`uuid`),
     UNIQUE KEY `uk_username` (`username`),
     UNIQUE KEY `uk_phone` (`phone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息记录表';
 
 CREATE TABLE `picture` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -44,7 +44,7 @@ CREATE TABLE `picture` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_hash` (`hash`),
     KEY `idx_category` (`category_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片信息记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片信息记录表';
 
 CREATE TABLE `mark` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -56,7 +56,7 @@ CREATE TABLE `mark` (
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标签信息记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='标签信息记录表';
 
 CREATE TABLE `picture_mark` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -66,7 +66,7 @@ CREATE TABLE `picture_mark` (
     UNIQUE KEY `uk_pic_mark` (`picture_hash`, `mark_id`),
     KEY `idx_picture` (`picture_hash`),
     KEY `idx_mark` (`mark_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 标签映射关系记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片 - 标签映射关系记录表';
 
 CREATE TABLE `category` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -80,7 +80,7 @@ CREATE TABLE `category` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_code` (`code`),
     UNIQUE KEY `uk_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类信息记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分类信息记录表';
 
 INSERT INTO `category` (`code`, `name`) VALUES ('default', '默认分类');
 
@@ -102,7 +102,7 @@ CREATE TABLE `collection` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_code` (`code`),
     KEY `idx_uuid` (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题信息记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='专题信息记录表';
 
 CREATE TABLE `picture_collection` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -110,7 +110,7 @@ CREATE TABLE `picture_collection` (
     `collection_code` CHAR(16) NOT NULL DEFAULT '' COMMENT '专题 Code',
     PRIMARY KEY (`id`),
     KEY `idx_collection_code` (`collection_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专题 - 图片映射关系记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='专题 - 图片映射关系记录表';
 
 CREATE TABLE `picture_recommend` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -118,7 +118,7 @@ CREATE TABLE `picture_recommend` (
     `gmt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录的创建时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_picture_hash` (`picture_hash`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 推荐映射关系记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片 - 推荐映射关系记录表';
 
 CREATE TABLE `color` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -129,7 +129,7 @@ CREATE TABLE `color` (
     `gmt_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_color` (`color`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='颜色记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='颜色记录表';
 
 CREATE TABLE `picture_color` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -139,4 +139,4 @@ CREATE TABLE `picture_color` (
     UNIQUE KEY `uk_pic_color` (`picture_hash`, `color`),
     KEY `idx_picture_hash` (`picture_hash`),
     KEY `idx_color` (`color`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片 - 颜色映射关系记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片 - 颜色映射关系记录表';
