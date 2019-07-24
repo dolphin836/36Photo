@@ -2,6 +2,8 @@
 
 /.vscode
 
+/Manage/.env
+
 /Manage/composer.lock
 
 /Manage/cache
@@ -19,6 +21,8 @@
 /Manage/.idea
 
 /Manage/public/x.php
+
+/Web/.env
 
 /Web/vendor
 
