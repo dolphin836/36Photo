@@ -29,6 +29,7 @@
     "zooming": "^2.1.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "lodash": ">=4.17.13"
   }
 }
